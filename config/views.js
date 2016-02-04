@@ -1,0 +1,3 @@
+module.exports = {
+  engine: 'handlebars'
+}
