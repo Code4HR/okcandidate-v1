@@ -10,7 +10,7 @@ Most people don’t know their candidates for local offices. Publishing voter gu
 We propose an app that works like a dating site for matching voters with their candidates. This has been done for presidential elections but never at the local level, where it is most needed.
 
 ## Background
-A common feature of dating sites is the age-old questionnaire. A group of users is given a list of questions. Potential compatibility between members of the group is calculated based on the user’s responses and the level of importance they have placed in finding someone who shares their views.  We believe the same approach can be taken to match candidates with voters.
+A common feature of dating sites is the age-old questionnaire. A group of participants is given a list of questions. Potential compatibility between members of the group is calculated based on the user’s responses and the level of importance they have placed in finding someone who shares their views.  We believe the same approach can be taken to match candidates with voters.
 
 ## Approach
 We are going to publish a platform and web application in which:
