@@ -20,5 +20,9 @@
   "dependencies": {
     "hapi": "^13.0.0",
     "vision": "^4.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^2.2.0",
+    "eslint-config-trails": "^1.0.4"
   }
 }
