@@ -1,17 +1,19 @@
 // Create a basic Hapi.js server
 require('babel-register')({
-  presets: ['es2015', 'react'],
-});
-var Hapi = require('hapi');
-var dateFormat = require('dateformat');
-var format = "dd mmm HH:MM:ss";
+  presets: ['es2015', 'react']
+})
+
+const Hapi = require('hapi')
+const dateFormat = require('dateformat')
+const format = 'dd mmm HH:MM:ss'
+const routes = require('./routes')
 
 // Basic Hapi.js connection stuff
-var server = new Hapi.Server();
+const server = new Hapi.Server()
 server.connection({
   host: '0.0.0.0',
   port: 8000
-});
+})
 
 // Register the inert and vision Hapi plugins
 // As of Hapi 9.x, these two plugins are no longer
@@ -23,7 +25,7 @@ server.register([{
   register: require('vision')
 }], function(err) {
 
-  if (err) return console.error(err);
+  if (err) return console.error(err)
 
     // Add the React-rendering view engine
     server.views({
@@ -32,7 +34,7 @@ server.register([{
         },
         relativeTo: __dirname,
         path: 'views'
-    });
+    })
 
     // Add a route to serve static assets (CSS, JS, IMG)
     server.route({
@@ -44,20 +46,14 @@ server.register([{
           index: ['index.html']
         }
       }
-    });
+    })
 
     // Add main app route
-    server.route({
-      method: 'GET',
-      path: '/',
-      handler: {
-        view: 'Default'
-      }
-    });
+    server.route(routes)
 
     server.start(function() {
-      console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri);
-    });
+      console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri)
+    })
 
 });
 
