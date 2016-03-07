@@ -62,6 +62,10 @@
 
 	var _Frame2 = _interopRequireDefault(_Frame);
 
+	var _SplashPage = __webpack_require__(221);
+
+	var _SplashPage2 = _interopRequireDefault(_SplashPage);
+
 	var _AdminDashboard = __webpack_require__(219);
 
 	var _AdminDashboard2 = _interopRequireDefault(_AdminDashboard);
@@ -99,6 +103,7 @@
 	        _react2.default.createElement(
 	          _reactRouter.Route,
 	          { path: '/', component: _Frame2.default },
+	          _react2.default.createElement(_reactRouter.IndexRoute, { component: _SplashPage2.default }),
 	          _react2.default.createElement(_reactRouter.Route, { path: 'admin', component: _AdminDashboard2.default }),
 	          _react2.default.createElement(_reactRouter.Route, { path: 'survey', component: _SurveyPage2.default })
 	        )
@@ -25064,6 +25069,66 @@
 	SurveyPage.propTypes = {};
 
 	exports.default = SurveyPage;
+
+/***/ },
+/* 221 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SplashPage = function (_Component) {
+	  _inherits(SplashPage, _Component);
+
+	  function SplashPage() {
+	    _classCallCheck(this, SplashPage);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SplashPage).apply(this, arguments));
+	  }
+
+	  _createClass(SplashPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'article',
+	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Splash Page'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Marketing material and such goes here.'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SplashPage;
+	}(_react.Component);
+
+	SplashPage.propTypes = {};
+
+	exports.default = SplashPage;
 
 /***/ }
 /******/ ]);

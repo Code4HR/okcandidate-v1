@@ -1,5 +1,4 @@
 // Routes
-
 module.exports = [
   {
     method: 'GET',
