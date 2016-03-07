@@ -1,0 +1,18 @@
+{
+  "extends": "trails/react",
+
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
+  "globals": {
+    "document": true,
+    "it": true,
+    "describe": true
+  }
+
+}
+
