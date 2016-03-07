@@ -11,6 +11,8 @@ class SurveyPage extends Component {
   }
 }
 
-SurveyPage.propTypes = {}
+SurveyPage.propTypes = {
+  surveys: PropTypes.object
+}
 
 export default SurveyPage

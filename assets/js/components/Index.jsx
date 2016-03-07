@@ -1,6 +1,18 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component} from 'react';
 import ReactDOM from 'react-dom'
 import { IndexRoute, Router, Route, browserHistory } from 'react-router'
+import { Provider } from 'react-redux'
+import { applyMiddleware, createStore } from 'redux'
+import reducer from './../redux/reducer'
+import createLogger from 'redux-logger'
+import thunk from 'redux-thunk'
+
+// Redux Setup
+const logger = createLogger()
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk, logger)
+)
 
 // Top Level Components
 import Frame from './environments/Frame.jsx'
@@ -23,6 +35,8 @@ class App extends Component {
 }
 
 ReactDOM.render(
-  <App />
-  , document.body
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.body
 );
