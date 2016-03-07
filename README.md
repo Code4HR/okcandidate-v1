@@ -29,11 +29,7 @@ We are going to publish a platform and web application in which:
 ```
 git clone git@github.com:Code4HR/okcandidate.git
 npm install
-npm start
+npm run dev
 ```
 
-## Tests
-```
-npm tests
-```
 
