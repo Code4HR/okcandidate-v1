@@ -5,14 +5,14 @@ class Frame extends Component {
     return (
       <div>
         <h1>OKCandidate</h1>
-        
         { this.props.children }
-          
       </div>
     )
   }
 }
 
-Frame.propTypes = {}
+Frame.propTypes = {
+  children: PropTypes.any
+}
 
 export default Frame

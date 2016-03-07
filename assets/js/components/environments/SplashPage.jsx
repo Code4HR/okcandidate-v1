@@ -11,6 +11,8 @@ class SplashPage extends Component {
   }
 }
 
-SplashPage.propTypes = {}
+SplashPage.propTypes = {
+  splash: PropTypes.object
+}
 
 export default SplashPage
