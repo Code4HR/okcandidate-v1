@@ -33,12 +33,22 @@ npm run dev
 ```
 
 ## Database Setup
-OKCandidate uses Postgres as its database.  A couple of fixture files are available to create the initial tables and populate them with fixture data. First, create a database locally `okcandidate_dev` using PgAdmin3 or similar.  Then, run these commands in terminal to setup fixture data.
+OKCandidate uses Postgres as its database.  A couple of fixture files are available to create the initial tables and populate them with fixture data. There are two approaches to setting up the database:
 
-### OSX 
+1. __Using PGAdmin3__
+  1. After connecting to your local instance, right click on databases and select _New Database_. Give it a name like `okcandidate_dev` or `okcandidate`. Everything else can be left default. Click `OK`
+  2. Click on your newly created database in the Object Browser and select the SQL button in the top ribbon to open a new SQL editor window. 
+  3. Open `okcandidate_database_create.sql` in the SQL editor and run the file with the play button. This will create your table structure.
+  4. If you want to install sample data open `okcandidate_database_sampledata.sql` and run it as well.
+2. __From the command line__
+  1. run `psql` to get to the postgres console. Create the database using the first line in the okcandidate_database_create.sql file or something similar. a simple command would be:<br />`CEATE DATABASE okcandidate_dev`
+  2. Exit the postgres console with `\q`.
+  3. Assuming your database name is `okcandidate_dev` you would then run following commands from the database directory:
+
 ```
 // from databases directory
-psql -U ${whoami} -d okcandidate_dev -a -f okcandidate_database_create.sql
-psql -U ${whoami} -d okcandidate_dev -a -f okcandidate_database_sampledata.sql
+psql -d okcandidate_dev -a -f okcandidate_database_create.sql
+psql -d okcandidate_dev -a -f okcandidate_database_sampledata.sql
 ```
 
+You will additionally want to create a user to connect to the database. From within PGAdmin3 you can do this by right-clicking on Login Roles in the Object Browser. From the postgres console you do this with the command:<br /><br />`CREATE USER survey_manager WITH PASSWORD 'MyPassword'`<br /><br />Replacing survey_manager and 'MyPassword' with your choice of user name and password respectively.
