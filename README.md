@@ -32,4 +32,13 @@ npm install
 npm run dev
 ```
 
+## Database Setup
+OKCandidate uses Postgres as its database.  A couple of fixture files are available to create the initial tables and populate them with fixture data. First, create a database locally `okcandidate_dev` using PgAdmin3 or similar.  Then, run these commands in terminal to setup fixture data.
+
+### OSX 
+```
+// from databases directory
+psql -U ${whoami} -d okcandidate_dev -a -f okcandidate_database_create.sql
+psql -U ${whoami} -d okcandidate_dev -a -f okcandidate_database_sampledata.sql
+```
 
