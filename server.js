@@ -20,11 +20,12 @@ server.connection({
 // As of Hapi 9.x, these two plugins are no longer
 // included in Hapi automatically
 // https://github.com/hapijs/hapi/issues/2682
-server.register([{
-  register: require('inert')
-}, {
-  register: require('vision')
-}], function(err) {
+server.register([
+  {register: require('inert')},
+  {register: require('vision')},
+  {register: require('./server/plugins/basic-auth')}
+  // {register: require('./server/plugins/google-auth')}
+], function(err) {
 
   if (err) return console.error(err)
 
