@@ -6,7 +6,7 @@ require('babel-register')({
 const Hapi = require('hapi')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
-const routes = require('./routes')
+const routes = require('./server/routes')
 
 // Basic Hapi.js connection stuff
 const server = new Hapi.Server()
@@ -19,11 +19,12 @@ server.connection({
 // As of Hapi 9.x, these two plugins are no longer
 // included in Hapi automatically
 // https://github.com/hapijs/hapi/issues/2682
-server.register([{
-  register: require('inert')
-}, {
-  register: require('vision')
-}], function(err) {
+server.register([
+  {register: require('inert')},
+  {register: require('vision')},
+  {register: require('./server/plugins/basic-auth')}
+  // {register: require('./server/plugins/google-auth')}
+], function(err) {
 
   if (err) return console.error(err)
 
@@ -47,13 +48,12 @@ server.register([{
         }
       }
     })
-
-    // Add main app route
-    server.route(routes)
-
-    server.start(function() {
-      console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri)
-    })
-
 });
+
+// API Router
+server.route(routes)
+
+server.start(function() {
+    console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri)
+})
 
