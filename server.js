@@ -6,7 +6,8 @@ require('babel-register')({
 const Hapi = require('hapi')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
-const routes = require('./routes')
+const routes = require('./server/routes')
+const Bell = require('bell')
 
 // Basic Hapi.js connection stuff
 const server = new Hapi.Server()
@@ -47,13 +48,12 @@ server.register([{
         }
       }
     })
-
-    // Add main app route
-    server.route(routes)
-
-    server.start(function() {
-      console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri)
-    })
-
 });
+
+// API Router
+server.route(routes)
+
+server.start(function() {
+    console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri)
+})
 
