@@ -7,7 +7,6 @@ const Hapi = require('hapi')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
 const routes = require('./server/routes')
-const Bell = require('bell')
 
 // Basic Hapi.js connection stuff
 const server = new Hapi.Server()
