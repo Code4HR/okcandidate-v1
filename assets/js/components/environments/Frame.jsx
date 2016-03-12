@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 
+import AppHeader from './../organisms/AppHeader.jsx'
+
 class Frame extends Component {
   render() {
     return (
       <div>
-        <h1>OKCandidate</h1>
-        { this.props.children }
+        <AppHeader />
+        <div className="container">
+          { this.props.children }
+        </div>
       </div>
     )
   }

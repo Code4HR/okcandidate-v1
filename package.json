@@ -14,6 +14,7 @@
     "inert": "^3.2.0",
     "material-ui": "^0.14.4",
     "react": "^0.14.3",
+    "react-bootstrap": "^0.28.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0",
