@@ -15,7 +15,8 @@ class SplashPage extends Component {
     };
 
     const aboutStyle = {
-      border: 'solid blue 2px'
+      border: 'solid blue 2px',
+      fontSize: '18'
     };
 
     const teamStyle = {
@@ -54,13 +55,23 @@ class SplashPage extends Component {
             <hr/>
             <h2>Problem</h2>
             <hr/>
-            <p>Lorem ipsum</p>
+            <p>Most people don’t know their candidates for local offices. Publishing voter guides is laborious and most voters are not going to take the time to read them. Even the most engaged voters have difficulty determining which candidates to support for some local offices.</p>
             <h2>Solution</h2>
             <hr/>
-            <p>Lorem ipsum</p>
+            <p>We propose an app that works like a dating site for matching voters with their candidates. This has been done for presidential elections but never at the local level, where it is most needed.</p>
             <h2>Background</h2>
             <hr/>
-            <p>Lorem ipsum</p>
+            <p>A common feature of dating sites is the age-old questionnaire. A group of users are given a list of questions. Potential compatibility between members of the group is calculated based on the user’s responses and the level of importance they have placed in finding someone who shares their views. We believe the same approach can be taken to match candidates with voters.</p>
+            <h2>Approach</h2>
+            <hr/>
+            <p>This is a platform on which:</p>
+              <ul>
+                <li>News editors create questions</li>
+                <li>Candidates answer the questions</li>
+                <li>Voters answer the questions</li>
+                <li>Voters see which candidates match their answers best</li>
+                <li>Candidate see how many respondents line up with them</li>
+              </ul>
           </div>
           <div className="col-sm-2 col-md-2 col-lg-2"></div>
         </div>
