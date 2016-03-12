@@ -5,6 +5,8 @@ import {
   setAdminDashboardMood
 } from './../../redux/admin/admin-actions'
 
+import QuestionBuilder from './../ecosystems/QuestionBuilder.jsx'
+
 class AdminDashboard extends Component {
 
   constructor(props) {
@@ -20,7 +22,13 @@ class AdminDashboard extends Component {
       <article>
         <h1>Admin Dashboard</h1>
         <p>This is where the adminstrator will create and manage surveys.</p>
-        <p>At present, the administrator's mood is: <pre>{this.props.admin.mood}</pre></p>
+        <p>At present, the administrator's mood is:</p>
+        <pre>{this.props.admin.mood}</pre>
+
+        <QuestionBuilder
+          questionBuilder={this.props.questionBuilder}
+          dispatch={this.props.dispatch}/>
+
       </article>
     )
   }
@@ -33,6 +41,7 @@ AdminDashboard.propTypes = {
 
 export default connect(
   state => ({
-    admin: state.admin
+    admin: state.admin,
+    questionBuilder: state.questionBuilder
   })
 )(AdminDashboard)
