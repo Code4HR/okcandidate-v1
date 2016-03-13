@@ -4,6 +4,7 @@ require('babel-register')({
 })
 
 const Hapi = require('hapi')
+const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
 const routes = require('./routes')
@@ -14,6 +15,40 @@ server.connection({
   host: '0.0.0.0',
   port: 8000
 })
+
+const database = process.env['OKC_DB_NAME']
+const user = process.env['OKC_DB_USER']
+const password = process.env['OK_DB_PASSWORD']
+
+server.register(
+  {
+    register: HapiShelf,
+    options: {
+      knex: {
+        client: 'pg',
+        connection: {
+          host: '127.0.0.1',
+          user: user,
+          password: password,
+          database: database
+        }
+      },
+      plugins: ['registry'],
+      models: [
+        './api/models/Survey',
+        './api/models/Answer',
+        './api/models/Question'
+      ]
+    }
+  },
+  function (err) {
+
+    if (err) {
+      throw err
+    }
+
+  }
+)
 
 // Register the inert and vision Hapi plugins
 // As of Hapi 9.x, these two plugins are no longer
@@ -49,11 +84,10 @@ server.register([{
     })
 
     // Add main app route
-    server.route(routes)
+    server.route(routes(server))
 
     server.start(function() {
       console.log(dateFormat(new Date(), format) + ' - Server started at: ' + server.info.uri)
     })
 
 });
-
