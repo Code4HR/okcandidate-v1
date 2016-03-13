@@ -35,6 +35,7 @@ server.register(
       },
       plugins: ['registry'],
       models: [
+        './api/models/Survey',
         './api/models/Answer',
         './api/models/Question'
       ]
