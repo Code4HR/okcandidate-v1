@@ -35,9 +35,11 @@ server.register(
       },
       plugins: ['registry'],
       models: [
+        './api/models/Category',
+        './api/models/DataType',
         './api/models/Survey',
-        './api/models/Answer',
-        './api/models/Question'
+        './api/models/Question',
+        './api/models/Answer'
       ]
     }
   },
