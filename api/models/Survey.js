@@ -2,6 +2,7 @@
 
 module.exports = function(bookshelf) {
 
+  require('./Question')
   const Survey = bookshelf.Model.extend({
     tableName: 'survey',
     questions: function() {

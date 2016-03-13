@@ -104,7 +104,7 @@ module.exports = (server) => {
       handler: (request, reply) => {
         Survey
           .where({id: request.params.id})
-          .fetch({withRelated: ['questions']})
+          .fetch({withRelated: ['questions.answers']})
           .then(survey => {
             reply(survey)
           })
