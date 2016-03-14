@@ -1,18 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  setQuestionText,
-  addAnswerField,
-  removeAnswerField,
-  setNewAnswerText,
-  setAnswerText,
-  submitQuestion
-} from './../../redux/admin/question-builder/question-builder-actions'
-
-import {
   Input,
-  Button,
-  Alert
+  Button
 } from 'react-bootstrap'
 
 import QuestionBuilderAnswer from './../organisms/QuestionBuilderAnswer.jsx'
@@ -21,71 +11,99 @@ class QuestionBuilder extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      questionText: { value: this.props.question.questionText },
+      answers: this.props.question.answers,
+      newAnswer: {}
+    }
   }
 
   setQuestion(event) {
-    this.props.dispatch(setQuestionText(event.target.value))
+    this.setState({
+      questionText: { value: event.target.value }
+    })
   }
 
-  setAnswerText(id, text) {
-    this.props.dispatch(setAnswerText(id, text))
+  setNewAnswer(event) {
+    this.setState({
+      newAnswer: { value: event.target.value }
+    })
   }
 
-  setNewAnswerText(event) {
-    this.props.dispatch(setNewAnswerText(event.target.value))
-  }
-
-  addAnswerField(text) {
-    this.props.dispatch(addAnswerField(text))
+  setAnswer(id, event) {
+    const state = Object.assign({}, this.state, {
+      answers: this.state.answers.map(answer => {
+        if (answer.id === id) {
+          answer.answerLabel = event.target.value
+        }
+        return answer
+      })
+    })
+    this.setState(state)
   }
 
   removeAnswerField(id) {
-    this.props.dispatch(removeAnswerField(id))
+    const state = Object.assign({}, this.state, {
+      answers: this.state.answers.filter(answer => {
+        return answer.id !== id
+      })
+    })
+    this.setState(state)
   }
 
-  submitQuestion() {
-    this.props.dispatch(submitQuestion())
+  addAnswerField(answer) {
+    const state = Object.assign({}, this.state, {
+      answers: [
+        ...this.state.answers,
+        { answerLabel: answer, id: this.state.answers.length + 1}
+      ]
+    })
+    this.setState(state)
+  }
+
+  submitQuestion(id) {
+    // Update the question object, make an API call, untoggle editable state.
+    this.props.submitQuestion({
+      id: this.props.id,
+      questionText: this.state.questionText,
+      answers: this.state.answers
+    })
   }
 
   render() {
     return (
       <section>
-        <h2>Question Builder</h2>
 
-        {
-          this.props.questionBuilder.alerts.map(alert => {
-            return (
-              <Alert
-                bsStyle={alert.severity}>{alert.text}</Alert>
-            )
-          })
-        }
-
+        <label>Question</label>
         <Input
           type="text"
-          value={this.props.questionBuilder.question.value}
+          value={this.state.questionText.value}
           placeholder="Enter the question here"
           onChange={this.setQuestion.bind(this)} />
 
+        <label>Enter a New Answer</label>
+
+        <QuestionBuilderAnswer
+          newAnswer
+          text={this.state.newAnswer.value}
+          help={this.state.newAnswer.help}
+          add={this.addAnswerField.bind(this)}
+          onChange={this.setNewAnswer.bind(this)} />
+
+        <label>Answers</label>
+
         {
-          this.props.questionBuilder.answers.map(answer => {
+          this.state.answers.map(answer => {
             return (
               <QuestionBuilderAnswer
-                answerText={answer.text}
-                setAnswerText={this.setAnswerText.bind(this)}
-                removeAnswerField={this.removeAnswerField.bind(this)}
+                text={answer.answerLabel}
+                onChange={this.setAnswer.bind(this, answer.id)}
+                remove={this.removeAnswerField.bind(this, answer.id)}
                 id={answer.id}
                 key={answer.id} />
             )
           })
         }
-
-        <QuestionBuilderAnswer
-          newAnswer
-          answerText={this.props.questionBuilder.newAnswer.value}
-          help={this.props.questionBuilder.newAnswer.help}
-          addAnswerField={this.addAnswerField.bind(this)}
-          setAnswerText={this.setNewAnswerText.bind(this)} />
 
         <Button
           onClick={this.submitQuestion.bind(this)}
@@ -97,7 +115,10 @@ class QuestionBuilder extends Component {
 }
 
 QuestionBuilder.propTypes = {
-  questionBuilder: PropTypes.object,
+  id: PropTypes.number,
+  toggleEditable: PropTypes.func,
+  submitQuestion: PropTypes.func,
+  question: PropTypes.object,
   dispatch: PropTypes.func
 }
 

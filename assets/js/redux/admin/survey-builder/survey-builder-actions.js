@@ -82,3 +82,22 @@ export function selectActiveSurveyFailure(error) {
     error
   }
 }
+
+export const TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE =
+  'TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE'
+
+export function toggleSurveyBuilderQuestionEditable(id) {
+  return {
+    type: TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE,
+    id
+  }
+}
+
+export const UPDATE_SURVEY_BUILDER_QUESTION = 'UPDATE_SURVEY_BUILDER_QUESTION'
+
+export function updateSurveyBuilderQuestion(question) {
+  return {
+    type: UPDATE_SURVEY_BUILDER_QUESTION,
+    question
+  }
+}
