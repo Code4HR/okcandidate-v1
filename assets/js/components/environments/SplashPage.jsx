@@ -50,18 +50,30 @@ class SplashPage extends Component {
           <div className="col-sm-12 col-sm-8 col-md-8 col-lg-8">
             <h1>What is this about?</h1>
             <h2>
-              OK Candidate is a web app for matching voters with candidates for local offices.
+              OK Candidate is a web app for matching voters with candidates for
+              local offices.
             </h2>
             <hr/>
             <h2>Problem</h2>
             <hr/>
-            <p>Most people don’t know their candidates for local offices. Publishing voter guides is laborious and most voters are not going to take the time to read them. Even the most engaged voters have difficulty determining which candidates to support for some local offices.</p>
+            <p>Most people don’t know their candidates for local offices.
+              Publishing voter guides is laborious and most voters are not going
+              to take the time to read them. Even the most engaged voters have
+              difficulty determining which candidates to support for some local
+              offices.</p>
             <h2>Solution</h2>
             <hr/>
-            <p>We propose an app that works like a dating site for matching voters with their candidates. This has been done for presidential elections but never at the local level, where it is most needed.</p>
+            <p>We propose an app that works like a dating site for matching
+               voters with their candidates. This has been done for presidential
+               elections but never at the local level, where it is most needed.</p>
             <h2>Background</h2>
             <hr/>
-            <p>A common feature of dating sites is the age-old questionnaire. A group of users are given a list of questions. Potential compatibility between members of the group is calculated based on the user’s responses and the level of importance they have placed in finding someone who shares their views. We believe the same approach can be taken to match candidates with voters.</p>
+            <p>A common feature of dating sites is the age-old questionnaire. A
+               group of users are given a list of questions. Potential
+               compatibility between members of the group is calculated based
+               on the user’s responses and the level of importance they have
+               placed in finding someone who shares their views. We believe the
+               same approach can be taken to match candidates with voters.</p>
             <h2>Approach</h2>
             <hr/>
             <p>This is a platform on which:</p>

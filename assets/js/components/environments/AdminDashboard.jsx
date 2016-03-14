@@ -36,6 +36,7 @@ class AdminDashboard extends Component {
 
 AdminDashboard.propTypes = {
   admin: PropTypes.object,
+  questionBuilder: PropTypes.object,
   dispatch: PropTypes.func
 }
 
