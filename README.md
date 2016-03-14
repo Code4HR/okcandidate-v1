@@ -41,7 +41,7 @@ OKCandidate uses Postgres as its database.  A couple of fixture files are availa
   3. Open `okcandidate_database_create.sql` in the SQL editor and run the file with the play button. This will create your table structure.
   4. If you want to install sample data open `okcandidate_database_sampledata.sql` and run it as well.
 2. __From the command line__
-  1. run `psql` to get to the postgres console. Create the database using the first line in the okcandidate_database_create.sql file or something similar. a simple command would be:<br />`CEATE DATABASE okcandidate_dev`
+  1. run `psql` to get to the postgres console. Create the database using the first line in the okcandidate_database_create.sql file or something similar. a simple command would be:<br />`CREATE DATABASE okcandidate_dev`
   2. Exit the postgres console with `\q`.
   3. Assuming your database name is `okcandidate_dev` you would then run following commands from the database directory:
 
@@ -51,7 +51,17 @@ psql -d okcandidate_dev -a -f okcandidate_database_create.sql
 psql -d okcandidate_dev -a -f okcandidate_database_sampledata.sql
 ```
 
-You will additionally want to create a user to connect to the database. From within PGAdmin3 you can do this by right-clicking on Login Roles in the Object Browser. From the postgres console you do this with the command:<br /><br />`CREATE USER survey_manager WITH PASSWORD 'MyPassword'`<br /><br />Replacing survey_manager and 'MyPassword' with your choice of user name and password respectively.
+You will additionally want to create a user to connect to the database. From within PGAdmin3 you can do this by right-clicking on Login Roles in the Object Browser. From the postgres console you do this with the command:<br /><br />`CREATE USER username WITH PASSWORD 'MyPassword'`<br /><br />Replacing username and 'MyPassword' with your choice of user name and password respectively.
+
+The created user will also need permissions on your database. You can add these permissions with the following two commands, run in the `okcandidate_dev` database:
+
+```
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public to username;
+
+GRANT USAGE, SELECT
+ON ALL SEQUENCES IN SCHEMA public TO username;
+```
 
 ## Work with local database
 
