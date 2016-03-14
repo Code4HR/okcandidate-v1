@@ -4,8 +4,12 @@ import {
   Input
 } from 'react-bootstrap'
 
+import SurveyBuilderQuestion from './../organisms/SurveyBuilderQuestion.jsx'
+
 import {
-  fetchActiveSurveys
+  fetchActiveSurveys,
+  toggleSurveyBuilderQuestionEditable,
+  updateSurveyBuilderQuestion
 } from './../../redux/admin/survey-builder/survey-builder-actions'
 
 class SurveyBuilder extends Component {
@@ -21,6 +25,19 @@ class SurveyBuilder extends Component {
   selectSurvey(event) {
     // this may not actually see any action until there is more than
     // one survey to select.
+  }
+
+  toggleEditable(question) {
+    if (!question.editable) {
+      this.props.dispatch(toggleSurveyBuilderQuestionEditable(question.id))
+    }
+    else {
+      this.props.dispatch(updateSurveyBuilderQuestion(question))
+    }
+  }
+
+  submitQuestion(question) {
+    this.props.dispatch(updateSurveyBuilderQuestion(question))
   }
 
   render() {
@@ -42,7 +59,16 @@ class SurveyBuilder extends Component {
 
         {
           this.props.surveyBuilder.questions.map(question => {
-            return <pre>Question!</pre>
+            if (question.dataType === 1) {
+              return (
+                <SurveyBuilderQuestion
+                  key={question.id}
+                  id={question.id}
+                  toggleEditable={this.toggleEditable.bind(this)}
+                  submitQuestion={this.submitQuestion.bind(this)}
+                  question={question} />
+              )
+            }
           })
         }
 

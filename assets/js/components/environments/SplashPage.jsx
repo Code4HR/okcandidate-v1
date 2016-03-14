@@ -20,21 +20,21 @@ class SplashPage extends Component {
     };
 
     const teamStyle = {
-        border: 'solid green 2px'
-    };
+      border: 'solid green 2px'
+    }
 
     const code4HRStyle = {
       backgroundImage: 'url("/img/code4hr.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100%',
       height: 160
-    };
+    }
 
     const pilotStyle = {
       backgroundImage: 'url("/img/pilot.jpg")',
       backgroundSize: '100%',
       height: 160
-    };
+    }
 
     return (
       <div className="row" style={viewStyle}>
