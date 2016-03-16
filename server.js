@@ -39,7 +39,9 @@ server.register(
         './api/models/DataType',
         './api/models/Survey',
         './api/models/Question',
-        './api/models/Answer'
+        './api/models/Answer',
+        './api/models/SurveyResponse',
+        './api/models/SurveyAnswer'
       ]
     }
   },
