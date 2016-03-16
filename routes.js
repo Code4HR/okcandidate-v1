@@ -65,9 +65,26 @@ module.exports = (server) => {
           .where({id: request.params.id})
           .fetch()
           .then(function(category) {
-            survey.save({
+            category.save({
               category_name: request.payload.categoryName
             })
+            .then(function(category) {
+              reply(category)
+            })
+            .catch()
+          })
+          .catch()
+      }
+    },
+    {
+      method: 'POST',
+      path: '/category/delete/{id}',
+      handler: (request, reply) => {
+        Category
+          .where({id: request.params.id})
+          .fetch()
+          .then(function(category) {
+            category.destroy()
             .then(function(category) {
               reply(category)
             })
@@ -210,6 +227,23 @@ module.exports = (server) => {
       }
     },
     {
+      method: 'POST',
+      path: '/question/delete/{id}',
+      handler: (request, reply) => {
+        Answer
+          .where({id: request.params.id})
+          .fetch()
+          .then(function(question) {
+            question.destroy()
+            .then(function() {
+              reply()
+            })
+            .catch()
+          })
+          .catch()
+      }
+    },
+    {
       method: 'GET',
       path: '/answer',
       handler: (request, reply) => {
@@ -267,6 +301,23 @@ module.exports = (server) => {
             })
             .then(function(answer) {
               reply(answer)
+            })
+            .catch()
+          })
+          .catch()
+      }
+    },
+    {
+      method: 'POST',
+      path: '/answer/delete/{id}',
+      handler: (request, reply) => {
+        Answer
+          .where({id: request.params.id})
+          .fetch()
+          .then(function(answer) {
+            answer.destroy()
+            .then(function() {
+              reply()
             })
             .catch()
           })
