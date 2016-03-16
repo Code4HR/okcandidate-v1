@@ -10,17 +10,24 @@ class SplashPage extends Component {
     const titleStyle = {
       WebkitTransition: 'all', // note the capital 'W' here
       msTransition: 'all', // 'ms' is the only lowercase vendor prefix
-      height: 160,
-      border: 'solid red 2px'
+      flex: 1,
+      backgroundColor: 'pink',
+      border: 'solid lightgrey 4px',
+      margin: 2
     };
 
     const aboutStyle = {
-      border: 'solid blue 2px',
-      fontSize: '18'
+      fontSize: '18',
+      flex: 1,
+      backgroundColor: 'white',
+      border: 'solid lightgrey 4px',
+      margin: 2
     };
 
     const teamStyle = {
-        border: 'solid green 2px'
+      backgroundColor: 'lightblue',
+      border: 'solid lightgrey 4px',
+      margin: 2
     };
 
     const code4HRStyle = {
