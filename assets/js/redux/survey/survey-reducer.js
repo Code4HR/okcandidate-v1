@@ -1,4 +1,4 @@
-import makeError from './../../utils/makeError'
+import makeError from './../utils/makeError'
 
 import {
   FETCH_ACTIVE_SURVEYS_REQUEST,
@@ -9,7 +9,7 @@ import {
   SELECT_ACTIVE_SURVEY_FAILURE,
   TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE,
   UPDATE_SURVEY_BUILDER_QUESTION
-} from './survey-builder-actions'
+} from './survey-actions'
 
 const initialState = {
   alerts: [],

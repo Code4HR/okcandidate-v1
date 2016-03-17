@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import checkStatus from './../../utils/checkStatus'
+import checkStatus from './../utils/checkStatus'
 
 export const FETCH_ACTIVE_SURVEYS_REQUEST = 'FETCH_ACTIVE_SURVEYS_REQUEST'
 export const FETCH_ACTIVE_SURVEYS_SUCCESS = 'FETCH_ACTIVE_SURVEYS_SUCCESS'

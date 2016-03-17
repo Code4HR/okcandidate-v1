@@ -10,7 +10,7 @@ import {
   fetchActiveSurveys,
   toggleSurveyBuilderQuestionEditable,
   updateSurveyBuilderQuestion
-} from './../../redux/admin/survey-builder/survey-builder-actions'
+} from './../../redux/survey/survey-actions'
 
 class SurveyBuilder extends Component {
 
@@ -49,7 +49,7 @@ class SurveyBuilder extends Component {
           placeholder="Active Campaign"
           onChange={this.selectSurvey.bind(this)}>
           {
-            this.props.surveyBuilder.activeSurveys.map(survey => {
+            this.props.survey.activeSurveys.map(survey => {
               return (
                 <option value={survey.id}>{survey.surveyName}</option>
               )
@@ -58,7 +58,7 @@ class SurveyBuilder extends Component {
         </Input>
 
         {
-          this.props.surveyBuilder.questions.map(question => {
+          this.props.survey.questions.map(question => {
             if (question.dataType === 1) {
               return (
                 <SurveyBuilderQuestion
@@ -78,7 +78,7 @@ class SurveyBuilder extends Component {
 }
 
 SurveyBuilder.propTypes = {
-  surveyBuilder: PropTypes.object,
+  survey: PropTypes.object,
   dispatch: PropTypes.func
 }
 
