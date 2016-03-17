@@ -15,6 +15,8 @@
     "history": "^2.0.1",
     "inert": "^3.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "inherits": "^2.0.1",
+    "lodash": "^4.6.1",
     "material-ui": "^0.14.4",
     "pg": "^4.5.1",
     "react": "^0.14.3",
