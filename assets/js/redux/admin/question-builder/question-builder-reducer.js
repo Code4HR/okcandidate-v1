@@ -1,3 +1,5 @@
+import makeError from './../../utils/makeError'
+
 import {
   SET_QUESTION_TEXT,
   ADD_ANSWER_FIELD,
@@ -38,13 +40,6 @@ function validateNewAnswerText(text) {
   }
   if (errors.length) {
     throw errors
-  }
-}
-
-function makeError(severity, text) {
-  return {
-    severity,
-    text
   }
 }
 
