@@ -8,17 +8,17 @@ import {
 class QuestionBuilderAnswer extends Component {
 
   removeAnswerField(event) {
-    this.props.removeAnswerField(this.props.id)
+    this.props.remove(this.props.id)
   }
 
   addAnswerField(event) {
-    this.props.addAnswerField(this.props.answerText)
+    this.props.add(event.target.value)
   }
 
   addAnswerFieldOnEnter(event) {
     if (!this.props.newAnswer) return
     if (event.key === 'Enter') {
-      this.props.addAnswerField(this.props.answerText)
+      this.props.add(event.target.value)
     }
   }
 
@@ -27,7 +27,7 @@ class QuestionBuilderAnswer extends Component {
     const button = this.props.newAnswer ?
       <Button
         onClick={this.addAnswerField.bind(this)}
-        bsStyle="primary">Add Answer</Button>
+        bsStyle="primary">Submit</Button>
       :
       <Button
         onClick={this.removeAnswerField.bind(this)}
@@ -39,8 +39,8 @@ class QuestionBuilderAnswer extends Component {
         type="text"
         placeholder="Enter the text of the candidate's answer here."
         help={this.props.help}
-        value={this.props.answerText}
-        onChange={this.props.setAnswerText}
+        value={this.props.text}
+        onChange={this.props.onChange}
         onKeyPress={this.addAnswerFieldOnEnter.bind(this)}
         buttonAfter={button}/>
     )
@@ -49,10 +49,11 @@ class QuestionBuilderAnswer extends Component {
 
 QuestionBuilderAnswer.propTypes = {
   id: PropTypes.number,
-  answerText: PropTypes.string,
+  text: PropTypes.string,
   help: PropTypes.string,
-  setAnswerText: PropTypes.func,
-  removeAnswerField: PropTypes.func,
+  onChange: PropTypes.func,
+  remove: PropTypes.func,
+  add: PropTypes.func,
   addAnswerField: PropTypes.func,
   newAnswer: PropTypes.bool
 }

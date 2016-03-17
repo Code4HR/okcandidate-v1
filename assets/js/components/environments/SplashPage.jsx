@@ -30,18 +30,19 @@ class SplashPage extends Component {
       margin: 2
     };
 
+
     const code4HRStyle = {
       backgroundImage: 'url("/img/code4hr.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100%',
       height: 160
-    };
+    }
 
     const pilotStyle = {
       backgroundImage: 'url("/img/pilot.jpg")',
       backgroundSize: '100%',
       height: 160
-    };
+    }
 
     return (
       <div className="row" style={viewStyle}>
