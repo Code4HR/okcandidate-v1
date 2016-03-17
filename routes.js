@@ -23,6 +23,9 @@ module.exports = (server) => {
       path: '/admin',
       handler: {
         view: 'Default'
+      },
+      config: {
+        auth: 'simple'
       }
     },
     {
@@ -34,7 +37,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/category',
+      path: '/api/category',
       handler: (request, reply) => {
         Category
           .fetchAll()
@@ -45,7 +48,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/category',
+      path: '/api/category',
       handler: (request, reply) => {
         var category = new Category();
 
@@ -61,7 +64,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/category/{id}',
+      path: '/api/category/{id}',
       handler: (request, reply) => {
         Category
           .where({id: request.params.id})
@@ -80,7 +83,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/category/delete/{id}',
+      path: '/api/category/delete/{id}',
       handler: (request, reply) => {
         Category
           .where({id: request.params.id})
@@ -97,7 +100,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/data_type',
+      path: '/api/data_type',
       handler: (request, reply) => {
         DataType
           .fetchAll()
@@ -108,7 +111,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey',
+      path: '/api/survey',
       handler: (request, reply) => {
         Survey
           .fetchAll()
@@ -119,7 +122,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey/{id}',
+      path: '/api/survey/{id}',
       handler: (request, reply) => {
         Survey
           .where({id: request.params.id})
@@ -131,7 +134,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/survey',
+      path: '/api/survey',
       handler: (request, reply) => {
         var survey = new Survey();
 
@@ -147,7 +150,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/survey/{id}',
+      path: '/api/survey/{id}',
       handler: (request, reply) => {
         Survey
           .where({id: request.params.id})
@@ -166,7 +169,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/question',
+      path: '/api/question',
       handler: (request, reply) => {
         Question
           .fetchAll({withRelated: ['answers']})
@@ -177,7 +180,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/question/{id}',
+      path: '/api/question/{id}',
       handler: (request, reply) => {
         Question
           .where({id: request.params.id})
@@ -189,7 +192,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/question',
+      path: '/api/question',
       handler: (request, reply) => {
         var question = new Question();
 
@@ -208,7 +211,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/question/{id}',
+      path: '/api/question/{id}',
       handler: (request, reply) => {
         Answer
           .where({id: request.params.id})
@@ -230,7 +233,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/question/delete/{id}',
+      path: '/api/question/delete/{id}',
       handler: (request, reply) => {
         Answer
           .where({id: request.params.id})
@@ -247,7 +250,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/answer',
+      path: '/api/answer',
       handler: (request, reply) => {
         Answer
           .fetchAll()
@@ -258,7 +261,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/answer/{id}',
+      path: '/api/answer/{id}',
       handler: (request, reply) => {
         Answer
           .where({id: request.params.id})
@@ -270,7 +273,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/answer',
+      path: '/api/answer',
       handler: (request, reply) => {
         var answer = new Answer();
 
@@ -289,7 +292,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/answer/{id}',
+      path: '/api/answer/{id}',
       handler: (request, reply) => {
         Answer
           .where({id: request.params.id})
@@ -311,7 +314,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/answer/delete/{id}',
+      path: '/api/answer/delete/{id}',
       handler: (request, reply) => {
         Answer
           .where({id: request.params.id})
@@ -328,7 +331,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey_response',
+      path: '/api/survey_response',
       handler: (request, reply) => {
         SurveyResponse
           .fetchAll()
@@ -339,7 +342,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey_response/{id}',
+      path: '/api/survey_response/{id}',
       handler: (request, reply) => {
         SurveyResponse
           .where({id: request.params.id})
@@ -351,7 +354,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/survey_response',
+      path: '/api/survey_response',
       handler: (request, reply) => {
         var survey_response = new SurveyResponse();
 
@@ -370,7 +373,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/survey_response/{id}',
+      path: '/api/survey_response/{id}',
       handler: (request, reply) => {
         survey_response
           .where({id: request.params.id})
@@ -392,7 +395,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey_answer',
+      path: '/api/survey_answer',
       handler: (request, reply) => {
         SurveyAnswer
           .fetchAll()
@@ -403,7 +406,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey_answer/{id}',
+      path: '/api/survey_answer/{id}',
       handler: (request, reply) => {
         SurveyAnswer
           .where({id: request.params.id})
@@ -415,7 +418,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/survey_answer',
+      path: '/api/survey_answer',
       handler: (request, reply) => {
         var survey_answer = new SurveyAnswer();
 
@@ -434,7 +437,7 @@ module.exports = (server) => {
     },
     {
       method: 'POST',
-      path: '/survey_answer/{id}',
+      path: '/api/survey_answer/{id}',
       handler: (request, reply) => {
         survey_answer
           .where({id: request.params.id})
