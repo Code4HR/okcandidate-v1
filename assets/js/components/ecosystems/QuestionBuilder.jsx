@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 import {
   Input,
-  Button,
-  Alert
+  Button
 } from 'react-bootstrap'
 
 import QuestionBuilderAnswer from './../organisms/QuestionBuilderAnswer.jsx'

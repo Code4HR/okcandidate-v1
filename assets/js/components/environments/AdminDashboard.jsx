@@ -15,7 +15,7 @@ class AdminDashboard extends Component {
         <h1>Admin Dashboard</h1>
 
         <SurveyBuilder
-          surveyBuilder={this.props.surveyBuilder}
+          survey={this.props.survey}
           dispatch={this.props.dispatch} />
 
       </article>
@@ -24,13 +24,12 @@ class AdminDashboard extends Component {
 }
 
 AdminDashboard.propTypes = {
-  surveyBuilder: PropTypes.object,
-  admin: PropTypes.object,
+  survey: PropTypes.object,
   dispatch: PropTypes.func
 }
 
 export default connect(
   state => ({
-    surveyBuilder: state.surveyBuilder
+    survey: state.survey
   })
 )(AdminDashboard)
