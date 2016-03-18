@@ -23,9 +23,6 @@ module.exports = (server) => {
       path: '/admin',
       handler: {
         view: 'Default'
-      },
-      config: {
-        auth: 'simple'
       }
     },
     {
