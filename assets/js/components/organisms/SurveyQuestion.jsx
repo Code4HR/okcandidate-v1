@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input,
-  Well,
-  Button
+  Well
 } from 'react-bootstrap'
 
 class SurveyQuestion extends Component {
@@ -17,7 +15,7 @@ class SurveyQuestion extends Component {
                 {
                   this.props.question.answers.map(answer => {
                     return (<div>
-                      <input type='radio'>
+                      <input type="radio">
                         <span className="checkbox-label">{answer.answerLabel}</span>
                       </input>
                     </div>
