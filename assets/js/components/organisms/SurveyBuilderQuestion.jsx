@@ -45,6 +45,7 @@ class SurveyBuilderQuestion extends Component {
 SurveyBuilderQuestion.propTypes = {
   id: PropTypes.id,
   question: PropTypes.object,
+  submitQuestion: PropTypes.func,
   editable: PropTypes.bool,
   toggleEditable: PropTypes.func
 }
