@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input,
-  Well,
-  Button
+  Well
 } from 'react-bootstrap'
 
 class SurveyQuestion extends Component {

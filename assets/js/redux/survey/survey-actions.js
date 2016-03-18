@@ -28,7 +28,7 @@ export function fetchActiveSurveysFailure(error) {
 export function fetchActiveSurveys() {
   return function(dispatch) {
     dispatch(fetchActiveSurveysRequest())
-    return fetch('/survey')
+    return fetch('/api/survey')
     .then(checkStatus)
     .then(response => response.json())
     .then(response => {
@@ -54,7 +54,7 @@ export function selectActiveSurvey(survey) {
       type: SELECT_ACTIVE_SURVEY_REQUEST,
       survey
     })
-    return fetch(`/survey/${survey.id}`)
+    return fetch(`/api/survey/${survey.id}`)
     .then(checkStatus)
     .then(response => response.json())
     .then(response => dispatch(selectActiveSurveySuccess(response)))
