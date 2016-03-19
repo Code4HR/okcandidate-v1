@@ -12,16 +12,17 @@ class SurveyQuestion extends Component {
         {
           <Well>
             <label>{this.props.question.questionText}
-                {
+                 <radio-group>{
                   this.props.question.answers.map(answer => {
                     return (<div>
-                      <input type="radio">
-                        <span className="checkbox-label">{answer.answerLabel}</span>
-                      </input>
+                      <radio-button>
+                        <input type="radio" className="checkbox-label" >{answer.answerLabel}</input>
+                      </radio-button>
                     </div>
                     )
                   })
                 }
+                </radio-group>
             </label>
           </Well>
         }
