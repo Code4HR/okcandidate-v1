@@ -137,7 +137,7 @@ export function submitSurveyAnswersFailure(error) {
   }
 }
 
-export function submitSurveyAnswers() {
+export function submitSurveyAnswers(responses) {
   return function(dispatch) {
     dispatch(submitSurveyAnswersRequest())
     return fetch('/api/survey_answer', {
@@ -147,8 +147,7 @@ export function submitSurveyAnswers() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: 'Hubot',
-        login: 'hubot'
+        responses: responses
       })
     })
     .then(checkStatus)

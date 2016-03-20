@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 
 import {
-  fetchActiveSurveys
+  fetchActiveSurveys,
+  submitSurveyAnswers
 } from './../../redux/survey/survey-actions'
 
 import {
@@ -34,7 +35,9 @@ class SurveyPage extends Component {
   }
 
   submit() {
-    this.props.dispatch()
+    this.props.dispatch(
+      submitSurveyAnswers(this.props.survey.responses)
+    )
   }
 
   render() {

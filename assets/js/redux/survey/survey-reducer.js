@@ -23,7 +23,7 @@ const initialState = {
 
 function makeSurveyAnswer(selectedSurveyId, questionId, answer) {
   return Object.assign({}, {
-    survey_id: selectedSurveyId,
+    survey_response_id: selectedSurveyId,
     question_id: questionId,
     answer_id: answer.id,
     score: answer.answerValue
