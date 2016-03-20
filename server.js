@@ -7,7 +7,7 @@ const Hapi = require('hapi')
 const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
-const routes = require('./routes')
+const routes = require('./api/routes')
 
 // Basic Hapi.js connection stuff
 const server = new Hapi.Server()
@@ -16,6 +16,7 @@ server.connection({
   port: 8000
 })
 
+const host = process.env['OKC_DB_HOST'] || '127.0.0.1'
 const database = process.env['OKC_DB_NAME']
 const user = process.env['OKC_DB_USER']
 const password = process.env['OK_DB_PASSWORD']
@@ -27,10 +28,10 @@ server.register(
       knex: {
         client: 'pg',
         connection: {
-          host: '127.0.0.1',
-          user: user,
-          password: password,
-          database: database
+          host,
+          user,
+          password,
+          database
         }
       },
       plugins: ['registry'],
