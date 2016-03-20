@@ -7,7 +7,7 @@ const Hapi = require('hapi')
 const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
-const routes = require('./routes')
+const routes = require('./api/routes')
 
 // Basic Hapi.js connection stuff
 const server = new Hapi.Server()
