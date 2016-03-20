@@ -1,0 +1,6 @@
+--debug
+--compilers jsx:./test/preprocessor.js
+--require ./test/dom.js
+--recursive
+--colors
+--timeout 30000
