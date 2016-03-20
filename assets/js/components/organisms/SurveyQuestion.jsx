@@ -1,28 +1,41 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Well
+  Well,
+  Input
 } from 'react-bootstrap'
 
+import {
+  selectSurveyQuestionResponse
+} from './../../redux/survey/survey-actions'
+
 class SurveyQuestion extends Component {
+
+  makeSelection(questionId, answer, event) {
+    this.props.dispatch(selectSurveyQuestionResponse(questionId, answer))
+  }
+
+  getChecked(answer) {
+    return this.props.question.selectedAnswer === answer.id
+  }
 
   render() {
     return (
       <section>
         {
           <Well>
-            <label>{this.props.question.questionText}
-                {
-                  this.props.question.answers.map(answer => {
-                    return (<div>
-                      <input type="radio">
-                        <span className="checkbox-label">{answer.answerLabel}</span>
-                      </input>
-                    </div>
-                    )
-                  })
-                }
-            </label>
+            <label>{this.props.question.questionText}</label>
+              {
+                this.props.question.answers.map(answer => {
+                  return (
+                    <Input
+                      checked={this.getChecked.call(this, answer)}
+                      onClick={this.makeSelection.bind(this, this.props.question.id, answer)}
+                      type="radio"
+                      label={answer.answerLabel} />
+                  )
+                })
+              }
           </Well>
         }
       </section>
@@ -31,8 +44,8 @@ class SurveyQuestion extends Component {
 }
 
 SurveyQuestion.propTypes = {
-  id: PropTypes.id,
-  question: PropTypes.object
+  question: PropTypes.object,
+  dispatch: PropTypes.func
 }
 
 export default SurveyQuestion

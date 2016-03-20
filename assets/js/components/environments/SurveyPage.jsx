@@ -4,8 +4,13 @@ import { connect } from 'react-redux'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 
 import {
-  fetchActiveSurveys
+  fetchActiveSurveys,
+  submitSurveyAnswers
 } from './../../redux/survey/survey-actions'
+
+import {
+  Button
+} from 'react-bootstrap'
 
 class SurveyPage extends Component {
 
@@ -17,19 +22,45 @@ class SurveyPage extends Component {
     this.props.dispatch(fetchActiveSurveys())
   }
 
+  blendQuestionsAndReponses(questions, responses) {
+    return questions.map(question => {
+      const answer = responses.find(response => {
+        return question.id === response.question_id
+      })
+      if (answer) {
+        question.selectedAnswer = answer.answer_id
+      }
+      return question
+    })
+  }
+
+  submit() {
+    this.props.dispatch(
+      submitSurveyAnswers(this.props.survey.responses)
+    )
+  }
+
   render() {
     return (
       <article>
-        <h1>Survey Page</h1>
-        <p>This is where the user will take a survey.</p>
 
         {
-          this.props.survey.questions.map(question => {
+          this.blendQuestionsAndReponses(
+            this.props.survey.questions,
+            this.props.survey.responses
+          ).map(question => {
             return (
-              <SurveyQuestion question={question}/>
+              <SurveyQuestion
+                question={question}
+                dispatch={this.props.dispatch} />
             )
           })
         }
+
+        <Button
+          onClick={this.submit.bind(this)}
+          bsStyle="primary"
+          bsSize="large">Submit</Button>
 
       </article>
     )
