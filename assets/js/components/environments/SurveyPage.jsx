@@ -7,6 +7,10 @@ import {
   fetchActiveSurveys
 } from './../../redux/survey/survey-actions'
 
+import {
+  Button
+} from 'react-bootstrap'
+
 class SurveyPage extends Component {
 
   constructor(props) {
@@ -29,6 +33,10 @@ class SurveyPage extends Component {
     })
   }
 
+  submit() {
+    this.props.dispatch()
+  }
+
   render() {
     return (
       <article>
@@ -45,6 +53,11 @@ class SurveyPage extends Component {
             )
           })
         }
+
+        <Button
+          onClick={this.submit.bind(this)}
+          bsStyle="primary"
+          bsSize="large">Submit</Button>
 
       </article>
     )

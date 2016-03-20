@@ -424,7 +424,7 @@ module.exports = (server) => {
       method: 'POST',
       path: '/api/survey_answer',
       handler: (request, reply) => {
-        var survey_answer = new SurveyAnswer();
+        const survey_answer = new SurveyAnswer();
 
         survey_answer
           .save({
@@ -443,6 +443,8 @@ module.exports = (server) => {
       method: 'POST',
       path: '/api/survey_answer/{id}',
       handler: (request, reply) => {
+        const survey_answer = new SurveyAnswer();
+
         survey_answer
           .where({id: request.params.id})
           .fetch()
