@@ -4,8 +4,13 @@ import { connect } from 'react-redux'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 
 import {
-  fetchActiveSurveys
+  fetchActiveSurveys,
+  submitSurveyAnswers
 } from './../../redux/survey/survey-actions'
+
+import {
+  Button
+} from 'react-bootstrap'
 
 class SurveyPage extends Component {
 
@@ -29,6 +34,12 @@ class SurveyPage extends Component {
     })
   }
 
+  submit() {
+    this.props.dispatch(
+      submitSurveyAnswers(this.props.survey.responses)
+    )
+  }
+
   render() {
     return (
       <article>
@@ -45,6 +56,11 @@ class SurveyPage extends Component {
             )
           })
         }
+
+        <Button
+          onClick={this.submit.bind(this)}
+          bsStyle="primary"
+          bsSize="large">Submit</Button>
 
       </article>
     )

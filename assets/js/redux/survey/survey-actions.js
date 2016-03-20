@@ -111,3 +111,52 @@ export function selectSurveyQuestionResponse(questionId, answer) {
     answer
   }
 }
+
+export const SUBMIT_SURVEY_ANSWERS = 'SUBMIT_SURVEY_ANSWERS'
+export const SUBMIT_SURVEY_ANSWERS_REQUEST = 'SUBMIT_SURVEY_ANSWERS_REQUEST'
+export const SUBMIT_SURVEY_ANSWERS_SUCCESS = 'SUBMIT_SURVEY_ANSWERS_SUCCESS'
+export const SUBMIT_SURVEY_ANSWERS_FAILURE = 'SUBMIT_SURVEY_ANSWERS_FAILURE'
+
+export function submitSurveyAnswersRequest() {
+  return {
+    type: SUBMIT_SURVEY_ANSWERS_REQUEST
+  }
+}
+
+export function submitSurveyAnswersSuccess(response) {
+  return {
+    type: SUBMIT_SURVEY_ANSWERS_SUCCESS,
+    response
+  }
+}
+
+export function submitSurveyAnswersFailure(error) {
+  return {
+    type: SUBMIT_SURVEY_ANSWERS_FAILURE,
+    error
+  }
+}
+
+export function submitSurveyAnswers(responses) {
+  return function(dispatch) {
+    dispatch(submitSurveyAnswersRequest())
+    return fetch('/api/survey_answer', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        responses: responses
+      })
+    })
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(submitSurveyAnswersSuccess(response))
+    })
+    .catch(error => {
+      dispatch(submitSurveyAnswersFailure(error))
+    })
+  }
+}
