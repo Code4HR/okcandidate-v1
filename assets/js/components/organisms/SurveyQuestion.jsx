@@ -15,10 +15,8 @@ class SurveyQuestion extends Component {
     this.props.dispatch(selectSurveyQuestionResponse(questionId, answer))
   }
 
-  getValue(answer) {
-    if (this.props.question.selectedAnswer === answer.id) {
-      return 'on'
-    }
+  getChecked(answer) {
+    return this.props.question.selectedAnswer === answer.id
   }
 
   render() {
@@ -31,7 +29,7 @@ class SurveyQuestion extends Component {
                 this.props.question.answers.map(answer => {
                   return (
                     <Input
-                      checked={this.getValue.call(this, answer)}
+                      checked={this.getChecked.call(this, answer)}
                       onClick={this.makeSelection.bind(this, this.props.question.id, answer)}
                       type="radio"
                       label={answer.answerLabel} />
