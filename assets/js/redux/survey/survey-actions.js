@@ -101,3 +101,13 @@ export function updateSurveyBuilderQuestion(question) {
     question
   }
 }
+
+export const SELECT_SURVEY_QUESTION_RESPONSE = 'SELECT_SURVEY_QUESTION_RESPONSE'
+
+export function selectSurveyQuestionResponse(questionId, answer) {
+  return {
+    type: SELECT_SURVEY_QUESTION_RESPONSE,
+    questionId,
+    answer
+  }
+}

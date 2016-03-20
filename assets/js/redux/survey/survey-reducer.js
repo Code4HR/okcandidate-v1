@@ -8,7 +8,8 @@ import {
   SELECT_ACTIVE_SURVEY_SUCCESS,
   SELECT_ACTIVE_SURVEY_FAILURE,
   TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE,
-  UPDATE_SURVEY_BUILDER_QUESTION
+  UPDATE_SURVEY_BUILDER_QUESTION,
+  SELECT_SURVEY_QUESTION_RESPONSE
 } from './survey-actions'
 
 const initialState = {
@@ -16,10 +17,23 @@ const initialState = {
   isFetching: false,
   activeSurveys: [],
   selectedSurvey: {},
-  questions: []
+  questions: [],
+  responses: []
+}
+
+function makeSurveyAnswer(selectedSurveyId, questionId, answer) {
+  return Object.assign({}, {
+    survey_id: selectedSurveyId,
+    question_id: questionId,
+    answer_id: answer.id,
+    score: answer.answerValue
+  })
 }
 
 export default function (state = initialState, action) {
+
+  let found
+
   switch (action.type) {
 
     case FETCH_ACTIVE_SURVEYS_REQUEST:
@@ -82,6 +96,44 @@ export default function (state = initialState, action) {
           return question
         })
       })
+
+    case SELECT_SURVEY_QUESTION_RESPONSE:
+
+      // If the question has already been answered, find the previous response
+      found = state.responses.find(response => {
+        return response.question_id === action.questionId
+      })
+
+      // If response doesn't exist in responses, add it.
+      if (!found) {
+        return Object.assign({}, state, {
+          responses: [
+            ...state.responses,
+            makeSurveyAnswer(
+              state.selectedSurvey.id,
+              action.questionId,
+              action.answer
+            )
+          ]
+        })
+      }
+      // Otherwise, modify it.
+      else if (found) {
+        return Object.assign({}, state, {
+          responses: state.responses.map(response => {
+            if (response.question_id === found.question_id) {
+              response = makeSurveyAnswer(
+                state.selectedSurvey.id,
+                action.questionId,
+                action.answer
+              )
+            }
+            return response
+          })
+        })
+      }
+      // otherwise just return state
+      return state
 
     default:
       return state
