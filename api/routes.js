@@ -5,7 +5,6 @@ module.exports = (server) => {
 
   const API_ROUTES = [].concat(
      require('./controllers/Category')(server),
-     require('./controllers/DataType')(server),
      require('./controllers/Survey')(server),
      require('./controllers/Question')(server),
      require('./controllers/Answer')(server),

@@ -41,8 +41,7 @@ module.exports = function (server) {
           .save({
             survey_response_id: request.payload.surveyResponseId,
             question_id: request.payload.questionId,
-            answer_id: request.payload.answerId,
-            score: request.payload.score
+            answer_id: request.payload.answerId
           })
           .then(function (newSurveyAnswer) {
             reply(newSurveyAnswer)
@@ -61,8 +60,7 @@ module.exports = function (server) {
             survey_answer.save({
               survey_response_id: request.payload.surveyResponseId,
               question_id: request.payload.questionId,
-              answer_id: request.payload.answerId,
-              score: request.payload.score
+              answer_id: request.payload.answerId
             })
               .then(function (surveyResponse) {
                 reply(surveyResponse)

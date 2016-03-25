@@ -33,9 +33,7 @@ module.exports = function (server) {
         survey_response
           .save({
             survey_id: request.payload.surveyId,
-            response_type: request.payload.responseType,
-            congressional_district: request.payload.congressionalDistrict,
-            score: request.payload.score
+            geography_id: request.payload.GeographyId,
           })
           .then(function (newSurveyResponse) {
             reply(newSurveyResponse)
@@ -53,9 +51,7 @@ module.exports = function (server) {
           .then(function (survey_response) {
             survey_response.save({
               survey_id: request.payload.surveyId,
-              response_type: request.payload.responseType,
-              congressional_district: request.payload.congressionalDistrict,
-              score: request.payload.score
+              geography_id: request.payload.geographyId
             })
               .then(function (surveyResponse) {
                 reply(surveyResponse)

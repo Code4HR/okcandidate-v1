@@ -34,8 +34,7 @@ module.exports = function (server) {
           .save({
             question_id: request.payload.questionId,
             answer_label: request.payload.answerLabel,
-            answer_value: request.payload.answerValue,
-            answer_order: request.payload.answerOrder
+            answer_value: request.payload.answerValue
           })
           .then(function (newAnswer) {
             reply(newAnswer)
@@ -54,8 +53,7 @@ module.exports = function (server) {
             answer.save({
               question_id: request.payload.questionId,
               answer_label: request.payload.answerLabel,
-              answer_value: request.payload.answerValue,
-              answer_order: request.payload.answerOrder
+              answer_value: request.payload.answerValue
             })
               .then(function (answer) {
                 reply(answer)
