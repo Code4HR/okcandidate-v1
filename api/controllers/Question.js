@@ -35,7 +35,6 @@ module.exports = function (server) {
           .save({
             survey_id: request.payload.surveyId,
             category_id: request.payload.categoryId,
-            data_type: request.payload.dataType,
             question_text: request.payload.questionText
           })
           .then(function (newQuestion) {
@@ -55,7 +54,6 @@ module.exports = function (server) {
             question.save({
               survey_id: request.payload.surveyId,
               category_id: request.payload.categoryId,
-              data_type: request.payload.dataType,
               question_text: request.payload.questionText
             })
               .then(function (answer) {
