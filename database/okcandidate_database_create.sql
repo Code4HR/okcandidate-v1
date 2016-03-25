@@ -2,13 +2,13 @@
 
 --CREATE ROLE survey_manager LOGIN ENCRYPTED PASSWORD 'md52e5db3de6105661d19e5f4dd2e7b67cc' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
 
--- GRANT SELECT, INSERT, UPDATE, DELETE
--- ON ALL TABLES IN SCHEMA public
--- TO survey_manager;
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public
+TO survey_manager;
 --
--- GRANT USAGE, SELECT
--- ON ALL SEQUENCES IN SCHEMA public
--- TO survey_manager;
+GRANT USAGE, SELECT
+ON ALL SEQUENCES IN SCHEMA public
+TO survey_manager;
 
 DROP TABLE IF EXISTS candidate_geography;
 DROP TABLE IF EXISTS candidate_answer;
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS survey_answer (
 	id SERIAL PRIMARY KEY,
 	survey_response_id int NOT NULL REFERENCES survey_response,
 	question_id int NOT NULL REFERENCES question,
-	answer_id int NOT NULL REFERENCES answer
+	answer_id int NOT NULL REFERENCES answer,
+	intensity int
 );
 
 CREATE TABLE IF NOT EXISTS candidate_type (
