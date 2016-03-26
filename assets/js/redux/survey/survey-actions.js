@@ -148,7 +148,6 @@ export function submitSurveyAnswersFailure(error) {
 }
 
 export function submitSurveyAnswers(responses) {
-  debugger
   return function(dispatch) {
     dispatch(submitSurveyAnswersRequest())
     return fetch('/api/survey_answer', {

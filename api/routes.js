@@ -33,6 +33,13 @@ module.exports = (server) => {
       handler: {
         view: 'Default'
       }
+    },
+    {
+      method: 'GET',
+      path: '/survey/questions',
+      handler: {
+        view: 'Default'
+      }
     }
   ].concat(API_ROUTES)
 

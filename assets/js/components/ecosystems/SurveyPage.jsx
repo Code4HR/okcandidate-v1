@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
-import WardFinder from './../organisms/WardFinder.jsx'
 
 import {
   fetchActiveSurveys,
@@ -46,34 +45,23 @@ class SurveyPage extends Component {
     return (
       <article>
 
-        <WardFinder
-          ward={this.props.survey.ward}
-          dispatch={this.props.dispatch} />
-
         {
-          this.props.survey.ward.id ?
-            <div>
-              {
-                this.blendQuestionsAndReponses(
-                  this.props.survey.questions,
-                  this.props.survey.responses
-                ).map(question => {
-                  return (
-                    <SurveyQuestion
-                      question={question}
-                      dispatch={this.props.dispatch} />
-                  )
-                })
-              }
-
-              <Button
-                onClick={this.submit.bind(this)}
-                bsStyle="primary"
-                bsSize="large">Submit</Button>
-            </div>
-          :
-            <p>Select a ward above to continue</p>
+          this.blendQuestionsAndReponses(
+            this.props.survey.questions,
+            this.props.survey.responses
+          ).map(question => {
+            return (
+              <SurveyQuestion
+                question={question}
+                dispatch={this.props.dispatch} />
+            )
+          })
         }
+
+        <Button
+          onClick={this.submit.bind(this)}
+          bsStyle="primary"
+          bsSize="large">Submit</Button>
 
       </article>
     )
