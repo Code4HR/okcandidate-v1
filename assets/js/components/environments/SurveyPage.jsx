@@ -26,11 +26,11 @@ class SurveyPage extends Component {
   blendQuestionsAndReponses(questions, responses) {
     return questions.map(question => {
       const answer = responses.find(response => {
-        return question.id === response.question_id
+        return question.id === response.questionId
       })
       if (answer) {
         question.intensity = answer.intensity
-        question.selectedAnswer = answer.answer_id
+        question.selectedAnswer = answer.answerId
       }
       return question
     })
@@ -51,22 +51,29 @@ class SurveyPage extends Component {
           dispatch={this.props.dispatch} />
 
         {
-          this.blendQuestionsAndReponses(
-            this.props.survey.questions,
-            this.props.survey.responses
-          ).map(question => {
-            return (
-              <SurveyQuestion
-                question={question}
-                dispatch={this.props.dispatch} />
-            )
-          })
-        }
+          this.props.survey.ward.id ?
+            <div>
+              {
+                this.blendQuestionsAndReponses(
+                  this.props.survey.questions,
+                  this.props.survey.responses
+                ).map(question => {
+                  return (
+                    <SurveyQuestion
+                      question={question}
+                      dispatch={this.props.dispatch} />
+                  )
+                })
+              }
 
-        <Button
-          onClick={this.submit.bind(this)}
-          bsStyle="primary"
-          bsSize="large">Submit</Button>
+              <Button
+                onClick={this.submit.bind(this)}
+                bsStyle="primary"
+                bsSize="large">Submit</Button>
+            </div>
+          :
+            <p>Select a ward above to continue</p>
+        }
 
       </article>
     )

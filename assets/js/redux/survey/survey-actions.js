@@ -148,6 +148,7 @@ export function submitSurveyAnswersFailure(error) {
 }
 
 export function submitSurveyAnswers(responses) {
+  debugger
   return function(dispatch) {
     dispatch(submitSurveyAnswersRequest())
     return fetch('/api/survey_answer', {
@@ -260,9 +261,62 @@ export function fetchGeography() {
 
 export const SELECT_GEOGRAPHY = 'SELECT_GEOGRAPHY'
 
-export function selectGeography(selection) {
+export function selectGeography(geographyId) {
+  return function(dispatch) {
+    dispatch({
+      type: SELECT_GEOGRAPHY,
+      selection: geographyId
+    })
+    // Todo: surveyID needs to come from somewhere.
+    dispatch(fetchSurveyRequestId(1, geographyId))
+  }
+}
+
+export const FETCH_SURVEY_RESPONSE_ID_REQUEST = 'FETCH_SURVEY_RESPONSE_ID_REQUEST'
+export const FETCH_SURVEY_RESPONSE_ID_SUCCESS = 'FETCH_SURVEY_RESPONSE_ID_SUCCESS'
+export const FETCH_SURVEY_RESPONSE_ID_FAILURE = 'FETCH_SURVEY_RESPONSE_ID_FAILURE'
+
+export function fetchSurveyResponseIdRequest() {
   return {
-    type: SELECT_GEOGRAPHY,
-    selection
+    type: FETCH_SURVEY_RESPONSE_ID_REQUEST
+  }
+}
+
+export function fetchSurveyRequestIdSuccess(response) {
+  return {
+    type: FETCH_SURVEY_RESPONSE_ID_SUCCESS,
+    response
+  }
+}
+
+export function fetchSurveyRequestIdFailure(error) {
+  return {
+    type: FETCH_SURVEY_RESPONSE_ID_FAILURE,
+    error
+  }
+}
+
+export function fetchSurveyRequestId(surveyId, geographyId) {
+  return function(dispatch) {
+    dispatch(fetchSurveyResponseIdRequest())
+    return fetch('/api/survey_response', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        surveyId: surveyId,
+        geographyId: geographyId
+      })
+    })
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(fetchSurveyRequestIdSuccess(response))
+    })
+    .catch(error => {
+      dispatch(fetchSurveyRequestIdFailure(error))
+    })
   }
 }

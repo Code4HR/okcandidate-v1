@@ -29,11 +29,10 @@ module.exports = function (server) {
       path: '/api/survey_response',
       handler: (request, reply) => {
         const survey_response = new SurveyResponse()
-
         survey_response
           .save({
             survey_id: request.payload.surveyId,
-            geography_id: request.payload.GeographyId,
+            geography_id: request.payload.geographyId,
           })
           .then(function (newSurveyResponse) {
             reply(newSurveyResponse)
