@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
+import WardFinder from './../organisms/WardFinder.jsx'
 
 import {
   fetchActiveSurveys,
@@ -43,6 +44,10 @@ class SurveyPage extends Component {
   render() {
     return (
       <article>
+
+        <WardFinder
+          ward={this.props.survey.ward}
+          dispatch={this.props.dispatch} />
 
         {
           this.blendQuestionsAndReponses(
