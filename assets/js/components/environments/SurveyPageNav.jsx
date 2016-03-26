@@ -47,7 +47,11 @@ class SurveyPageNav extends Component {
     return (
       <article>
 
-        <Nav style={navStyle} bsStyle="pills" activeKey={this.state.tab} onSelect={this.handleSelect.bind(this)}>
+        <Nav
+          style={navStyle}
+          bsStyle="pills"
+          activeKey={this.state.tab}
+          onSelect={this.handleSelect.bind(this)}>
           <NavItem href="/survey" eventKey={1}>Select a Ward</NavItem>
           <NavItem href="/survey/questions" eventKey={2}>Survey</NavItem>
           <NavItem href="/survey/results" eventKey={3}>Results</NavItem>
@@ -60,6 +64,8 @@ class SurveyPageNav extends Component {
   }
 }
 
-SurveyPageNav.propTypes = {}
+SurveyPageNav.propTypes = {
+  children: PropTypes.any
+}
 
 export default SurveyPageNav
