@@ -18,7 +18,10 @@ const store = createStore(
 import Frame from './environments/Frame.jsx'
 import SplashPage from './environments/SplashPage.jsx'
 import AdminDashboard from './environments/AdminDashboard.jsx'
-import SurveyPage from './environments/SurveyPage.jsx'
+import WardFinderPage from './ecosystems/WardFinderPage.jsx'
+import ResultsPage from './ecosystems/ResultsPage.jsx'
+import SurveyPage from './ecosystems/SurveyPage.jsx'
+import SurveyPageNav from './environments/SurveyPageNav.jsx'
 
 class App extends Component {
   render() {
@@ -27,7 +30,11 @@ class App extends Component {
         <Route path="/" component={Frame}>
           <IndexRoute component={SplashPage} />
           <Route path="admin" component={AdminDashboard}/>
-          <Route path="survey" component={SurveyPage} />
+          <Route path="survey" component={SurveyPageNav}>
+            <IndexRoute component={WardFinderPage} />
+            <Route path="questions" component={SurveyPage} />
+            <Route path="results" component={ResultsPage} />
+          </Route>
         </Route>
       </Router>
     )
