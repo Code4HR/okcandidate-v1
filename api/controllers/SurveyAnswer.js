@@ -37,6 +37,8 @@ module.exports = function (server) {
       handler: (request, reply) => {
         var survey_answer = new SurveyAnswer()
 
+        console.log(request.payload)
+
         survey_answer
           .save({
             survey_response_id: request.payload.surveyResponseId,

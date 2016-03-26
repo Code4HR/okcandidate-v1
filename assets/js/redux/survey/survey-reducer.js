@@ -35,9 +35,9 @@ const initialState = {
 
 function makeSurveyAnswer(selectedSurveyId, questionId, answer, intensity) {
   return Object.assign({}, {
-    survey_response_id: selectedSurveyId,
-    question_id: questionId,
-    answer_id: answer ? answer.id : undefined,
+    surveyResponseId: selectedSurveyId,
+    questionId: questionId,
+    answerId: answer ? answer.id : undefined,
     intensity: intensity
   })
 }
@@ -154,7 +154,7 @@ export default function (state = initialState, action) {
 
       // If the question has already been answered, find the previous response
       found = state.responses.find(response => {
-        return response.question_id === action.questionId
+        return response.questionId === action.questionId
       })
 
       // If response doesn't exist in responses, add it.
@@ -175,12 +175,12 @@ export default function (state = initialState, action) {
       else if (found) {
         return Object.assign({}, state, {
           responses: state.responses.map(response => {
-            if (response.question_id === found.question_id) {
+            if (response.questionId === found.questionId) {
               if (action.type === SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY) {
                 response.intensity = action.intensity
               }
               else if (action.type === SELECT_SURVEY_QUESTION_RESPONSE) {
-                response.answer_id = action.answer.id
+                response.answerId = action.answer.id
               }
             }
             return response
