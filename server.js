@@ -42,7 +42,8 @@ server.register(
         './api/models/Question',
         './api/models/Answer',
         './api/models/SurveyResponse',
-        './api/models/SurveyAnswer'
+        './api/models/SurveyAnswer',
+        './api/models/Geography'
       ]
     }
   },

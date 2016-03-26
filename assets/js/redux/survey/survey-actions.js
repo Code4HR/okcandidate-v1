@@ -170,3 +170,99 @@ export function submitSurveyAnswers(responses) {
     })
   }
 }
+
+export const SUBMIT_STREET_ADDRESS_REQUEST = 'SUBMIT_STREET_ADDRESS_REQUEST'
+export const SUBMIT_STREET_ADDRESS_SUCCESS = 'SUBMIT_STREET_ADDRESS_SUCCESS'
+export const SUBMIT_STREET_ADDRESS_FAILURE = 'SUBMIT_STREET_ADDRESS_FAILURE'
+
+export function submitStreetAddressRequest() {
+  return {
+    type: SUBMIT_STREET_ADDRESS_REQUEST
+  }
+}
+
+export function submitStreetAddressSuccess(response) {
+  return {
+    type: SUBMIT_STREET_ADDRESS_SUCCESS,
+    response
+  }
+}
+
+export function submitStreetAddressFailure(error) {
+  return {
+    type: SUBMIT_STREET_ADDRESS_FAILURE,
+    error
+  }
+}
+
+export function submitStreetAddress(address) {
+  return function(dispatch) {
+    dispatch(submitStreetAddressRequest())
+    return fetch('/api/wardinfo/', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        address: address
+      })
+    })
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(submitStreetAddressSuccess(response))
+    })
+    .catch(error => {
+      dispatch(submitStreetAddressFailure(error))
+    })
+  }
+}
+
+export const FETCH_GEOGRAPHY_REQUEST = 'FETCH_GEOGRAPHY_REQUEST'
+export const FETCH_GEOGRAPHY_SUCCESS = 'FETCH_GEOGRAPHY_SUCCESS'
+export const FETCH_GEOGRAPHY_FAILURE = 'FETCH_GEOGRAPHY_FAILURE'
+
+export function fetchGeographyRequest() {
+  return {
+    type: FETCH_GEOGRAPHY_REQUEST
+  }
+}
+
+export function fetchGeographySuccess(response) {
+  return {
+    type: FETCH_GEOGRAPHY_SUCCESS,
+    response
+  }
+}
+
+export function fetchGeographyFailure(error) {
+  return {
+    type: FETCH_GEOGRAPHY_FAILURE,
+    error
+  }
+}
+
+export function fetchGeography() {
+  return function(dispatch) {
+    dispatch(fetchGeographyRequest())
+    return fetch('/api/geography')
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(fetchGeographySuccess(response))
+    })
+    .catch(error => {
+      dispatch(fetchGeographyFailure(error))
+    })
+  }
+}
+
+export const SELECT_GEOGRAPHY = 'SELECT_GEOGRAPHY'
+
+export function selectGeography(selection) {
+  return {
+    type: SELECT_GEOGRAPHY,
+    selection
+  }
+}

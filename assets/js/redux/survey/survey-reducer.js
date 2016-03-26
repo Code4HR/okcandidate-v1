@@ -10,10 +10,20 @@ import {
   TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE,
   UPDATE_SURVEY_BUILDER_QUESTION,
   SELECT_SURVEY_QUESTION_RESPONSE,
-  SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY
+  FETCH_GEOGRAPHY_REQUEST,
+  SUBMIT_STREET_ADDRESS_REQUEST,
+  SUBMIT_STREET_ADDRESS_SUCCESS,
+  SELECT_GEOGRAPHY,
+  FETCH_GEOGRAPHY_SUCCESS,
+  FETCH_GEOGRAPHY_FAILURE,
+  SUBMIT_STREET_ADDRESS_FAILURE
 } from './survey-actions'
 
 const initialState = {
+  ward: {
+    id: null,
+    results: []
+  },
   alerts: [],
   isFetching: false,
   activeSurveys: [],
@@ -36,6 +46,46 @@ export default function (state = initialState, action) {
   let found
 
   switch (action.type) {
+
+    case FETCH_GEOGRAPHY_REQUEST:
+    case SUBMIT_STREET_ADDRESS_REQUEST:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          isFetching: true
+        })
+      })
+
+    case SUBMIT_STREET_ADDRESS_SUCCESS:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          isFetching: false,
+          id: action.response.ward
+        })
+      })
+
+    case SELECT_GEOGRAPHY:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          id: action.selection
+        })
+      })
+
+    case FETCH_GEOGRAPHY_SUCCESS:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          isFetching: false,
+          results: action.response
+        })
+      })
+
+    case FETCH_GEOGRAPHY_FAILURE:
+    case SUBMIT_STREET_ADDRESS_FAILURE:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          isFetching: false
+        })
+      })
+
 
     case FETCH_ACTIVE_SURVEYS_REQUEST:
       return Object.assign({}, state, {
