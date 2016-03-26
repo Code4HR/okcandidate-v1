@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import Rating from 'react-rating'
 
 import {
   Well,
@@ -6,13 +7,28 @@ import {
 } from 'react-bootstrap'
 
 import {
+  selectSurveyQuestionResponseIntensity,
   selectSurveyQuestionResponse
 } from './../../redux/survey/survey-actions'
 
 class SurveyQuestion extends Component {
 
-  makeSelection(questionId, answer, event) {
-    this.props.dispatch(selectSurveyQuestionResponse(questionId, answer))
+  makeSelection(answer) {
+    this.props.dispatch(
+      selectSurveyQuestionResponse(
+        this.props.question.id,
+        answer
+      )
+    )
+  }
+
+  setRating(rating) {
+    this.props.dispatch(
+      selectSurveyQuestionResponseIntensity(
+        this.props.question.id,
+        rating
+      )
+    )
   }
 
   getChecked(answer) {
@@ -30,12 +46,16 @@ class SurveyQuestion extends Component {
                   return (
                     <Input
                       checked={this.getChecked.call(this, answer)}
-                      onClick={this.makeSelection.bind(this, this.props.question.id, answer)}
+                      onClick={this.makeSelection.bind(this, answer)}
                       type="radio"
                       label={answer.answerLabel} />
                   )
                 })
               }
+            <label>How strongly do you feel about this?</label><br />
+            <Rating
+              initialRate={this.props.question.intensity}
+              onChange={this.setRating.bind(this)} />
           </Well>
         }
       </section>

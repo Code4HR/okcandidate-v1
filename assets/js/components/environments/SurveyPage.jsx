@@ -28,6 +28,7 @@ class SurveyPage extends Component {
         return question.id === response.question_id
       })
       if (answer) {
+        question.intensity = answer.intensity
         question.selectedAnswer = answer.answer_id
       }
       return question
