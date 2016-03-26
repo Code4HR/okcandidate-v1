@@ -17,10 +17,12 @@ import {
   SELECT_GEOGRAPHY,
   FETCH_GEOGRAPHY_SUCCESS,
   FETCH_GEOGRAPHY_FAILURE,
-  SUBMIT_STREET_ADDRESS_FAILURE
+  SUBMIT_STREET_ADDRESS_FAILURE,
+  FETCH_SURVEY_RESPONSE_ID_SUCCESS
 } from './survey-actions'
 
 const initialState = {
+  surveyResponseId: null,
   ward: {
     id: null,
     results: []
@@ -189,6 +191,11 @@ export default function (state = initialState, action) {
       }
       // otherwise just return state
       return state
+
+    case FETCH_SURVEY_RESPONSE_ID_SUCCESS:
+      return Object.assign({}, state, {
+        surveyResponseId: action.response.id
+      })
 
     default:
       return state
