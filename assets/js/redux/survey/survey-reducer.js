@@ -32,12 +32,12 @@ const initialState = {
   responses: []
 }
 
-function makeSurveyAnswer(selectedSurveyId, questionId, answer) {
+function makeSurveyAnswer(selectedSurveyId, questionId, answer, intensity) {
   return Object.assign({}, {
     survey_response_id: selectedSurveyId,
     question_id: questionId,
-    answer_id: answer.id,
-    score: answer.answerValue
+    answer_id: answer ? answer.id : undefined,
+    intensity: intensity
   })
 }
 
@@ -148,6 +148,7 @@ export default function (state = initialState, action) {
         })
       })
 
+    case SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY:
     case SELECT_SURVEY_QUESTION_RESPONSE:
 
       // If the question has already been answered, find the previous response
@@ -163,7 +164,8 @@ export default function (state = initialState, action) {
             makeSurveyAnswer(
               state.selectedSurvey.id,
               action.questionId,
-              action.answer
+              action.answer,
+              action.intensity
             )
           ]
         })
@@ -173,11 +175,12 @@ export default function (state = initialState, action) {
         return Object.assign({}, state, {
           responses: state.responses.map(response => {
             if (response.question_id === found.question_id) {
-              response = makeSurveyAnswer(
-                state.selectedSurvey.id,
-                action.questionId,
-                action.answer
-              )
+              if (action.type === SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY) {
+                response.intensity = action.intensity
+              }
+              else if (action.type === SELECT_SURVEY_QUESTION_RESPONSE) {
+                response.answer_id = action.answer.id
+              }
             }
             return response
           })
