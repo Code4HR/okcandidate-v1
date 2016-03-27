@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+
+import { browserHistory } from 'react-router'
+
 import {
   Input,
   Button,
@@ -39,7 +42,7 @@ class WardFinder extends Component {
 
   submitAddress() {
     const address = this.state.address.value
-    if (address.length > 3) {
+    if (address && address.length > 3) {
       this.props.dispatch(submitStreetAddress(address))
     }
     else {
@@ -52,6 +55,10 @@ class WardFinder extends Component {
     }
   }
 
+  nextPage() {
+    browserHistory.push('/survey/questions')
+  }
+
   render() {
 
     return (
@@ -60,20 +67,20 @@ class WardFinder extends Component {
 
           <Row>
             <Col xs={12}>
-              <h2>Which Ward are you in?</h2>
+              <h1>Where are you?</h1>
             </Col>
           </Row>
 
           <Row>
             <Col xs={12} sm={6}>
-              <p>We can look up your ward based on your address.</p>
+              <p>Find politicians near you!</p>
               <Input type="text"
                 label="Street Address"
                 onChange={this.onSetAddress.bind(this)}
                 value={this.state.address.value}
                 help={this.state.address.help}
                 bsSize="large"
-                placeholder="Enter your street address here"
+                placeholder="111 Granby St"
                 buttonAfter={
                   <Button
                     onClick={this.submitAddress.bind(this)}
@@ -82,7 +89,7 @@ class WardFinder extends Component {
             </Col>
 
             <Col xs={12} sm={6}>
-              <p>If you know what your super ward is, select it here.</p>
+              <p>If you already know your super ward, you can pick it here.</p>
               <Input
                 ref="selectGeography"
                 onChange={this.selectGeography.bind(this)}
@@ -101,6 +108,19 @@ class WardFinder extends Component {
               </Input>
             </Col>
 
+          </Row>
+
+          <Row>
+            <Col xs={9}>
+              <p>Find your superward to continue.</p>
+            </Col>
+            <Col xs={3}>
+              <Button
+                onClick={this.nextPage.bind(this)}
+                disabled={!this.props.ward.id}
+                bsStyle="danger"
+                bsSize="large">Next</Button>
+            </Col>
           </Row>
 
         </Grid>
