@@ -46,22 +46,31 @@ class SurveyPage extends Component {
       <article>
 
         {
-          this.blendQuestionsAndReponses(
-            this.props.survey.questions,
-            this.props.survey.responses
-          ).map(question => {
-            return (
-              <SurveyQuestion
-                question={question}
-                dispatch={this.props.dispatch} />
-            )
-          })
-        }
+          !this.props.survey.isFetching ?
+          <div>
 
-        <Button
-          onClick={this.submit.bind(this)}
-          bsStyle="primary"
-          bsSize="large">Submit</Button>
+            {
+              this.blendQuestionsAndReponses(
+                this.props.survey.questions,
+                this.props.survey.responses
+              ).map(question => {
+                return (
+                  <SurveyQuestion
+                    question={question}
+                    dispatch={this.props.dispatch} />
+                )
+              })
+            }
+
+            <Button
+              onClick={this.submit.bind(this)}
+              bsStyle="primary"
+              bsSize="large">Submit</Button>
+
+          </div>
+          :
+          <p>Loading Questions</p>
+        }
 
       </article>
     )
