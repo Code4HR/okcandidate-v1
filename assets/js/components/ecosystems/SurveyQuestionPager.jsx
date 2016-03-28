@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+import { browserHistory } from 'react-router'
+
 import {
   Button,
   Alert
@@ -64,6 +66,11 @@ class SurveyQuestionPager extends Component {
     }
   }
 
+  isAnswered() {
+    const currentQuestion = this.props.questions[this.state.index]
+    return currentQuestion.selectedAnswer && currentQuestion.intensity
+  }
+
   // Increment index, but skip input validation
   skipQuestion() {
     this.setState({
@@ -72,28 +79,34 @@ class SurveyQuestionPager extends Component {
     })
   }
 
+  nextPage() {
+    browserHistory.push('/survey/results')
+  }
+
   render() {
 
     const currentQuestion = this.props.questions[this.state.index]
+    const remainingQuestionCount =
+      this.props.questions.length - this.state.index
 
     return (
       <section>
 
-        {this.state.alerts.map(alert => {
-          return (
-            <Alert bsStyle="warning">
-              {alert}
-            </Alert>
-          )
-        })}
+        {
+          this.state.alerts.map(alert => {
+            return (
+              <Alert bsStyle="warning">
+                {alert}
+              </Alert>
+            )
+          })
+        }
 
         <SurveyQuestion
           question={currentQuestion}
           dispatch={this.props.dispatch} />
 
-          <label>Question { this.state.index + 1 }{'/'}{ this.props.questions ? this.props.questions.length : null }</label>
-
-          <div>
+          <div style={{marginBottom: '2em'}}>
             <Button
               disabled={!this.shouldEnableDecrement.call(this)}
               onClick={this.decrementIndex.bind(this)}
@@ -102,10 +115,30 @@ class SurveyQuestionPager extends Component {
               onClick={this.skipQuestion.bind(this)}
               bsSize="large">Skip</Button> {' '}
             <Button
-              disabled={!this.shouldEnableIncrement.bind(this)}
+              disabled={!this.shouldEnableIncrement.call(this)}
               onClick={this.incrementIndex.bind(this)}
-              bsSize="large">Next</Button>
+              bsSize="large">Submit</Button>
           </div>
+
+          {
+            remainingQuestionCount === 1 && this.isAnswered() ?
+              <Alert bsStyle="success">
+                <span>OK, let's see your results</span>
+                {' '}
+                <Button
+                  onClick={this.nextPage.bind(this)}
+                  bsStyle="success">Next</Button>
+              </Alert>
+            :
+              <Alert bsStyle="info">
+                {
+                  remainingQuestionCount === 1 ?
+                    <span><b>Last question!</b></span>
+                  :
+                    <span><b>{remainingQuestionCount}</b> questions remaining</span>
+                }
+              </Alert>
+          }
 
       </section>
     )
