@@ -7,7 +7,8 @@ import {
   Button,
   Col,
   Grid,
-  Row
+  Row,
+  Alert
 } from 'react-bootstrap'
 
 import {
@@ -21,8 +22,12 @@ class WardFinder extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: {}
+      address: this.props.ward.address
     }
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.state.address.help = newProps.ward.address.help
   }
 
   componentWillMount() {
@@ -80,6 +85,7 @@ class WardFinder extends Component {
                 value={this.state.address.value}
                 help={this.state.address.help}
                 bsSize="large"
+                bsStyle={this.state.address.help ? 'warning' : null}
                 placeholder="111 Granby St"
                 buttonAfter={
                   <Button
@@ -96,6 +102,7 @@ class WardFinder extends Component {
                 bsSize="large"
                 type="select"
                 label="Select a Super Ward"
+                value={this.props.ward.id}
                 placeholder="select">
                 <option value={0}>...</option>
                 {
@@ -111,15 +118,22 @@ class WardFinder extends Component {
           </Row>
 
           <Row>
-            <Col xs={9}>
-              <p>Find your superward to continue.</p>
-            </Col>
-            <Col xs={3}>
-              <Button
-                onClick={this.nextPage.bind(this)}
-                disabled={!this.props.ward.id}
-                bsStyle="danger"
-                bsSize="large">Next</Button>
+            <Col xs={12}>
+              {
+                this.props.ward.id ?
+                  <Alert bsStyle='success'>
+                    <span>OK, looks like you're in <b>{this.props.ward.name}</b>!</span>
+                    {' '}
+                    <Button
+                      onClick={this.nextPage.bind(this)}
+                      disabled={!this.props.ward.id}
+                      bsStyle="success">Next</Button>
+                  </Alert>
+                :
+                  <Alert byStyle="info">
+                    <p>Find your superward to continue.</p>
+                  </Alert>
+              }
             </Col>
           </Row>
 

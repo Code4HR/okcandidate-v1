@@ -195,17 +195,17 @@ export function submitStreetAddressFailure(error) {
   }
 }
 
-export function submitStreetAddress(address) {
+export function submitStreetAddress(street) {
   return function(dispatch) {
     dispatch(submitStreetAddressRequest())
-    return fetch('/api/wardinfo/', {
+    return fetch('/api/geography/ward', {
       method: 'post',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        address: address
+        street: street
       })
     })
     .then(checkStatus)
