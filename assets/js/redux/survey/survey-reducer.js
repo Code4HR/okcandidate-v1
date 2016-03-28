@@ -24,6 +24,7 @@ import {
 const initialState = {
   surveyResponseId: null,
   ward: {
+    address: { value: '', help: '' },
     id: null,
     results: []
   },
@@ -62,14 +63,19 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, {
         ward: Object.assign({}, state.ward, {
           isFetching: false,
-          id: action.response.ward
+          id: action.response.id,
+          name: action.response.geographyName,
+          address: state.ward.address
         })
       })
 
     case SELECT_GEOGRAPHY:
       return Object.assign({}, state, {
         ward: Object.assign({}, state.ward, {
-          id: action.selection
+          id: action.selection,
+          name: state.ward.results.find(ward => {
+            return ward.id === action.selection
+          }).geographyName
         })
       })
 
@@ -85,10 +91,12 @@ export default function (state = initialState, action) {
     case SUBMIT_STREET_ADDRESS_FAILURE:
       return Object.assign({}, state, {
         ward: Object.assign({}, state.ward, {
-          isFetching: false
+          isFetching: false,
+          address: Object.assign({}, state.ward.address, {
+            help: 'There was an error.  Try another address?'
+          })
         })
       })
-
 
     case FETCH_ACTIVE_SURVEYS_REQUEST:
       return Object.assign({}, state, {

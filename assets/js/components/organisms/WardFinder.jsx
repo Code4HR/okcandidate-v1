@@ -1,10 +1,14 @@
 import React, { Component, PropTypes } from 'react'
+
+import { browserHistory } from 'react-router'
+
 import {
   Input,
   Button,
   Col,
   Grid,
-  Row
+  Row,
+  Alert
 } from 'react-bootstrap'
 
 import {
@@ -18,8 +22,12 @@ class WardFinder extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: {}
+      address: this.props.ward.address
     }
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.state.address.help = newProps.ward.address.help
   }
 
   componentWillMount() {
@@ -39,7 +47,7 @@ class WardFinder extends Component {
 
   submitAddress() {
     const address = this.state.address.value
-    if (address.length > 3) {
+    if (address && address.length > 3) {
       this.props.dispatch(submitStreetAddress(address))
     }
     else {
@@ -52,6 +60,10 @@ class WardFinder extends Component {
     }
   }
 
+  nextPage() {
+    browserHistory.push('/survey/questions')
+  }
+
   render() {
 
     return (
@@ -60,20 +72,21 @@ class WardFinder extends Component {
 
           <Row>
             <Col xs={12}>
-              <h2>Which Ward are you in?</h2>
+              <h1>Where are you?</h1>
             </Col>
           </Row>
 
           <Row>
             <Col xs={12} sm={6}>
-              <p>We can look up your ward based on your address.</p>
+              <p>Find politicians near you!</p>
               <Input type="text"
                 label="Street Address"
                 onChange={this.onSetAddress.bind(this)}
                 value={this.state.address.value}
                 help={this.state.address.help}
                 bsSize="large"
-                placeholder="Enter your street address here"
+                bsStyle={this.state.address.help ? 'warning' : null}
+                placeholder="111 Granby St"
                 buttonAfter={
                   <Button
                     onClick={this.submitAddress.bind(this)}
@@ -82,13 +95,14 @@ class WardFinder extends Component {
             </Col>
 
             <Col xs={12} sm={6}>
-              <p>If you know what your super ward is, select it here.</p>
+              <p>If you already know your super ward, you can pick it here.</p>
               <Input
                 ref="selectGeography"
                 onChange={this.selectGeography.bind(this)}
                 bsSize="large"
                 type="select"
                 label="Select a Super Ward"
+                value={this.props.ward.id}
                 placeholder="select">
                 <option value={0}>...</option>
                 {
@@ -101,6 +115,26 @@ class WardFinder extends Component {
               </Input>
             </Col>
 
+          </Row>
+
+          <Row>
+            <Col xs={12}>
+              {
+                this.props.ward.id ?
+                  <Alert bsStyle='success'>
+                    <span>OK, looks like you're in <b>{this.props.ward.name}</b>!</span>
+                    {' '}
+                    <Button
+                      onClick={this.nextPage.bind(this)}
+                      disabled={!this.props.ward.id}
+                      bsStyle="success">Next</Button>
+                  </Alert>
+                :
+                  <Alert byStyle="info">
+                    <p>Find your superward to continue.</p>
+                  </Alert>
+              }
+            </Col>
           </Row>
 
         </Grid>

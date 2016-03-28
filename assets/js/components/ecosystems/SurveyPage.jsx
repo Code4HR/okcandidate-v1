@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
+import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
 
 import {
   fetchActiveSurveys,
@@ -42,26 +43,23 @@ class SurveyPage extends Component {
   }
 
   render() {
+
+    const questions = this.blendQuestionsAndReponses(
+      this.props.survey.questions,
+      this.props.survey.responses
+    )
+
     return (
       <article>
 
         {
-          this.blendQuestionsAndReponses(
-            this.props.survey.questions,
-            this.props.survey.responses
-          ).map(question => {
-            return (
-              <SurveyQuestion
-                question={question}
-                dispatch={this.props.dispatch} />
-            )
-          })
+          !this.props.survey.isFetching && questions.length ?
+            <SurveyQuestionPager
+              questions={questions}
+              dispatch={this.props.dispatch} />
+          :
+          <p>Loading Questions</p>
         }
-
-        <Button
-          onClick={this.submit.bind(this)}
-          bsStyle="primary"
-          bsSize="large">Submit</Button>
 
       </article>
     )

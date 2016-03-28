@@ -71,8 +71,8 @@ Make a file (don't put it in source control) that has the following...
 export OKC_DB_NAME=databasename
 export OKC_DB_USER=username
 export OKC_DB_PASSWORD=password
-export SS_AUTH_ID=SS_AUTH_ID
-export SS_AUTH_TOKEN=SS_AUTH_TOKEN
+export SMARTY_STREETS_AUTH_ID=smartystreetsauthid
+export SMARTY_STREETS_AUTH_TOKEN=smartystreetsauthtoken
 ```
 ... replacing `databasename`, `username`, and `password` with the information used during setup of the database.
 
