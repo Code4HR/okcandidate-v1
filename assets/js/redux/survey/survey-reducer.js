@@ -11,13 +11,14 @@ import {
   UPDATE_SURVEY_BUILDER_QUESTION,
   SELECT_SURVEY_QUESTION_RESPONSE,
   SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY,
-  FETCH_GEOGRAPHY_REQUEST,
+  SET_STREET_ADDRESS,
   SUBMIT_STREET_ADDRESS_REQUEST,
   SUBMIT_STREET_ADDRESS_SUCCESS,
+  SUBMIT_STREET_ADDRESS_FAILURE,
+  FETCH_GEOGRAPHY_REQUEST,
   SELECT_GEOGRAPHY,
   FETCH_GEOGRAPHY_SUCCESS,
   FETCH_GEOGRAPHY_FAILURE,
-  SUBMIT_STREET_ADDRESS_FAILURE,
   FETCH_SURVEY_RESPONSE_ID_SUCCESS
 } from './survey-actions'
 
@@ -48,10 +49,17 @@ function makeSurveyAnswer(selectedSurveyId, questionId, answer, intensity) {
 export default function (state = initialState, action) {
 
   let found
+  let update = {}
 
   switch (action.type) {
 
     case FETCH_GEOGRAPHY_REQUEST:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          isFetching: true
+        })
+      })
+
     case SUBMIT_STREET_ADDRESS_REQUEST:
       return Object.assign({}, state, {
         ward: Object.assign({}, state.ward, {
@@ -156,6 +164,13 @@ export default function (state = initialState, action) {
             })
           }
           return question
+        })
+      })
+
+    case SET_STREET_ADDRESS:
+      return Object.assign({}, state, {
+        ward: Object.assign({}, state.ward, {
+          address: action.street
         })
       })
 
