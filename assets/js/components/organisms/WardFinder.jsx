@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap'
 
 import {
+  setStreetAddress,
   submitStreetAddress,
   fetchGeography,
   selectGeography
@@ -21,13 +22,6 @@ class WardFinder extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      address: this.props.ward.address
-    }
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.state.address.help = newProps.ward.address.help
   }
 
   componentWillMount() {
@@ -35,9 +29,7 @@ class WardFinder extends Component {
   }
 
   onSetAddress(event) {
-    this.setState({
-      address: { value: event.target.value }
-    })
+    this.props.dispatch(setStreetAddress({ value: event.target.value }))
   }
 
   selectGeography() {
@@ -46,18 +38,7 @@ class WardFinder extends Component {
   }
 
   submitAddress() {
-    const address = this.state.address.value
-    if (address && address.length > 3) {
-      this.props.dispatch(submitStreetAddress(address))
-    }
-    else {
-      this.setState({
-        address: {
-          value: address,
-          help: 'This field shouldn\'t be blank'
-        }
-      })
-    }
+    this.props.dispatch(submitStreetAddress(this.props.ward.address.value))
   }
 
   nextPage() {
@@ -82,10 +63,10 @@ class WardFinder extends Component {
               <Input type="text"
                 label="Street Address"
                 onChange={this.onSetAddress.bind(this)}
-                value={this.state.address.value}
-                help={this.state.address.help}
+                value={this.props.ward.address.value}
+                help={this.props.ward.address.help}
                 bsSize="large"
-                bsStyle={this.state.address.help ? 'warning' : null}
+                bsStyle={this.props.ward.address.help ? 'warning' : null}
                 placeholder="111 Granby St"
                 buttonAfter={
                   <Button

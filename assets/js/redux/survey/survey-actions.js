@@ -171,6 +171,16 @@ export function submitSurveyAnswers(responses) {
   }
 }
 
+export const SET_STREET_ADDRESS = 'SET_STREET_ADDRESS'
+export const SET_STREET_ADDRESS_ERROR = 'SET_STREET_ADDRESS_ERROR'
+
+export function setStreetAddress(street) {
+  return {
+    type: SET_STREET_ADDRESS,
+    street
+  }
+}
+
 export const SUBMIT_STREET_ADDRESS_REQUEST = 'SUBMIT_STREET_ADDRESS_REQUEST'
 export const SUBMIT_STREET_ADDRESS_SUCCESS = 'SUBMIT_STREET_ADDRESS_SUCCESS'
 export const SUBMIT_STREET_ADDRESS_FAILURE = 'SUBMIT_STREET_ADDRESS_FAILURE'
@@ -197,7 +207,15 @@ export function submitStreetAddressFailure(error) {
 
 export function submitStreetAddress(street) {
   return function(dispatch) {
-    dispatch(submitStreetAddressRequest())
+    dispatch(submitStreetAddressRequest(street))
+
+    if (!street) {
+      dispatch(setStreetAddress({
+        help: 'This field shouldn\'t be blank'
+      }))
+      return
+    }
+
     return fetch('/api/geography/ward', {
       method: 'post',
       headers: {
