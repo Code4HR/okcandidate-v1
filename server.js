@@ -19,7 +19,7 @@ server.connection({
 const host = process.env['OKC_DB_HOST'] || '127.0.0.1'
 const database = process.env['OKC_DB_NAME']
 const user = process.env['OKC_DB_USER']
-const password = process.env['OK_DB_PASSWORD']
+const password = process.env['OKC_DB_PASSWORD']
 
 server.register(
   {
