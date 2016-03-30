@@ -1,3 +1,5 @@
+[ ![Codeship Status for Code4HR/okcandidate](https://codeship.com/projects/3ea4e4a0-d842-0133-4a1f-6a1daaefbd5c/status?branch=master)](https://codeship.com/projects/143177)
+
 # OKCandidate
 Find out which candidates for local offices match with you
 
