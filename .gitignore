@@ -35,3 +35,6 @@ node_modules
 
 # Bundle
 assets/js/bundle.js
+
+# Swap files
+*.swp
