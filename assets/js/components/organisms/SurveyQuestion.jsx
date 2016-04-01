@@ -55,6 +55,8 @@ class SurveyQuestion extends Component {
             <label>How strongly do you feel about this?</label><br />
             <Rating
               initialRate={this.props.question.intensity}
+              empty='glyphicon glyphicon-heart-empty'
+              full='glyphicon glyphicon-heart'
               onChange={this.setRating.bind(this)} />
           </Well>
         }
