@@ -31,11 +31,11 @@ INSERT INTO question (id, survey_id, category_id, question_text) VALUES
 (3, 1, 1, 'Would you support reducing car lanes to accommodate more bike lanes?'),
 (4, 1, 1, 'Where should The Tide go next?'),
 (5, 1, 1, 'Choose one project:'),
-(6, 1, 1, 'Do you own a bike?'),
-(7, 1, 1, 'Have you ridden public transit in the past three months?'),
-(8, 1, 1, 'The city spend limited transportation dollars on:'),
+(6, 1, 1, 'Do you or would you ever own a bike?'),
+(7, 1, 1, 'Would you ride public transit in the near future?'),
+(8, 1, 1, 'The city spends too little transportation dollars on:'),
 (9, 1, 2, 'What should the city emphasize first:'),
-(10, 1, 2, 'Was The Main a good use of city money?'),
+(10, 1, 2, 'Was The Main (the construction next to Dominion Enterprises) a good use of city money?'),
 (11, 1, 2, 'How will the new Waterside affect local businesses?'),
 (12, 1, 2, 'Has the city spent too much, too little or the right amount of money downtown?'),
 (13, 1, 2, 'What is your opinion on the best method of luring business to Norfolk?'),
@@ -172,7 +172,8 @@ INSERT INTO answer (id, question_id, answer_label, answer_value) VALUES
 (101, 37, 'No.', 'No.'),
 (102, 38, 'Yes.', 'Yes.'),
 (103, 38, 'No.', 'No.'),
-(104, 38, 'Some of them, some years.', 'Some of them, some years.');
+(104, 38, 'Some of them, some years.', 'Some of them, some years.'),
+(105, 38, 'I don''t have kids.', 'I don''t have kids.');
 
 ---------------------
 --- Candidate Type --
