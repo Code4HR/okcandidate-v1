@@ -35,22 +35,27 @@ module.exports = function (server) {
     method: 'POST',
     path: '/api/survey_answer',
     handler: (request, reply) => {
-      const survey_answer = new SurveyAnswer()
+      if (request.payload.responses) {
+        Promise.all(
+          request.payload.responses.map(function(answer) {
+              var surveyAnswer = new SurveyAnswer()
+              var newAnswer = surveyAnswer
+              .save({
+                survey_response_id: answer.surveyResponseId,
+                question_id: answer.questionId,
+                answer_id: answer.answerId,
+                intensity: answer.intensity
+              })
+              .catch(function(err) {
+                console.error(err)
+              })
 
-      Promise.all(
-        request.payload.responses.map(response => {
-          survey_answer
-            .save({
-              survey_response_id: response.surveyResponseId,
-              question_id: response.questionId,
-              answer_id: response.answerId,
-              intensity: response.intensity
-            })
+              return newAnswer
+          })
+        ).then(function (newSurveyAnswers) {
+          reply(newSurveyAnswers)
         })
-      ).then(function (newSurveyAnswer) {
-        reply(newSurveyAnswer)
-      })
-      .catch()
+      }
     }
   },
   {
