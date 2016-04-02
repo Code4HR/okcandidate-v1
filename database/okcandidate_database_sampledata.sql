@@ -81,7 +81,6 @@ INSERT INTO answer (id, question_id, answer_label, answer_value) VALUES
 (10, 4, 'ODU', 'ODU'),
 (11, 4, 'Norfolk International Airport', 'Norfolk International Airport'),
 (12, 4, 'Naval Station Norfolk', 'Naval Station Norfolk'),
-(13, 4, 'Virginia Beach', 'Virginia Beach'),
 (14, 4, 'Nowhere', 'Nowhere'),
 (15, 5, 'Bus service to the Norfolk International Airport', 'Bus service to the Norfolk International Airport'),
 (16, 5, 'A citywide bike share program', 'A citywide bike share program'),
