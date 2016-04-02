@@ -1,6 +1,10 @@
 {
   "extends": "trails/react",
 
+  "rules": {
+      "indent": ["error", 2, { "SwitchCase": 2 }]
+  },
+
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
