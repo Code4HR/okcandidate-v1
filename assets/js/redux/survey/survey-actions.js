@@ -285,7 +285,7 @@ export function selectGeography(geographyId) {
       selection: geographyId
     })
     // Todo: surveyID needs to come from somewhere.
-    dispatch(fetchSurveyRequestId(1, geographyId))
+    dispatch(fetchSurveyResponseId(1, geographyId))
   }
 }
 
@@ -299,21 +299,21 @@ export function fetchSurveyResponseIdRequest() {
   }
 }
 
-export function fetchSurveyRequestIdSuccess(response) {
+export function fetchSurveyResponseIdSuccess(response) {
   return {
     type: FETCH_SURVEY_RESPONSE_ID_SUCCESS,
     response
   }
 }
 
-export function fetchSurveyRequestIdFailure(error) {
+export function fetchSurveyResponseIdFailure(error) {
   return {
     type: FETCH_SURVEY_RESPONSE_ID_FAILURE,
     error
   }
 }
 
-export function fetchSurveyRequestId(surveyId, geographyId) {
+export function fetchSurveyResponseId(surveyId, geographyId) {
   return function(dispatch) {
     dispatch(fetchSurveyResponseIdRequest())
     return fetch('/api/survey_response', {
@@ -330,10 +330,11 @@ export function fetchSurveyRequestId(surveyId, geographyId) {
     .then(checkStatus)
     .then(response => response.json())
     .then(response => {
-      dispatch(fetchSurveyRequestIdSuccess(response))
+      debugger
+      dispatch(fetchSurveyResponseIdSuccess(response))
     })
     .catch(error => {
-      dispatch(fetchSurveyRequestIdFailure(error))
+      dispatch(fetchSurveyResponseIdFailure(error))
     })
   }
 }

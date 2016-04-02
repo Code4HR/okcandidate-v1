@@ -80,6 +80,7 @@ class SurveyQuestionPager extends Component {
   }
 
   nextPage() {
+    this.props.onSubmit()
     browserHistory.push('/survey/results')
   }
 
@@ -147,6 +148,7 @@ class SurveyQuestionPager extends Component {
 }
 
 SurveyQuestionPager.propTypes = {
+  onSubmit: PropTypes.func,
   questions: PropTypes.array,
   dispatch: PropTypes.func
 }
