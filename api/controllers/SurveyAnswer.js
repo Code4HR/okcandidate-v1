@@ -8,68 +8,70 @@ module.exports = function (server) {
       view: 'Login'
     }
   },
-    {
-      method: 'GET',
-      path: '/api/survey_answer',
-      handler: (request, reply) => {
-        SurveyAnswer
-          .fetchAll()
-          .then(survey_answers => {
-            reply(survey_answers)
-          })
-      }
-    },
-    {
-      method: 'GET',
-      path: '/api/survey_answer/{id}',
-      handler: (request, reply) => {
-        SurveyAnswer
-          .where({id: request.params.id})
-          .fetch()
-          .then(survey_answers => {
-            reply(survey_answers)
-          })
-      }
-    },
-    {
-      method: 'POST',
-      path: '/api/survey_answer',
-      handler: (request, reply) => {
-        var survey_answer = new SurveyAnswer()
+  {
+    method: 'GET',
+    path: '/api/survey_answer',
+    handler: (request, reply) => {
+      SurveyAnswer
+        .fetchAll()
+        .then(survey_answers => {
+          reply(survey_answers)
+        })
+    }
+  },
+  {
+    method: 'GET',
+    path: '/api/survey_answer/{id}',
+    handler: (request, reply) => {
+      SurveyAnswer
+        .where({id: request.params.id})
+        .fetch()
+        .then(survey_answers => {
+          reply(survey_answers)
+        })
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/survey_answer',
+    handler: (request, reply) => {
+      const survey_answer = new SurveyAnswer()
 
-        console.log(request.payload)
-
-        survey_answer
-          .save({
+      Promise.all(
+        request.payload.responses.map(response => {
+          survey_answer
+            .save({
+              survey_response_id: response.surveyResponseId,
+              question_id: response.questionId,
+              answer_id: response.answerId,
+              intensity: response.intensity
+            })
+        })
+      ).then(function (newSurveyAnswer) {
+        reply(newSurveyAnswer)
+      })
+      .catch()
+    }
+  },
+  {
+    method: 'POST',
+    path: '/api/survey_answer/{id}',
+    handler: (request, reply) => {
+      survey_answer
+        .where({id: request.params.id})
+        .fetch()
+        .then(function (survey_answer) {
+          survey_answer.save({
             survey_response_id: request.payload.surveyResponseId,
             question_id: request.payload.questionId,
             answer_id: request.payload.answerId
           })
-          .then(function (newSurveyAnswer) {
-            reply(newSurveyAnswer)
-          })
-          .catch()
-      }
-    },
-    {
-      method: 'POST',
-      path: '/api/survey_answer/{id}',
-      handler: (request, reply) => {
-        survey_answer
-          .where({id: request.params.id})
-          .fetch()
-          .then(function (survey_answer) {
-            survey_answer.save({
-              survey_response_id: request.payload.surveyResponseId,
-              question_id: request.payload.questionId,
-              answer_id: request.payload.answerId
+            .then(function (surveyResponse) {
+              reply(surveyResponse)
             })
-              .then(function (surveyResponse) {
-                reply(surveyResponse)
-              })
-              .catch()
-          })
-          .catch()
-      }
-    }]
+            .catch()
+        })
+        .catch()
+    }
+  }]
 }

@@ -49,7 +49,6 @@ function makeSurveyAnswer(selectedSurveyId, questionId, answer, intensity) {
 export default function (state = initialState, action) {
 
   let found
-  let update = {}
 
   switch (action.type) {
 
@@ -188,7 +187,7 @@ export default function (state = initialState, action) {
             responses: [
               ...state.responses,
               makeSurveyAnswer(
-              state.selectedSurvey.id,
+              state.surveyResponseId,
               action.questionId,
               action.answer,
               action.intensity

@@ -1,17 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 
-import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
 
 import {
   fetchActiveSurveys,
   submitSurveyAnswers
 } from './../../redux/survey/survey-actions'
-
-import {
-  Button
-} from 'react-bootstrap'
 
 class SurveyPage extends Component {
 
@@ -55,6 +50,7 @@ class SurveyPage extends Component {
         {
           !this.props.survey.isFetching && questions.length ?
             <SurveyQuestionPager
+              onSubmit={this.submit.bind(this)}
               questions={questions}
               dispatch={this.props.dispatch} />
           :
