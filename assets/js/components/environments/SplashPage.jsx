@@ -30,19 +30,33 @@ class SplashPage extends Component {
       margin: 2
     };
 
+    const candidateStyle = {
+      height: 160,
+      alignItems: 'center',
+      justifyContent: 'center'
+    };
+
+    const citizenStyle = {
+      height: 160,
+      alignItems: 'center',
+      justifyContent: 'center'
+    };
+
 
     const code4HRStyle = {
       backgroundImage: 'url("/img/code4hr.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100%',
+      marginTop: 20,
       height: 160
-    }
+    };
 
     const pilotStyle = {
       backgroundImage: 'url("/img/pilot.jpg")',
-      backgroundSize: '100%',
+      backgroundSize: '70%',
+      backgroundRepeat: 'no-repeat',
       height: 160
-    }
+    };
 
     return (
       <div className="row" style={viewStyle}>
@@ -106,16 +120,16 @@ class SplashPage extends Component {
           <div className="row">
             <div className="col-sm-1 col-md-1 col-lg-1"></div>
             <div className="col-sm-2 col-md-2 col-lg-2" style={code4HRStyle}>
-              Code4HR
+
             </div>
-            <div className="col-sm-3 col-md-3 col-lg-3">
+            <div className="col-sm-3 col-md-3 col-lg-3" style={candidateStyle}>
               Candidates
             </div>
-            <div className="col-sm-3 col-md-3 col-lg-3">
+            <div className="col-sm-3 col-md-3 col-lg-3" style={citizenStyle}>
               Citizens
             </div>
             <div className="col-sm-2 col-md-2 col-lg-2" style={pilotStyle}>
-              The Virginian-Pilot
+
             </div>
             <div className="col-sm-1 col-md-1 col-lg-1"></div>
           </div>
