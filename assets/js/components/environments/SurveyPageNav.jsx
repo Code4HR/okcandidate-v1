@@ -28,15 +28,15 @@ class SurveyPageNav extends Component {
 
     let route
     switch (tabIndex) {
-      case 1:
-        route = '/survey'
-        break
-      case 2:
-        route = '/survey/questions'
-        break
-      case 3:
-        route = '/survey/results'
-        break
+        case 1:
+          route = '/survey'
+          break
+        case 2:
+          route = '/survey/questions'
+          break
+        case 3:
+          route = '/survey/results'
+          break
     }
 
     browserHistory.push(route)

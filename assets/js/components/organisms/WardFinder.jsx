@@ -102,7 +102,7 @@ class WardFinder extends Component {
             <Col xs={12}>
               {
                 this.props.ward.id ?
-                  <Alert bsStyle='success'>
+                  <Alert bsStyle="success">
                     <span>OK, looks like you're in <b>{this.props.ward.name}</b>!</span>
                     {' '}
                     <Button
