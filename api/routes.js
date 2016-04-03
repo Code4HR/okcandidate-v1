@@ -9,7 +9,8 @@ module.exports = (server) => {
      require('./controllers/Answer')(server),
      require('./controllers/SurveyResponse')(server),
      require('./controllers/SurveyAnswer')(server),
-     require('./controllers/Geography')(server)
+     require('./controllers/Geography')(server),
+     require('./controllers/Candidate')(server)
   )
 
   return [
@@ -30,6 +31,13 @@ module.exports = (server) => {
     {
       method: 'GET',
       path: '/survey',
+      handler: {
+        view: 'Default'
+      }
+    },
+    {
+      method: 'GET',
+      path: '/survey/',
       handler: {
         view: 'Default'
       }

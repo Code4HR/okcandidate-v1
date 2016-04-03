@@ -43,7 +43,11 @@ server.register(
         './api/models/Answer',
         './api/models/SurveyResponse',
         './api/models/SurveyAnswer',
-        './api/models/Geography'
+        './api/models/Geography',
+        './api/models/Candidate',
+        './api/models/CandidateAnswer',
+        './api/models/CandidateGeography',
+        './api/models/CandidateType'
       ]
     }
   },
