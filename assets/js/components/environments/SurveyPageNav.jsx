@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { browserHistory } from 'react-router'
 import { Breadcrumb } from 'react-bootstrap'
 
 const navStyle = {
@@ -41,7 +42,7 @@ class SurveyPageNav extends Component {
     const tab = this.currentTab - 1,
       [ward, survey, results] = this.routes.map((route, i) =>
         i < tab ?
-          { href: route } :
+          { onClick: () => browserHistory.push(route) } :
           { active: 'active' })
     return (
       <article>

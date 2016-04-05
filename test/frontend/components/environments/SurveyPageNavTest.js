@@ -90,19 +90,15 @@ describe('The survey page navigator', () => {
             nav.activeTabIndex = 2
           })
 
-          it('will have an href property', () => {
-            expect(ward.props.href).to.exist
+          it('will have an onClick property', () => {
+            expect(ward.props.onClick).to.exist
           })
 
-          context('the href property', () => {
-            let href
+          context('the onClick property', () => {
+            let onClick
 
             beforeEach(() => {
-              href = ward.props.href
-            })
-
-            it('will refer to /survey', () => {
-              expect(href).to.equal('/survey')
+              onClick = ward.props.onClick
             })
           })
         })
@@ -152,8 +148,8 @@ describe('The survey page navigator', () => {
             nav.activeTabIndex = 3
           })
 
-          it('will have an href property', () => {
-            expect(survey.props.href).to.exist
+          it('will have an onClick property', () => {
+            expect(survey.props.onClick).to.exist
           })
 
           afterEach(() => {
