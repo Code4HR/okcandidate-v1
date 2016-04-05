@@ -59,7 +59,7 @@ module.exports = function (server) {
         })
         .fetchAll()
         .then(matches => {
-          reply(formatCandidateMatch(matches))
+          reply(formatCandidateMatch(matches.models))
         })
       })
     }
@@ -67,56 +67,41 @@ module.exports = function (server) {
 }
 
 function formatCandidateMatch(matchArray) {
-  var types = []
   var output = {}
-  output.id = matchArray.models[0].attributes.surveyId
-  output.geographyId = matchArray.models[0].attributes.geographyId
+  output.id = matchArray[0].attributes.surveyId
+  output.geographyId = matchArray[0].attributes.geographyId
+
   output.survey = []
 
-  for (var i = 0; i < matchArray.models.length; i++)
-  {
-    var typeExists = false
+  matchArray.map(function(match) {
+    var typeIndex = output.survey.findIndex(type =>
+      type.candidateTypeName === match.attributes.typeName)
 
-    for (var j = 0; j < output.survey.length; j++)
+    if(typeIndex === -1)
     {
-      if (output.survey[j].candidateTypeName == matchArray.models[i].attributes.typeName)
-      {
-        typeExists = true
-
-        var candidateExists = false
-
-        for (var k = 0; k < output.survey[j].candidates.length; k++)
-        {
-          if(output.survey[j].candidates[k].candidateId == matchArray.models[i].attributes.candidateId)
-          {
-            candidateExists = true
-          }
-        }
-
-        if(!candidateExists)
-        {
-          output.survey[j].candidates[output.survey[j].candidates.length] = {
-            candidateId: matchArray.models[i].attributes.candidateId,
-            candidateName: matchArray.models[i].attributes.candidateName,
-            compositeMatchScore: matchArray.models[i].attributes.compositeScore
-          }
-        }
-      }
-    }
-
-    if (!typeExists)
-    {
-      output.survey[output.survey.length] = {
-        candidateTypeId: matchArray.models[i].attributes.typeId,
-        candidateTypeName: matchArray.models[i].attributes.typeName,
+      output.survey.push({
+        candidateTypeId: match.attributes.typeId,
+        candidateTypeName: match.attributes.typeName,
         candidates: [{
-          candidateId: matchArray.models[i].attributes.candidateId,
-          candidateName: matchArray.models[i].attributes.candidateName,
-          compositeMatchScore: matchArray.models[i].attributes.compositeScore
+          candidateId: match.attributes.candidateId,
+          candidateName: match.attributes.candidateName,
+          compositeMatchScore: match.attributes.compositeScore
         }]
+      })
+    } else {
+      var candIndex = output.survey[typeIndex].candidates.findIndex(cand =>
+        cand.candidateId === match.attributes.candidateId)
+
+      if (candIndex === -1)
+      {
+        output.survey[typeIndex].candidates.push({
+          candidateId: match.attributes.candidateId,
+          candidateName: match.attributes.candidateName,
+          compositeMatchScore: match.attributes.compositeScore
+        })
       }
     }
-  }
+  })
 
   return(output)
 }
