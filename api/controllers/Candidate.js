@@ -53,12 +53,14 @@ module.exports = function (server) {
           })
           match_builder.innerJoin('candidate', 'candidate_answer.candidate_id', 'candidate.id')
           match_builder.innerJoin('candidate_type', 'candidate.candidate_type_id', 'candidate_type.id')
+          match_builder.where('survey_response.id', request.params.survey_response_id)
           match_builder.groupBy('survey_response.id', 'survey_response.geography_id'
           , 'candidate_answer.candidate_id', 'candidate.candidate_name'
           , 'candidate_type.id', 'candidate_type.type_name')
         })
         .fetchAll()
         .then(matches => {
+          console.log(getCategoryScores(SurveyAnswer, request.params.survey_response_id))
           reply(formatCandidateMatch(matches.models))
         })
       })
@@ -104,4 +106,37 @@ function formatCandidateMatch(matchArray) {
   })
 
   return(output)
+}
+
+function getCategoryScores(SurveyAnswer, surveyResponseId)
+{
+  var score_raw = 'round((sum(cast(survey_answer.intensity as numeric(3,2))) / cat_scores.score) * 100) as category_score'
+  SurveyAnswer
+  .query(function(cat_builder) {
+    cat_builder.column('candidate_answer.candidate_id')
+    cat_builder.column('category.id as category_id')
+    cat_builder.column('category.category_name')
+    cat_builder.column(server.plugins['hapi-shelf'].knex.raw(score_raw))
+    cat_builder.innerJoin('question', 'survey_answer.question_id', 'question.id')
+    cat_builder.innerJoin('category', 'survey_answer.category_id', 'category.id')
+    cat_builder.innerJoin('survey_response', 'survey_answer.survey_response_id', 'survey_response.id')
+    cat_builder.innerJoin('candidate_answer', 'survey_answer.answer_id', 'candidate_answer.answer_id')
+    cat_builder.innerJoin('candidate_geography', function() {
+      this.on('survey_answer.question_id', '=', 'question.question_id')
+      .andOn('candidate_geography.geography_id', '=', 'survey_response.geography_id')
+    })
+    cat_builder.innerJoin('candidate', 'candidate_answer.candidate_id', 'candidate.id')
+    cat_builder.join(server.plugins['hapi-shelf'].knex.raw(" \
+    (select question.category_id, category.category_name, sum(survey_answer.intensity) as score \
+     from survey_answer \
+     inner join question on survey_answer.question_id = question.id \
+     inner join category on question.category_id = category.id \
+     group by question.category_id, category.category_name) as cat_scores on category.id = cat_scores.category_id"))
+    cat_builder.where('survey_response.id', surveyResponseId)
+    cat_builder.groupBy('candidate_answer.candidate_id', 'category.id', 'category.category_name', 'cat_scores.score')
+  })
+  .fetchAll()
+  .then(categories => {
+    return categories
+  })
 }
