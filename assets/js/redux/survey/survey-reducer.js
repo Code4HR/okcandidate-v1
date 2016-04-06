@@ -22,7 +22,7 @@ import {
   FETCH_SURVEY_RESPONSE_ID_SUCCESS
 } from './survey-actions'
 
-const initialState = {
+export const initialState = {
   surveyResponseId: null,
   ward: {
     address: { value: '', help: '' },
@@ -34,7 +34,8 @@ const initialState = {
   activeSurveys: [],
   selectedSurvey: {},
   questions: [],
-  responses: []
+  responses: [],
+  candidateMatch: {}
 }
 
 function makeSurveyAnswer(selectedSurveyId, questionId, answer, intensity) {
