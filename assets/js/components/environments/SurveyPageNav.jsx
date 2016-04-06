@@ -24,7 +24,20 @@ class SurveyPageNav extends Component {
   }
 
   get routes() {
-    return [ '/survey', '/survey/questions', '/survey/results' ]
+    return this.tabs.map(tab => tab.route)
+  }
+
+  get tabs() {
+    return [{
+      route: '/survey',
+      useable: true
+    }, {
+      route: '/survey/questions',
+      useable: this.props.hasWard
+    }, {
+      route: '/survey/results',
+      useable: this.props.hasMatch
+    }]
   }
 
   get activeTabIndex() {
@@ -40,11 +53,11 @@ class SurveyPageNav extends Component {
   }
 
   render() {
-    const tab = this.currentTab - 1,
-      [ward, survey, results] = this.routes.map((route, i) =>
-        i < tab ?
-          { onClick: () => browserHistory.push(route) } :
-          { active: 'active' })
+    const current = this.currentTab - 1,
+      [ward, survey, results] = this.tabs.map((tab, i) =>
+        i === current || !tab.useable ?
+          { active: true } :
+          { onClick: () => browserHistory.push(tab.route) })
     return (
       <article>
         <Breadcrumb style={navStyle}>
@@ -68,14 +81,15 @@ class SurveyPageNav extends Component {
 }
 
 SurveyPageNav.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
+  hasWard: PropTypes.boolean,
+  hasMatch: PropTypes.boolean
 }
 
 export default connect(
   state => ({
-    responses: state.survey.responses,
-    ward: state.survey.ward.name,
-    tab: state.tab
+    hasWard: state.survey.ward.hasOwnProperty('name'),
+    hasMatch: state.survey.candidateMatch.hasOwnProperty('id')
   }), null, null, {
     withRef: true
   }
