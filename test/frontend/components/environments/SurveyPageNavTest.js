@@ -1,5 +1,6 @@
 import React from 'react/addons'
 import { expect } from 'chai'
+import sinon from 'sinon'
 import { Breadcrumb } from 'react-bootstrap'
 import SurveyQuestion from '../../../../assets/js/components/organisms/SurveyQuestion'
 import SurveyPageNav from '../../../../assets/js/components/environments/SurveyPageNav'
@@ -10,9 +11,22 @@ describe('The survey page navigator', () => {
   let nav
 
   beforeEach(() => {
+    let state = sinon.stub(),
+      store = {
+        getState: state,
+        subscribe: sinon.stub()
+      }
+    state.returns({
+      survey: {
+        responses: [],
+        ward: {
+          name: 'test'
+        }
+      }
+    })
     nav = TestUtils.renderIntoDocument(
-      <SurveyPageNav />
-    )
+      <SurveyPageNav store={store} />
+    ).getWrappedInstance()
   })
 
   context('get active method', () => {

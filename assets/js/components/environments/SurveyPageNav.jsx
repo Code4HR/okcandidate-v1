@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { Breadcrumb } from 'react-bootstrap'
 
@@ -70,4 +71,12 @@ SurveyPageNav.propTypes = {
   children: PropTypes.any
 }
 
-export default SurveyPageNav
+export default connect(
+  state => ({
+    responses: state.survey.responses,
+    ward: state.survey.ward.name,
+    tab: state.tab
+  }), null, null, {
+    withRef: true
+  }
+)(SurveyPageNav)
