@@ -8,7 +8,6 @@ const navStyle = {
 }
 
 class SurveyPageNav extends Component {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -17,9 +16,9 @@ class SurveyPageNav extends Component {
   }
 
   get currentTab() {
-    const current = this.routes.indexOf(window.location.pathname) + 1
-    return current > 0 ?
-      current :
+    const tab = this.routes.indexOf(window.location.pathname) + 1
+    return tab > 0 ?
+      tab :
       this.activeTabIndex
   }
 
@@ -30,13 +29,16 @@ class SurveyPageNav extends Component {
   get tabs() {
     return [{
       route: '/survey',
-      useable: true
+      useable: true,
+      text: 'Select a Ward'
     }, {
       route: '/survey/questions',
-      useable: this.props.hasWard
+      useable: this.props.hasWard,
+      text: 'Survey'
     }, {
       route: '/survey/results',
-      useable: this.props.hasMatch
+      useable: this.props.hasMatch,
+      text: 'Results'
     }]
   }
 
@@ -53,29 +55,40 @@ class SurveyPageNav extends Component {
   }
 
   render() {
-    const current = this.currentTab - 1,
-      [ward, survey, results] = this.tabs.map((tab, i) =>
-        i === current || !tab.useable ?
-          { active: true } :
-          { onClick: () => browserHistory.push(tab.route) })
     return (
       <article>
         <Breadcrumb style={navStyle}>
-          <Breadcrumb.Item {...ward}>
-            Select a Ward
-          </Breadcrumb.Item>
-
-          <Breadcrumb.Item {...survey}>
-            Survey
-          </Breadcrumb.Item>
-
-          <Breadcrumb.Item {...results}>
-            Results
-          </Breadcrumb.Item>
+          { this.tabs.map(this.toItem()) }
         </Breadcrumb>
 
         { this.props.children }
       </article>
+    )
+  }
+
+  toItem() {
+    return (tab, index) => this.isTabInactive(index) && tab.useable ?
+      this.toClickableTab(tab) :
+      this.toActiveTab(tab)
+  }
+
+  isTabInactive(index) {
+    return index !== this.currentTab - 1
+  }
+
+  toClickableTab({route, text}) {
+    return (
+      <Breadcrumb.Item onClick={() => browserHistory.push(route)}>
+        { text }
+      </Breadcrumb.Item>
+    )
+  }
+
+  toActiveTab({text}) {
+    return (
+      <Breadcrumb.Item active>
+        { text }
+      </Breadcrumb.Item>
     )
   }
 }
