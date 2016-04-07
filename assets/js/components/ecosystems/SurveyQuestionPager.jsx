@@ -15,7 +15,8 @@ class SurveyQuestionPager extends Component {
     super(props)
     this.state = {
       index: 0,
-      alerts: []
+      alerts: [], 
+      finalSkip: false
     }
   }
 
@@ -69,14 +70,18 @@ class SurveyQuestionPager extends Component {
   isAnswered() {
     const currentQuestion = this.props.questions[this.state.index]
     return currentQuestion.selectedAnswer && currentQuestion.intensity
-  }
+ } 
 
   // Increment index, but skip input validation
   skipQuestion() {
-    this.setState({
-      index: this.state.index += 1,
-      alerts: []
-    })
+    if (this.state.index < this.props.questions.length - 1) {
+        this.setState({
+        index: this.state.index += 1,
+        alerts: []
+      })
+    } else {
+       this.setState({finalSkip:true})
+    }
   }
 
   nextPage() {
@@ -122,7 +127,7 @@ class SurveyQuestionPager extends Component {
           </div>
 
           {
-            remainingQuestionCount === 1 && this.isAnswered() ?
+            (remainingQuestionCount === 1 && this.isAnswered()) || this.state.finalSkip === true ?
               <Alert bsStyle="success">
                 <span>OK, let's see your results</span>
                 {' '}
