@@ -2,6 +2,119 @@ module.exports = function (server) {
   const Candidate = server.plugins['hapi-shelf'].model('Candidate')
   const SurveyAnswer = server.plugins['hapi-shelf'].model('SurveyAnswer')
 
+  function getCategoryScores(surveyResponseId, callback)
+  {
+    var score_raw = 'round((sum(cast(survey_answer.intensity as numeric(3,2)))) / cat_scores.score * 100) as category_score'
+
+    SurveyAnswer
+    .query(function(cat_builder) {
+      cat_builder.column('candidate_answer.candidate_id')
+      cat_builder.column('category.id as category_id')
+      cat_builder.column('category.category_name')
+      cat_builder.column(server.plugins['hapi-shelf'].knex.raw(score_raw))
+      cat_builder.innerJoin('question', 'survey_answer.question_id', 'question.id')
+      cat_builder.innerJoin('category', 'question.category_id', 'category.id')
+      cat_builder.innerJoin('survey_response', 'survey_answer.survey_response_id', 'survey_response.id')
+      cat_builder.innerJoin('candidate_answer', 'survey_answer.answer_id', 'candidate_answer.answer_id')
+      cat_builder.innerJoin('candidate_geography', function() {
+        this.on('candidate_answer.candidate_id', '=', 'candidate_geography.candidate_id')
+        .andOn('candidate_geography.geography_id', '=', 'survey_response.geography_id')
+      })
+      cat_builder.innerJoin('candidate', 'candidate_answer.candidate_id', 'candidate.id')
+      cat_builder.join(server.plugins['hapi-shelf'].knex.raw(" \
+      (select question.category_id, category.category_name, sum(sa.intensity) as score \
+       from survey_answer sa \
+       inner join question on sa.question_id = question.id \
+       inner join category on question.category_id = category.id \
+       where sa.survey_response_id = " + surveyResponseId + " \
+       group by question.category_id, category.category_name) as cat_scores on category.id = cat_scores.category_id"))
+      cat_builder.where('survey_response.id', surveyResponseId)
+      cat_builder.groupBy('candidate_answer.candidate_id', 'category.id', 'category.category_name', 'cat_scores.score')
+    })
+    .fetchAll()
+    .then(categories => {
+      callback(categories)
+    })
+  }
+
+  function formatCandidateMatch(matchArray, categoryArray) {
+    var output = {}
+    output.id = matchArray[0].attributes.surveyId
+    output.geographyId = matchArray[0].attributes.geographyId
+
+    output.survey = []
+
+    matchArray.map(function(match) {
+      var typeIndex = output.survey.findIndex(type =>
+        type.candidateTypeName === match.attributes.typeName)
+
+      var catIndex = -1
+
+      if(typeIndex === -1)
+      {
+        typeIndex = output.survey.push({
+          candidateTypeId: match.attributes.typeId,
+          candidateTypeName: match.attributes.typeName,
+          candidates: [{
+            candidateId: match.attributes.candidateId,
+            candidateName: match.attributes.candidateName,
+            compositeMatchScore: match.attributes.compositeScore,
+            categoryMatchScores: []
+          }]
+        })-1
+
+        categoryArray.map(function(category) {
+          if (match.attributes.candidateId === category.attributes.candidateId)
+          {
+            catIndex = output.survey[typeIndex].candidates[0].categoryMatchScores.findIndex(candCat =>
+            candCat.categoryId === category.attributes.categoryId)
+
+            if (catIndex === -1)
+            {
+              output.survey[typeIndex].candidates[0].categoryMatchScores.push({
+                categoryId: category.attributes.categoryId,
+                categoryName: category.attributes.categoryName,
+                categoryMatch: category.attributes.categoryScore
+              })
+            }
+          }
+        })
+      } else {
+        var candIndex = output.survey[typeIndex].candidates.findIndex(cand =>
+          cand.candidateId === match.attributes.candidateId)
+
+        if (candIndex === -1)
+        {
+          candIndex = output.survey[typeIndex].candidates.push({
+            candidateId: match.attributes.candidateId,
+            candidateName: match.attributes.candidateName,
+            compositeMatchScore: match.attributes.compositeScore,
+            categoryMatchScores: []
+          })-1
+
+          categoryArray.map(function(category) {
+            if (match.attributes.candidateId === category.attributes.candidateId)
+            {
+              catIndex = output.survey[typeIndex].candidates[candIndex].categoryMatchScores.findIndex(candCat =>
+              candCat.categoryId === category.attributes.categoryId)
+
+              if (catIndex === -1)
+              {
+                output.survey[typeIndex].candidates[candIndex].categoryMatchScores.push({
+                  categoryId: category.attributes.categoryId,
+                  categoryName: category.attributes.categoryName,
+                  categoryMatch: category.attributes.categoryScore
+                })
+              }
+            }
+          })
+        }
+      }
+    })
+
+    return(output)
+  }
+
   return [{
     method: 'GET',
     path: '/api/candidate',
@@ -60,83 +173,11 @@ module.exports = function (server) {
         })
         .fetchAll()
         .then(matches => {
-          console.log(getCategoryScores(SurveyAnswer, request.params.survey_response_id))
-          reply(formatCandidateMatch(matches.models))
+          getCategoryScores(request.params.survey_response_id, function(categories) {
+            reply(formatCandidateMatch(matches.models, categories.models))
+          })
         })
       })
     }
   }]
-}
-
-function formatCandidateMatch(matchArray) {
-  var output = {}
-  output.id = matchArray[0].attributes.surveyId
-  output.geographyId = matchArray[0].attributes.geographyId
-
-  output.survey = []
-
-  matchArray.map(function(match) {
-    var typeIndex = output.survey.findIndex(type =>
-      type.candidateTypeName === match.attributes.typeName)
-
-    if(typeIndex === -1)
-    {
-      output.survey.push({
-        candidateTypeId: match.attributes.typeId,
-        candidateTypeName: match.attributes.typeName,
-        candidates: [{
-          candidateId: match.attributes.candidateId,
-          candidateName: match.attributes.candidateName,
-          compositeMatchScore: match.attributes.compositeScore
-        }]
-      })
-    } else {
-      var candIndex = output.survey[typeIndex].candidates.findIndex(cand =>
-        cand.candidateId === match.attributes.candidateId)
-
-      if (candIndex === -1)
-      {
-        output.survey[typeIndex].candidates.push({
-          candidateId: match.attributes.candidateId,
-          candidateName: match.attributes.candidateName,
-          compositeMatchScore: match.attributes.compositeScore
-        })
-      }
-    }
-  })
-
-  return(output)
-}
-
-function getCategoryScores(SurveyAnswer, surveyResponseId)
-{
-  var score_raw = 'round((sum(cast(survey_answer.intensity as numeric(3,2))) / cat_scores.score) * 100) as category_score'
-  SurveyAnswer
-  .query(function(cat_builder) {
-    cat_builder.column('candidate_answer.candidate_id')
-    cat_builder.column('category.id as category_id')
-    cat_builder.column('category.category_name')
-    cat_builder.column(server.plugins['hapi-shelf'].knex.raw(score_raw))
-    cat_builder.innerJoin('question', 'survey_answer.question_id', 'question.id')
-    cat_builder.innerJoin('category', 'survey_answer.category_id', 'category.id')
-    cat_builder.innerJoin('survey_response', 'survey_answer.survey_response_id', 'survey_response.id')
-    cat_builder.innerJoin('candidate_answer', 'survey_answer.answer_id', 'candidate_answer.answer_id')
-    cat_builder.innerJoin('candidate_geography', function() {
-      this.on('survey_answer.question_id', '=', 'question.question_id')
-      .andOn('candidate_geography.geography_id', '=', 'survey_response.geography_id')
-    })
-    cat_builder.innerJoin('candidate', 'candidate_answer.candidate_id', 'candidate.id')
-    cat_builder.join(server.plugins['hapi-shelf'].knex.raw(" \
-    (select question.category_id, category.category_name, sum(survey_answer.intensity) as score \
-     from survey_answer \
-     inner join question on survey_answer.question_id = question.id \
-     inner join category on question.category_id = category.id \
-     group by question.category_id, category.category_name) as cat_scores on category.id = cat_scores.category_id"))
-    cat_builder.where('survey_response.id', surveyResponseId)
-    cat_builder.groupBy('candidate_answer.candidate_id', 'category.id', 'category.category_name', 'cat_scores.score')
-  })
-  .fetchAll()
-  .then(categories => {
-    return categories
-  })
 }
