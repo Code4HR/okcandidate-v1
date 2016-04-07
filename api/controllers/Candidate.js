@@ -2,6 +2,30 @@ module.exports = function (server) {
   const Candidate = server.plugins['hapi-shelf'].model('Candidate')
   const SurveyAnswer = server.plugins['hapi-shelf'].model('SurveyAnswer')
 
+  function getCategoryAnswers(surveyResponseId, callback)
+  {
+    SurveyAnswer
+    .query(function(answer_builder) {
+      answer_builder.column('candidate_answer.candidate_id')
+      answer_builder.column('question.category_id')
+      answer_builder.column('question.id as question_id')
+      answer_builder.column('question.question_text')
+      answer_builder.column('a2.id as candidate_answer_id')
+      answer_builder.column('a2.answer_label as candidate_answer_label')
+      answer_builder.column('a1.id as voter_answer_id')
+      answer_builder.column('a1.answer_label as voter_answer_text')
+      answer_builder.innerJoin('answer as a1', 'survey_answer.answer_id', 'a1.id')
+      answer_builder.innerJoin('question', 'survey_answer.question_id', 'question.id')
+      answer_builder.innerJoin('answer as a2', 'question.id', 'a2.question_id')
+      answer_builder.innerJoin('candidate_answer', 'a2.id', 'candidate_answer.answer_id')
+      answer_builder.where('survey_answer.survey_response_id', surveyResponseId)
+    })
+    .fetchAll()
+    .then(answers => {
+      callback(answers)
+    })
+  }
+
   function getCategoryScores(surveyResponseId, callback)
   {
     var score_raw = 'round((sum(cast(survey_answer.intensity as numeric(3,2)))) / cat_scores.score * 100) as category_score'
@@ -37,7 +61,7 @@ module.exports = function (server) {
     })
   }
 
-  function formatCandidateMatch(matchArray, categoryArray) {
+  function formatCandidateMatch(matchArray, categoryArray, answerArray) {
     var output = {}
     output.id = matchArray[0].attributes.surveyId
     output.geographyId = matchArray[0].attributes.geographyId
@@ -49,6 +73,7 @@ module.exports = function (server) {
         type.candidateTypeName === match.attributes.typeName)
 
       var catIndex = -1
+      var answerIndex = -1
 
       if(typeIndex === -1)
       {
@@ -71,12 +96,28 @@ module.exports = function (server) {
 
             if (catIndex === -1)
             {
-              output.survey[typeIndex].candidates[0].categoryMatchScores.push({
+              catIndex = output.survey[typeIndex].candidates[0].categoryMatchScores.push({
                 categoryId: category.attributes.categoryId,
                 categoryName: category.attributes.categoryName,
-                categoryMatch: category.attributes.categoryScore
-              })
+                categoryMatch: category.attributes.categoryScore,
+                questions: []
+              })-1
             }
+
+            answerArray.map(function(answer) {
+              if(match.attributes.candidateId === answer.attributes.candidateId
+              && category.attributes.categoryId === answer.attributes.categoryId)
+              {
+                output.survey[typeIndex].candidates[0].categoryMatchScores[catIndex].questions.push({
+                  questionId: answer.attributes.questionId,
+                  questionText: answer.attributes.questionText,
+                  candidateAnswerId: answer.attributes.candidateAnswerId,
+                  candidateAnswerLabel: answer.attributes.candidateAnswerLabel,
+                  voterAnswerId: answer.attributes.voterAnswerId,
+                  voterAnswerText: answer.attributes.voterAnswerText
+                })
+              }
+            })
           }
         })
       } else {
@@ -100,12 +141,28 @@ module.exports = function (server) {
 
               if (catIndex === -1)
               {
-                output.survey[typeIndex].candidates[candIndex].categoryMatchScores.push({
+                catIndex = output.survey[typeIndex].candidates[candIndex].categoryMatchScores.push({
                   categoryId: category.attributes.categoryId,
                   categoryName: category.attributes.categoryName,
-                  categoryMatch: category.attributes.categoryScore
-                })
+                  categoryMatch: category.attributes.categoryScore,
+                  questions: []
+                })-1
               }
+
+              answerArray.map(function(answer) {
+                if(match.attributes.candidateId === answer.attributes.candidateId
+                && category.attributes.categoryId === answer.attributes.categoryId)
+                {
+                  output.survey[typeIndex].candidates[candIndex].categoryMatchScores[catIndex].questions.push({
+                    questionId: answer.attributes.questionId,
+                    questionText: answer.attributes.questionText,
+                    candidateAnswerId: answer.attributes.candidateAnswerId,
+                    candidateAnswerLabel: answer.attributes.candidateAnswerLabel,
+                    voterAnswerId: answer.attributes.voterAnswerId,
+                    voterAnswerText: answer.attributes.voterAnswerText
+                  })
+                }
+              })
             }
           })
         }
@@ -174,7 +231,9 @@ module.exports = function (server) {
         .fetchAll()
         .then(matches => {
           getCategoryScores(request.params.survey_response_id, function(categories) {
-            reply(formatCandidateMatch(matches.models, categories.models))
+            getCategoryAnswers(request.params.survey_response_id, function(answers) {
+              reply(formatCandidateMatch(matches.models, categories.models, answers.models))
+            })
           })
         })
       })
