@@ -7,8 +7,7 @@ import {
   Button,
   Col,
   Grid,
-  Row,
-  Alert
+  Row
 } from 'react-bootstrap'
 
 import {
@@ -49,48 +48,46 @@ class WardFinder extends Component {
 
     return (
       <section>
-        <Grid>
 
-          <Row>
-            <Col xs={12} sm={6}>
-              <Input type="text"
-                label="Street Address"
-                onChange={this.onSetAddress.bind(this)}
-                value={this.props.ward.address.value}
-                help={this.props.ward.address.help}
-                bsSize="large"
-                bsStyle={this.props.ward.address.help ? 'warning' : null}
-                placeholder="111 Granby St"
-                buttonAfter={
-                  <Button
-                    onClick={this.submitAddress.bind(this)}
-                    bsStyle="primary">Submit</Button>
-                } />
-            </Col>
+        <Input type="text"
+          label="Street Address"
+          onChange={this.onSetAddress.bind(this)}
+          value={this.props.ward.address.value}
+          help={this.props.ward.address.help}
+          bsSize="large"
+          bsStyle={this.props.ward.address.help ? 'warning' : null}
+          placeholder="111 Granby St"
+          buttonAfter={
+            <Button
+              onClick={this.submitAddress.bind(this)}
+              bsStyle="primary">Submit</Button>
+          } />
 
-            <Col xs={12} sm={6}>
-              <Input
-                ref="selectGeography"
-                onChange={this.selectGeography.bind(this)}
-                bsSize="large"
-                type="select"
-                label="Select a Super Ward"
-                value={this.props.ward.id}
-                placeholder="select">
-                <option value={0}>...</option>
-                {
-                  this.props.ward.results.map(ward => {
-                    return (
-                      <option value={ward.id}>{ward.geographyName}</option>
-                    )
-                  })
-                }
-              </Input>
-            </Col>
+          {/*
 
-          </Row>
+          <Col xs={12} sm={6}>
+            <Input
+              ref="selectGeography"
+              onChange={this.selectGeography.bind(this)}
+              bsSize="large"
+              type="select"
+              label="Select a Super Ward"
+              value={this.props.ward.id}
+              placeholder="select">
+              <option value={0}>...</option>
+              {
+                this.props.ward.results.map(ward => {
+                  return (
+                    <option value={ward.id}>{ward.geographyName}</option>
+                  )
+                })
+              }
+            </Input>
+          </Col>
 
-        </Grid>
+        </Row>
+
+        */}
 
       </section>
     )

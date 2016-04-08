@@ -6,10 +6,8 @@ class Frame extends Component {
   render() {
     return (
       <div>
-        <AppHeader />
-        <div className="container">
-          { this.props.children }
-        </div>
+        {/* }<AppHeader /> */}
+        { this.props.children }
       </div>
     )
   }
