@@ -52,14 +52,7 @@ class WardFinder extends Component {
         <Grid>
 
           <Row>
-            <Col xs={12}>
-              <h1>Where are you?</h1>
-            </Col>
-          </Row>
-
-          <Row>
             <Col xs={12} sm={6}>
-              <p>Find politicians near you!</p>
               <Input type="text"
                 label="Street Address"
                 onChange={this.onSetAddress.bind(this)}
@@ -76,7 +69,6 @@ class WardFinder extends Component {
             </Col>
 
             <Col xs={12} sm={6}>
-              <p>If you already know your super ward, you can pick it here.</p>
               <Input
                 ref="selectGeography"
                 onChange={this.selectGeography.bind(this)}
@@ -96,26 +88,6 @@ class WardFinder extends Component {
               </Input>
             </Col>
 
-          </Row>
-
-          <Row>
-            <Col xs={12}>
-              {
-                this.props.ward.id ?
-                  <Alert bsStyle="success">
-                    <span>OK, looks like you're in <b>{this.props.ward.name}</b>!</span>
-                    {' '}
-                    <Button
-                      onClick={this.nextPage.bind(this)}
-                      disabled={!this.props.ward.id}
-                      bsStyle="success">Next</Button>
-                  </Alert>
-                :
-                  <Alert byStyle="info">
-                    <p>Find your superward to continue.</p>
-                  </Alert>
-              }
-            </Col>
           </Row>
 
         </Grid>

@@ -9,6 +9,12 @@ class WardFinderPage extends Component {
   render() {
     return (
       <article>
+
+        <header>
+
+          <h1>Candidates Near You Want Your Vote!</h1>
+        </header>
+
         <WardFinder
           ward={this.props.ward}
           dispatch={this.props.dispatch} />
