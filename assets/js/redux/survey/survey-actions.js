@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import checkStatus from './../utils/checkStatus'
+import { browserHistory } from 'react-router'
 
 export const FETCH_ACTIVE_SURVEYS_REQUEST = 'FETCH_ACTIVE_SURVEYS_REQUEST'
 export const FETCH_ACTIVE_SURVEYS_SUCCESS = 'FETCH_ACTIVE_SURVEYS_SUCCESS'
@@ -164,6 +165,7 @@ export function submitSurveyAnswers(responses) {
     .then(response => response.json())
     .then(response => {
       dispatch(submitSurveyAnswersSuccess(response))
+      dispatch(browserHistory.push(`/survey/results/${response[0].survey_response_id}`))
     })
     .catch(error => {
       dispatch(submitSurveyAnswersFailure(error))
@@ -334,6 +336,45 @@ export function fetchSurveyResponseId(surveyId, geographyId) {
     })
     .catch(error => {
       dispatch(fetchSurveyResponseIdFailure(error))
+    })
+  }
+}
+
+export const FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST = 'FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST'
+export const FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS = 'FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS'
+export const FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE = 'FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE'
+
+export function fetchSurveyCandidateMatchesRequest() {
+  return {
+    type: FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST
+  }
+}
+
+export function fetchSurveyCandidateMatchesSuccess(response) {
+  return {
+    type: FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS,
+    response
+  }
+}
+
+export function fetchSurveyCandidateMatchesFailure(error) {
+  return {
+    type: FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE,
+    error
+  }
+}
+
+export function fetchSurveyCandidateMatches(id) {
+  return function(dispatch) {
+    dispatch(fetchSurveyCandidateMatchesRequest())
+    fetch(`/api/candidate_match/${id}`)
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(fetchSurveyCandidateMatchesSuccess(response))
+    })
+    .catch(error => {
+      dispatch(fetchSurveyCandidateMatchesFailure(error))
     })
   }
 }

@@ -33,7 +33,7 @@ class App extends Component {
           <Route path="survey" component={SurveyPageNav}>
             <IndexRoute component={WardFinderPage} />
             <Route path="questions" component={SurveyPage} />
-            <Route path="results" component={ResultsPage} />
+            <Route path="results/:id" component={ResultsPage} />
           </Route>
         </Route>
       </Router>

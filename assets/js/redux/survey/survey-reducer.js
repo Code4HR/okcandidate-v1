@@ -19,8 +19,13 @@ import {
   SELECT_GEOGRAPHY,
   FETCH_GEOGRAPHY_SUCCESS,
   FETCH_GEOGRAPHY_FAILURE,
-  FETCH_SURVEY_RESPONSE_ID_SUCCESS
+  FETCH_SURVEY_RESPONSE_ID_SUCCESS,
+  FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST,
+  FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS,
+  FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE
 } from './survey-actions'
+
+
 
 export const initialState = {
   surveyResponseId: null,
@@ -218,6 +223,22 @@ export default function (state = initialState, action) {
       case FETCH_SURVEY_RESPONSE_ID_SUCCESS:
         return Object.assign({}, state, {
           surveyResponseId: action.response.id
+        })
+
+      case FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST:
+        return Object.assign({}, state, {
+          isFetching: true
+        })
+
+      case FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS:
+        return Object.assign({}, state, {
+          isFetching: false,
+          candidateMatch: action.response
+        })
+
+      case FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE:
+        return Object.assign({}, state, {
+          isFetching: false
         })
 
       default:

@@ -1,13 +1,64 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+
+import { connect } from 'react-redux'
+
+import {
+  fetchSurveyCandidateMatches
+} from './../../redux/survey/survey-actions'
+
+import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
 
 class ResultsPage extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.props.dispatch(fetchSurveyCandidateMatches(
+      this.props.params.id
+    ))
+
+  }
+
   render() {
     return (
-      <pre>Results Page</pre>
+      <article>
+        <h1>Matches</h1>
+        {
+          this.props.survey.candidateMatch.survey &&
+          this.props.survey.candidateMatch.survey.map((race, index) => {
+            return (
+              <section key={index}>
+                <h2>{race.candidateTypeName}</h2>
+                <h3>Candidate</h3>
+                {
+                  race.candidates.map((candidate, index) => {
+                    return (
+                      <CandidateMatchCandidate
+                        key={index}
+                        candidateName={candidate.candidateName}
+                        candidateMatchScore={candidate.candidateMatchScore}
+                        categoryMatchScores={candidate.categoryMatchScores} />
+                    )
+                  })
+                }
+              </section>
+            )
+          })
+        }
+
+      </article>
     )
   }
 }
 
-ResultsPage.propTypes = {}
+ResultsPage.propTypes = {
+  dispatch: PropTypes.func,
+  params: PropTypes.object,
+  survey: PropTypes.object
+}
 
-export default ResultsPage
+export default connect(
+  state => ({
+    survey: state.survey
+  })
+)(ResultsPage)
