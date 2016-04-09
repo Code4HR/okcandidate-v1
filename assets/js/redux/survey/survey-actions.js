@@ -330,7 +330,6 @@ export function fetchSurveyResponseId(surveyId, geographyId) {
     .then(checkStatus)
     .then(response => response.json())
     .then(response => {
-      debugger
       dispatch(fetchSurveyResponseIdSuccess(response))
     })
     .catch(error => {
