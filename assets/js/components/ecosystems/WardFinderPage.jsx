@@ -1,7 +1,12 @@
 import React, { Component, PropTypes } from 'react'
+
 import {
   connect
 } from 'react-redux'
+
+import {
+  toggleWardfinderWardDropdown
+} from './../../redux/survey/survey-actions'
 
 import {
   Col,
@@ -12,27 +17,49 @@ import {
 import colors from './../style/colors'
 import Card from './../atoms/Card.jsx'
 
-import WardFinder from './../organisms/WardFinder.jsx'
+import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
+import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
+import Credits from './../atoms/Credits.jsx'
 
 const style = {
   header: {
-    background: colors.darkBlue,
-    padding: '3em 3em 0em 3em',
+    backgroundColor: colors.lightBlue,
+    backgroundImage: 'url("http://www.transparenttextures.com/patterns/60-lines.png")',
+    padding: '2em 1em 0em 1em',
     textAlign: 'center'
   },
   heading: {
     color: 'white'
+  },
+  logo: {
+    backgroundImage: 'url("/img/okcandidate-logo.png")',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    width: 300,
+    height: 65,
+    margin: '0 auto'
   },
   card: {
     position: 'relative',
     top: '2em'
   },
   marketingContainer: {
-    paddingTop: '2em'
+    paddingTop: '3em'
+  },
+  marketingColumns: {
+    textAlign: 'center'
   }
 }
 
 class WardFinderPage extends Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  toggleWardDropdown() {
+    this.props.dispatch(toggleWardfinderWardDropdown())
+  }
 
   render() {
     return (
@@ -44,8 +71,8 @@ class WardFinderPage extends Component {
               <Row>
                 <Col xs={12} sm={8} smOffset={2}>
                   <header>
-                    
-                    <h1 style={style.heading}>Candidates Near You Want Your Vote!</h1>
+                    <div style={style.logo}></div>
+                    <h1 style={style.heading}>Find out which candidates for local office are a match for you!</h1>
                   </header>
                 </Col>
               </Row>
@@ -53,10 +80,20 @@ class WardFinderPage extends Component {
               <Row>
                 <Col xs={12} sm={6} smOffset={3}>
                   <Card style={style.card}>
-                    <p>We can find candidates near you using your street address.</p>
-                    <WardFinder
+                    <h2>Get Started!</h2>
+                    <p>We can find candidates running for office in your area by using any Norfolk street address.</p>
+                    <WardFinderAddress
                       ward={this.props.ward}
                       dispatch={this.props.dispatch} />
+                    <a onClick={this.toggleWardDropdown.bind(this)}>Other options</a>
+                    {
+                      this.props.ward.showWardFinderDropdown ?
+                      <WardFinderDropdown
+                        ward={this.props.ward}
+                        dispatch={this.props.dispatch} />
+                      :
+                      null
+                    }
                   </Card>
                 </Col>
               </Row>
@@ -70,20 +107,25 @@ class WardFinderPage extends Component {
 
             <Grid>
               <Row>
-                <Col xs={12} sm={4}>
-                  <h2>Marketing Column 1</h2>
+                <Col xs={12} sm={4} style={style.marketingColumns}>
+                  <h2>1. Ask</h2>
+                  <p>Candidates and voters take our survey</p>
                 </Col>
-                <Col xs={12} sm={4}>
-                  <h2>Marketing Column 2</h2>
+                <Col xs={12} sm={4} style={style.marketingColumns}>
+                  <h2>2. Match</h2>
+                  <p>We match voters with candidates based on the results</p>
                 </Col>
-                <Col xs={12} sm={4}>
-                  <h2>Marketing Column 3</h2>
+                <Col xs={12} sm={4} style={style.marketingColumns}>
+                  <h2>3. Vote</h2>
+                  <p>Voters go to the polls knowing exactly who they want in every office</p>
                 </Col>
               </Row>
             </Grid>
 
           </div>
         </section>
+
+        <Credits />
 
       </article>
     )

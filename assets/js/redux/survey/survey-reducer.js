@@ -22,14 +22,14 @@ import {
   FETCH_SURVEY_RESPONSE_ID_SUCCESS,
   FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST,
   FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS,
-  FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE
+  FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE,
+  TOGGLE_WARDFINDER_WARD_DROPDOWN
 } from './survey-actions'
-
-
 
 export const initialState = {
   surveyResponseId: null,
   ward: {
+    showWardFinderDropdown: false,
     address: { value: '', help: '' },
     id: null,
     results: []
@@ -79,6 +79,13 @@ export default function (state = initialState, action) {
             id: action.response.id,
             name: action.response.geographyName,
             address: state.ward.address
+          })
+        })
+
+      case TOGGLE_WARDFINDER_WARD_DROPDOWN:
+        return Object.assign({}, state, {
+          ward: Object.assign({}, state.ward, {
+            showWardFinderDropdown: !state.ward.showWardFinderDropdown
           })
         })
 
