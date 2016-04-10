@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-import colors from './../style/colors'
-
 const style = {
   container: {
     boxSizing: 'border-box',
@@ -33,7 +31,7 @@ class Card extends Component {
 
 }
 
-Card.PropTypes = {
+Card.propTypes = {
   children: PropTypes.any,
   style: PropTypes.object
 }
