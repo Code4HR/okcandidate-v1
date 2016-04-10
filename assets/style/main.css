@@ -1,5 +1,12 @@
+/* General Body Styles */
+body, html {
+  background-color: #D8E9F0;
+  background-image: url("http://www.transparenttextures.com/patterns/60-lines.png");
+}
+
+/* Survey Question Styles */
 .glyphicon-heart-empty, .glyphicon-heart {
     color: #f33535;
     font-size: 48px;
-    padding: 3px;
+    padding: 3px 0;
 }

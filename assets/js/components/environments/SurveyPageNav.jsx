@@ -3,10 +3,6 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { Breadcrumb } from 'react-bootstrap'
 
-const navStyle = {
-  marginBottom: '2em'
-}
-
 class SurveyPageNav extends Component {
   constructor(props) {
     super(props)

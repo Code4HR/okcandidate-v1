@@ -15,6 +15,7 @@
   "globals": {
     "document": true,
     "window": true,
+    "context": true,
     "it": true,
     "describe": true,
     "beforeEach": true,

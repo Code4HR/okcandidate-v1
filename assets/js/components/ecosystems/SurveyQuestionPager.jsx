@@ -3,11 +3,23 @@ import React, { Component, PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 
 import {
-  Button,
-  Alert
+  Button
 } from 'react-bootstrap'
 
+import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
+import SurveyQuestionCounter from './../molecules/SurveyQuestionCounter.jsx'
+
+const style = {
+  buttonTray: {
+    container: {
+      display: 'flex'
+    },
+    spacer: {
+      flex: '1'
+    }
+  }
+}
 
 class SurveyQuestionPager extends Component {
 
@@ -15,136 +27,98 @@ class SurveyQuestionPager extends Component {
     super(props)
     this.state = {
       index: 0,
-      alerts: [], 
-      finalSkip: false
+      alerts: []
+    }
+  }
+
+  goBack() {
+    if (this.state.index > 0) {
+      this.decrementIndex()
+    }
+    else {
+      browserHistory.push('/survey')
+    }
+  }
+
+  goForward() {
+    try {
+      this.validateSelections()
+      this.state.alerts = {}
+      if (this.state.index < this.props.questions.length - 1) {
+        this.incrementIndex()
+      }
+      else {
+        this.props.onSubmit()
+      }
+    }
+    catch (errors) {
+      this.setState({
+        alerts: errors
+      })
     }
   }
 
   incrementIndex() {
-    try {
-      this.isDone()
-      this.setState({
-        index: this.state.index += 1,
-        alerts: []
-      })
-    }
-    catch (error) {
-      this.setState({
-        alerts: error
-      })
-    }
-
+    this.setState({
+      index: this.state.index + 1
+    })
   }
 
   decrementIndex() {
-    if (this.state.index !== 0) {
-      this.setState({
-        index: this.state.index -= 1,
-        alerts: []
-      })
-    }
+    this.setState({
+      index: this.state.index - 1
+    })
   }
 
-  shouldEnableDecrement() {
-    return this.state.index !== 0
-  }
-
-  shouldEnableIncrement() {
-    return this.state.index !== this.props.questions.length - 1
-  }
-
-  isDone() {
-    const errors = []
+  validateSelections() {
+    const errors = {}
     const currentQuestion = this.props.questions[this.state.index]
+    if (!currentQuestion.selectedAnswer && !currentQuestion.intensity) {
+      return
+    }
     if (!currentQuestion.selectedAnswer) {
-      errors.push('Please select an answer')
+      errors.answer = 'Please select an answer'
     }
     if (!currentQuestion.intensity) {
-      errors.push('How do you feel about this?')
+      errors.intensity = 'How do you feel about this?'
     }
-    if (errors.length) {
+    if (errors.intensity || errors.answer) {
       throw errors
     }
-  }
-
-  isAnswered() {
-    const currentQuestion = this.props.questions[this.state.index]
-    return currentQuestion.selectedAnswer && currentQuestion.intensity
- } 
-
-  // Increment index, but skip input validation
-  skipQuestion() {
-    if (this.state.index < this.props.questions.length - 1) {
-        this.setState({
-        index: this.state.index += 1,
-        alerts: []
-      })
-    } else {
-       this.setState({finalSkip:true})
-    }
-  }
-
-  nextPage() {
-    this.props.onSubmit()
-    browserHistory.push('/survey/results')
   }
 
   render() {
 
     const currentQuestion = this.props.questions[this.state.index]
-    const remainingQuestionCount =
-      this.props.questions.length - this.state.index
 
     return (
       <section>
+        <SurveyQuestionCounter
+          index={this.state.index}
+          total={this.props.questions.length} />
 
-        {
-          this.state.alerts.map(alert => {
-            return (
-              <Alert bsStyle="warning">
-                {alert}
-              </Alert>
-            )
-          })
-        }
+        <Card>
+          <SurveyQuestion
+            style={{marginBottom: '2em'}}
+            question={currentQuestion}
+            alerts={this.state.alerts}
+            dispatch={this.props.dispatch} />
 
-        <SurveyQuestion
-          question={currentQuestion}
-          dispatch={this.props.dispatch} />
+            <div style={style.buttonTray.container}>
+              <Button
+                ref="backButton"
+                onClick={this.goBack.bind(this)}
+                bsSize="large">Back</Button> {' '}
 
-          <div style={{marginBottom: '2em'}}>
-            <Button
-              disabled={!this.shouldEnableDecrement.call(this)}
-              onClick={this.decrementIndex.bind(this)}
-              bsSize="large">Back</Button> {' '}
-            <Button
-              onClick={this.skipQuestion.bind(this)}
-              bsSize="large">Skip</Button> {' '}
-            <Button
-              disabled={!this.shouldEnableIncrement.call(this)}
-              onClick={this.incrementIndex.bind(this)}
-              bsSize="large">Submit</Button>
-          </div>
+              <div style={style.buttonTray.spacer}></div>
 
-          {
-            (remainingQuestionCount === 1 && this.isAnswered()) || this.state.finalSkip === true ?
-              <Alert bsStyle="success">
-                <span>OK, let's see your results</span>
-                {' '}
-                <Button
-                  onClick={this.nextPage.bind(this)}
-                  bsStyle="success">Next</Button>
-              </Alert>
-            :
-              <Alert bsStyle="info">
-                {
-                  remainingQuestionCount === 1 ?
-                    <span><b>Last question!</b></span>
-                  :
-                    <span><b>{remainingQuestionCount}</b> questions remaining</span>
-                }
-              </Alert>
-          }
+              <Button
+                ref="nextButton"
+                bsStyle="primary"
+                bsSize="large"
+                onClick={this.goForward.bind(this)}>Next</Button>
+            </div>
+        </Card>
 
       </section>
     )
