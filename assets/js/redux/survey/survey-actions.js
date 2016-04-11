@@ -167,11 +167,19 @@ export function submitSurveyAnswers(original) {
     .then(response => response.json())
     .then(response => {
       dispatch(submitSurveyAnswersSuccess(response))
-      dispatch(browserHistory.push(`/survey/results/${response[0].survey_response_id}`))
+      browserHistory.push(`/survey/results/${response[0].survey_response_id}`)
     })
     .catch(error => {
       dispatch(submitSurveyAnswersFailure(error))
     })
+  }
+}
+
+export const TOGGLE_WARDFINDER_WARD_DROPDOWN = 'TOGGLE_WARDFINDER_WARD_DROPDOWN'
+
+export function toggleWardfinderWardDropdown() {
+  return {
+    type: TOGGLE_WARDFINDER_WARD_DROPDOWN
   }
 }
 
@@ -234,6 +242,7 @@ export function submitStreetAddress(street) {
     .then(response => response.json())
     .then(response => {
       dispatch(submitStreetAddressSuccess(response))
+      dispatch(selectGeography(response.id))
     })
     .catch(error => {
       dispatch(submitStreetAddressFailure(error))
@@ -335,6 +344,7 @@ export function fetchSurveyResponseId(surveyId, geographyId) {
     .then(response => response.json())
     .then(response => {
       dispatch(fetchSurveyResponseIdSuccess(response))
+      browserHistory.push('/survey/questions')
     })
     .catch(error => {
       dispatch(fetchSurveyResponseIdFailure(error))

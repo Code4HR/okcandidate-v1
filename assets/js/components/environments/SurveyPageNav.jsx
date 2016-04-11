@@ -57,9 +57,11 @@ class SurveyPageNav extends Component {
   render() {
     return (
       <article>
+        {/*}
         <Breadcrumb style={navStyle}>
           { this.tabs.map(this.toItem()) }
         </Breadcrumb>
+        */}
 
         { this.props.children }
       </article>
