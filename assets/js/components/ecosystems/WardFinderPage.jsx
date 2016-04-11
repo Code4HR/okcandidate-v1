@@ -14,7 +14,6 @@ import {
   Row
 } from 'react-bootstrap'
 
-import colors from './../style/colors'
 import Card from './../atoms/Card.jsx'
 
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
@@ -23,8 +22,8 @@ import Credits from './../atoms/Credits.jsx'
 
 const style = {
   header: {
-    backgroundColor: colors.lightBlue,
-    backgroundImage: 'url("http://www.transparenttextures.com/patterns/60-lines.png")',
+    // backgroundColor: colors.lightBlue,
+    // backgroundImage: 'url("http://www.transparenttextures.com/patterns/60-lines.png")',
     padding: '2em 1em 0em 1em',
     textAlign: 'center'
   },
@@ -44,7 +43,9 @@ const style = {
     top: '2em'
   },
   marketingContainer: {
-    paddingTop: '3em'
+    padding: '3em 0 2em 0',
+    marginBottom: '1em',
+    backgroundColor: '#ffffff'
   },
   marketingColumns: {
     textAlign: 'center'

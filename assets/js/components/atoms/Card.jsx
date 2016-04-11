@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 const style = {
   container: {
     boxSizing: 'border-box',
-    padding: '1rem',
+    padding: '2rem',
     background: '#ffffff',
     borderRadius: '2px',
     boxShadow: '0 1px 3px rgba(0,0,0,0.12),' +

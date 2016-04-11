@@ -7,7 +7,7 @@ import SurveyPageNav from '../../../../assets/js/components/environments/SurveyP
 
 var TestUtils = React.addons.TestUtils
 
-describe('The survey page navigator', () => {
+describe.skip('The survey page navigator', () => {
   let nav, state, store
 
   beforeEach(() => {

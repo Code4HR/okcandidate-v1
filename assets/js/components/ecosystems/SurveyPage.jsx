@@ -46,17 +46,17 @@ class SurveyPage extends Component {
 
     return (
       <article>
-
-        {
-          !this.props.survey.isFetching && questions.length ?
-            <SurveyQuestionPager
-              onSubmit={this.submit.bind(this)}
-              questions={questions}
-              dispatch={this.props.dispatch} />
-          :
-          <p>Loading Questions</p>
-        }
-
+        <div className="container">
+          {
+            !this.props.survey.isFetching && questions.length ?
+              <SurveyQuestionPager
+                onSubmit={this.submit.bind(this)}
+                questions={questions}
+                dispatch={this.props.dispatch} />
+            :
+            <p>Loading Questions</p>
+          }
+        </div>
       </article>
     )
   }
