@@ -21,7 +21,7 @@ class ResultsPage extends Component {
 
   render() {
     return (
-      <article>
+      <article className="container">
         <h1>Matches</h1>
         {
           this.props.survey.candidateMatch.survey &&
@@ -29,14 +29,13 @@ class ResultsPage extends Component {
             return (
               <section key={index}>
                 <h2>{race.candidateTypeName}</h2>
-                <h3>Candidate</h3>
                 {
                   race.candidates.map((candidate, index) => {
                     return (
                       <CandidateMatchCandidate
                         key={index}
                         candidateName={candidate.candidateName}
-                        candidateMatchScore={candidate.candidateMatchScore}
+                        compositeMatchScore={candidate.compositeMatchScore}
                         categoryMatchScores={candidate.categoryMatchScores} />
                     )
                   })
