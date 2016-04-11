@@ -148,9 +148,7 @@ export function submitSurveyAnswersFailure(error) {
   }
 }
 
-export function submitSurveyAnswers(original) {
-  let responses = original.filter(response =>
-    response.answer.id && response.intensity)
+export function submitSurveyAnswers(responses) {
   return function(dispatch) {
     dispatch(submitSurveyAnswersRequest())
     return fetch('/api/survey_answer', {
