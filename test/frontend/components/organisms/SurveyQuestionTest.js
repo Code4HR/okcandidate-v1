@@ -22,7 +22,7 @@ describe('The survey question component', () => {
       }
     }
     surveyQuestion = TestUtils.renderIntoDocument(
-      <SurveyQuestion question={ question } />
+      <SurveyQuestion question={ question } alerts={{}} />
     )
   })
 

@@ -55,7 +55,7 @@ describe('Survey Question Pager', () => {
 
     })
 
-    context.only('Next Button', () => {
+    context('Next Button', () => {
 
       it('should allow the user to skip to the next question if they have ' +
          'not interacted with other parts of the form', () => {

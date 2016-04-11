@@ -27,7 +27,8 @@ class SurveyQuestionPager extends Component {
     super(props)
     this.state = {
       index: 0,
-      alerts: []
+      alerts: [],
+      finalSkip: false
     }
   }
 
@@ -93,6 +94,7 @@ class SurveyQuestionPager extends Component {
 
     return (
       <section>
+
         <SurveyQuestionCounter
           index={this.state.index}
           total={this.props.questions.length} />
