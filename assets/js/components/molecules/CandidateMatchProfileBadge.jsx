@@ -19,11 +19,14 @@ const style = {
 }
 
 class CandidateMatchProfileBadge extends Component {
+  get containerStyle() {
+    return Object.assign({}, style.container, this.props.style)
+  }
 
   render() {
 
     return (
-      <section style={style.container}>
+      <section style={this.containerStyle}>
         <CandidateMatchPicture />
         <div style={{marginLeft: '.5em'}}>
           <h3 style={style.label}>{this.props.candidateName}</h3>
@@ -39,7 +42,8 @@ class CandidateMatchProfileBadge extends Component {
 
 CandidateMatchProfileBadge.propTypes = {
   compositeMatchScore: PropTypes.string,
-  candidateName: PropTypes.string
+  candidateName: PropTypes.string,
+  style: PropTypes.object
 }
 
 export default CandidateMatchProfileBadge
