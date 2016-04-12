@@ -15,6 +15,10 @@ class CandidateMatchCandidate extends Component {
     }
   }
 
+  get glyph() {
+    return `chevron-${this.state.showCategory ? 'up' : 'down'}`
+  }
+
   toggleCategories() {
     this.setState({
       showCategory: !this.state.showCategory
@@ -30,11 +34,12 @@ class CandidateMatchCandidate extends Component {
             compositeMatchScore={this.props.compositeMatchScore}
             style={{flex: 1}} />
           <Button onClick={event => this.toggleCategories()}>
-            <Glyphicon glyph="chevron-down" />
+            <Glyphicon glyph={this.glyph} />
           </Button>
         </div>
 
-        <Panel collapsible expanded={this.state.showCategory}>
+        <Panel collapsible expanded={this.state.showCategory}
+          style={{border: 'none'}}>
           {
             this.state.showCategory ?
             this.props.categoryMatchScores.map((category, index) => {

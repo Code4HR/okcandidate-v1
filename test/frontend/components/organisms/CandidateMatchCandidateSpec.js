@@ -75,6 +75,15 @@ describe('The results candidate component', () => {
           onclick()
           expect(candidate.state.showCategory).to.be.true
         })
+
+        it('will show an upwards chevron for an icon', () => {
+          let icon =
+            TestUtils.scryRenderedComponentsWithType(button, Glyphicon)[0]
+          onclick()
+          expect(icon).to.have.property('props')
+            .that.have.property('glyph')
+            .that.equal('chevron-up')
+        })
       })
     })
 
@@ -121,6 +130,13 @@ describe('The results candidate component', () => {
       expect(panel).to.have.property('props')
         .that.have.property('expanded')
         .that.equal(candidate.state.showCategory)
+    })
+
+    it('will have a borderless style', () => {
+      expect(panel).to.have.property('props')
+        .that.have.property('style')
+        .that.have.property('border')
+        .that.equal('none')
     })
   })
 })
