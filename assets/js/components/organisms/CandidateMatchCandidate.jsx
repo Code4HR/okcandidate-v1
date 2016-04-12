@@ -1,22 +1,28 @@
 import React, { PropTypes, Component } from 'react'
+
+import CandidateMatchProfileBadge from './../molecules/CandidateMatchProfileBadge.jsx'
+
 import CandidateMatchCategory from './../organisms/CandidateMatchCategory.jsx'
+import Card from './../atoms/Card.jsx'
 
 class CandidateMatchCandidate extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      showCategory: false
+    }
   }
 
   render() {
     return (
-      <section>
-        <h4>{this.props.candidateName}</h4>
-        <dl>
-          <dt>Match</dt>
-          <dd>{this.props.compositeMatchScore}</dd>
-        </dl>
-        <h5>Categories</h5>
+      <Card style={{marginBottom: '1em'}}>
+        <CandidateMatchProfileBadge
+          candidateName={this.props.candidateName}
+          compositeMatchScore={this.props.compositeMatchScore} />
+
         {
+          this.state.showCategory ?
           this.props.categoryMatchScores.map((category, index) => {
             return (
               <CandidateMatchCategory
@@ -26,8 +32,11 @@ class CandidateMatchCandidate extends Component {
                 questions={category.questions} />
             )
           })
+          :
+          null
         }
-      </section>
+
+      </Card>
     )
   }
 
