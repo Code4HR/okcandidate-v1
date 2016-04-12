@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { Panel, Button } from 'react-bootstrap'
 
 import CandidateMatchProfileBadge from './../molecules/CandidateMatchProfileBadge.jsx'
 
@@ -14,27 +15,36 @@ class CandidateMatchCandidate extends Component {
     }
   }
 
+  toggleCategories() {
+    this.setState({
+      showCategory: !this.state.showCategory
+    })
+  }
+
   render() {
     return (
       <Card style={{marginBottom: '1em'}}>
         <CandidateMatchProfileBadge
           candidateName={this.props.candidateName}
           compositeMatchScore={this.props.compositeMatchScore} />
+        <Button onClick={event => this.toggleCategories()} />
 
-        {
-          this.state.showCategory ?
-          this.props.categoryMatchScores.map((category, index) => {
-            return (
-              <CandidateMatchCategory
-                key={index}
-                categoryName={category.categoryName}
-                categoryMatch={category.categoryMatch}
-                questions={category.questions} />
-            )
-          })
-          :
-          null
-        }
+        <Panel collapsible expanded={this.state.showCategory}>
+          {
+            this.state.showCategory ?
+            this.props.categoryMatchScores.map((category, index) => {
+              return (
+                <CandidateMatchCategory
+                  key={index}
+                  categoryName={category.categoryName}
+                  categoryMatch={category.categoryMatch}
+                  questions={category.questions} />
+              )
+            })
+            :
+            null
+          }
+        </Panel>
 
       </Card>
     )
