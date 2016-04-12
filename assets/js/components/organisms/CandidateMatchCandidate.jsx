@@ -39,7 +39,7 @@ class CandidateMatchCandidate extends Component {
         </div>
 
         <Panel collapsible expanded={this.state.showCategory}
-          style={{border: 'none'}}>
+          style={{border: 'none', boxShadow: 'none'}}>
           {
             this.state.showCategory ?
             this.props.categoryMatchScores.map((category, index) => {

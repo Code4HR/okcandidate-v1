@@ -138,5 +138,12 @@ describe('The results candidate component', () => {
         .that.have.property('border')
         .that.equal('none')
     })
+
+    it('will have an unset box-shadow style', () => {
+      expect(panel).to.have.property('props')
+        .that.have.property('style')
+        .that.have.property('boxShadow')
+        .that.equal('none')
+    })
   })
 })
