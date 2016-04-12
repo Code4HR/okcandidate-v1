@@ -1,5 +1,5 @@
 import React from 'react'
-import { Panel, Button } from 'react-bootstrap'
+import { Panel, Button, Glyphicon } from 'react-bootstrap'
 import TestUtils from 'react-addons-test-utils'
 import { expect } from 'chai'
 
@@ -11,7 +11,8 @@ describe('The results candidate component', () => {
 
   beforeEach(() => {
     candidate = TestUtils.renderIntoDocument(
-      <CandidateMatchCandidate />
+      <CandidateMatchCandidate
+        categoryMatchScores={[]} />
     )
   })
 
@@ -19,31 +20,59 @@ describe('The results candidate component', () => {
     expect(candidate).to.be.ok
   })
 
-  context('button', () => {
-    let button
+  context('flexbox', () => {
+    let flexbox
 
     beforeEach(() => {
-      button = TestUtils.scryRenderedComponentsWithType(candidate, Button)[0]
+      flexbox = TestUtils.scryRenderedDOMComponentsWithTag(candidate, 'div')[0]
     })
 
     it('will exist', () => {
-      expect(button).to.be.ok
+      expect(flexbox).to.be.ok
     })
 
-    context('onclick', () => {
-      let onclick
+    it('will have a flex display style', () => {
+      expect(flexbox).to.have.property('style')
+        .that.is.an('object')
+        .that.have.property('display')
+        .that.is.a('string')
+        .that.equal('flex')
+    })
+
+    context('button', () => {
+      let button
 
       beforeEach(() => {
-        onclick = button.props.onClick
+        button = TestUtils.scryRenderedComponentsWithType(candidate, Button)[0]
       })
 
       it('will exist', () => {
-        expect(onclick).to.be.ok
+        expect(button).to.be.ok
       })
 
-      it('will toggle the showCategory state', () => {
-        onclick()
-        expect(candidate.state.showCategory).to.be.true
+      it('will have a downwards chevron for an icon', () => {
+        let icon =
+          TestUtils.scryRenderedComponentsWithType(button, Glyphicon)[0]
+        expect(icon).to.have.property('props')
+          .that.have.property('glyph')
+          .that.equal('chevron-down')
+      })
+
+      context('onclick', () => {
+        let onclick
+
+        beforeEach(() => {
+          onclick = button.props.onClick
+        })
+
+        it('will exist', () => {
+          expect(onclick).to.be.ok
+        })
+
+        it('will toggle the showCategory state', () => {
+          onclick()
+          expect(candidate.state.showCategory).to.be.true
+        })
       })
     })
   })

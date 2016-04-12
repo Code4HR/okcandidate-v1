@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { Panel, Button } from 'react-bootstrap'
+import { Panel, Button, Glyphicon } from 'react-bootstrap'
 
 import CandidateMatchProfileBadge from './../molecules/CandidateMatchProfileBadge.jsx'
 
@@ -24,10 +24,14 @@ class CandidateMatchCandidate extends Component {
   render() {
     return (
       <Card style={{marginBottom: '1em'}}>
-        <CandidateMatchProfileBadge
-          candidateName={this.props.candidateName}
-          compositeMatchScore={this.props.compositeMatchScore} />
-        <Button onClick={event => this.toggleCategories()} />
+        <div style={{display: 'flex'}}>
+          <CandidateMatchProfileBadge
+            candidateName={this.props.candidateName}
+            compositeMatchScore={this.props.compositeMatchScore} />
+          <Button onClick={event => this.toggleCategories()}>
+            <Glyphicon glyph="chevron-down" />
+          </Button>
+        </div>
 
         <Panel collapsible expanded={this.state.showCategory}>
           {
