@@ -27,7 +27,8 @@ class CandidateMatchCandidate extends Component {
         <div style={{display: 'flex'}}>
           <CandidateMatchProfileBadge
             candidateName={this.props.candidateName}
-            compositeMatchScore={this.props.compositeMatchScore} />
+            compositeMatchScore={this.props.compositeMatchScore}
+            style={{flex: 1}} />
           <Button onClick={event => this.toggleCategories()}>
             <Glyphicon glyph="chevron-down" />
           </Button>

@@ -5,6 +5,8 @@ import { expect } from 'chai'
 
 import CandidateMatchCandidate
   from '../../../../assets/js/components/organisms/CandidateMatchCandidate'
+import CandidateMatchProfileBadge
+  from '../../../../assets/js/components/molecules/CandidateMatchProfileBadge'
 
 describe('The results candidate component', () => {
   let candidate
@@ -73,6 +75,27 @@ describe('The results candidate component', () => {
           onclick()
           expect(candidate.state.showCategory).to.be.true
         })
+      })
+    })
+
+    context('badge', () => {
+      let badge
+
+      beforeEach(() => {
+        badge =
+          TestUtils.scryRenderedComponentsWithType(
+            candidate, CandidateMatchProfileBadge)[0]
+      })
+
+      it('will exist', () => {
+        expect(badge).to.be.ok
+      })
+
+      it('will have a flex style property of 1', () => {
+        expect(badge).to.have.property('props')
+          .that.have.property('style')
+          .that.have.property('flex')
+          .that.equal(1)
       })
     })
   })
