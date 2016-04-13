@@ -8,6 +8,12 @@ import {
   submitSurveyAnswers
 } from './../../redux/survey/survey-actions'
 
+import {
+  Col,
+  Grid,
+  Row
+} from 'react-bootstrap'
+
 class SurveyPage extends Component {
 
   constructor(props) {
@@ -46,17 +52,21 @@ class SurveyPage extends Component {
 
     return (
       <article>
-        <div className="container">
-          {
-            !this.props.survey.isFetching && questions.length ?
-              <SurveyQuestionPager
-                onSubmit={this.submit.bind(this)}
-                questions={questions}
-                dispatch={this.props.dispatch} />
-            :
-            <p>Loading Questions</p>
-          }
-        </div>
+        <Grid>
+          <Row>
+            <Col xs={12} sm={8} smOffset={2}>
+              {
+                !this.props.survey.isFetching && questions.length ?
+                  <SurveyQuestionPager
+                    onSubmit={this.submit.bind(this)}
+                    questions={questions}
+                    dispatch={this.props.dispatch} />
+                :
+                <p>Loading Questions</p>
+              }
+            </Col>
+          </Row>
+        </Grid>
       </article>
     )
   }
