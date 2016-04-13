@@ -27,10 +27,6 @@ class WardFinderDropdown extends Component {
     this.props.dispatch(selectGeography(selection))
   }
 
-  nextPage() {
-    browserHistory.push('/survey/questions')
-  }
-
   render() {
     return (
       <div style={style.container}>
