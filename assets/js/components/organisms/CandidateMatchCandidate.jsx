@@ -27,7 +27,7 @@ class CandidateMatchCandidate extends Component {
 
   render() {
     return (
-      <Card style={{marginBottom: '1em'}}>
+      <Card className="candidate-card" style={{marginBottom: '1em'}}>
         <div style={{display: 'flex'}}>
           <CandidateMatchProfileBadge
             candidateName={this.props.candidateName}

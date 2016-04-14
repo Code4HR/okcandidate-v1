@@ -7,6 +7,7 @@ import CandidateMatchCandidate
   from '../../../../assets/js/components/organisms/CandidateMatchCandidate'
 import CandidateMatchProfileBadge
   from '../../../../assets/js/components/molecules/CandidateMatchProfileBadge'
+import Card from '../../../../assets/js/components/atoms/Card'
 
 describe('The results candidate component', () => {
   let candidate
@@ -22,128 +23,147 @@ describe('The results candidate component', () => {
     expect(candidate).to.be.ok
   })
 
-  context('flexbox', () => {
-    let flexbox
+  context('card', () => {
+    let card
 
     beforeEach(() => {
-      flexbox = TestUtils.scryRenderedDOMComponentsWithTag(candidate, 'div')[0]
+      card = TestUtils.scryRenderedComponentsWithType(candidate, Card)[0]
     })
 
     it('will exist', () => {
-      expect(flexbox).to.be.ok
+      expect(card).to.be.ok
     })
 
-    it('will have a flex display style', () => {
-      expect(flexbox).to.have.property('style')
-        .that.is.an('object')
-        .that.have.property('display')
-        .that.is.a('string')
-        .that.equal('flex')
+    it('will have a candidate-card class', () => {
+      expect(card).to.have.property('props')
+        .that.have.property('className')
+        .that.equal('candidate-card')
     })
 
-    context('button', () => {
-      let button
+    context('flexbox', () => {
+      let flexbox
 
       beforeEach(() => {
-        button = TestUtils.scryRenderedComponentsWithType(candidate, Button)[0]
+        flexbox = TestUtils.scryRenderedDOMComponentsWithTag(card, 'div')[0]
       })
 
       it('will exist', () => {
-        expect(button).to.be.ok
+        expect(flexbox).to.be.ok
       })
 
-      it('will have a downwards chevron for an icon', () => {
-        let icon =
-          TestUtils.scryRenderedComponentsWithType(button, Glyphicon)[0]
-        expect(icon).to.have.property('props')
-          .that.have.property('glyph')
-          .that.equal('chevron-down')
+      it('will have a flex display style', () => {
+        expect(flexbox).to.have.property('style')
+          .that.is.an('object')
+          .that.have.property('display')
+          .that.is.a('string')
+          .that.equal('flex')
       })
 
-      context('onclick', () => {
-        let onclick
+      context('button', () => {
+        let button
 
         beforeEach(() => {
-          onclick = button.props.onClick
+          button = TestUtils.scryRenderedComponentsWithType(card, Button)[0]
         })
 
         it('will exist', () => {
-          expect(onclick).to.be.ok
+          expect(button).to.be.ok
         })
 
-        it('will toggle the showCategory state', () => {
-          onclick()
-          expect(candidate.state.showCategory).to.be.true
-        })
-
-        it('will show an upwards chevron for an icon', () => {
+        it('will have a downwards chevron for an icon', () => {
           let icon =
             TestUtils.scryRenderedComponentsWithType(button, Glyphicon)[0]
-          onclick()
           expect(icon).to.have.property('props')
             .that.have.property('glyph')
-            .that.equal('chevron-up')
+            .that.equal('chevron-down')
+        })
+
+        context('onclick', () => {
+          let onclick
+
+          beforeEach(() => {
+            onclick = button.props.onClick
+          })
+
+          it('will exist', () => {
+            expect(onclick).to.be.ok
+          })
+
+          it('will toggle the showCategory state', () => {
+            onclick()
+            expect(candidate.state.showCategory).to.be.true
+          })
+
+          it('will show an upwards chevron for an icon', () => {
+            let icon =
+              TestUtils.scryRenderedComponentsWithType(button, Glyphicon)[0]
+            onclick()
+            expect(icon).to.have.property('props')
+              .that.have.property('glyph')
+              .that.equal('chevron-up')
+          })
+        })
+      })
+
+      context('badge', () => {
+        let badge
+
+        beforeEach(() => {
+          badge =
+            TestUtils.scryRenderedComponentsWithType(
+              card, CandidateMatchProfileBadge)[0]
+        })
+
+        it('will exist', () => {
+          expect(badge).to.be.ok
+        })
+
+        it('will have a flex style property of 1', () => {
+          expect(badge).to.have.property('props')
+            .that.have.property('style')
+            .that.have.property('flex')
+            .that.equal(1)
         })
       })
     })
 
-    context('badge', () => {
-      let badge
+    context('panel', () => {
+      let panel
 
       beforeEach(() => {
-        badge =
-          TestUtils.scryRenderedComponentsWithType(
-            candidate, CandidateMatchProfileBadge)[0]
+        panel = TestUtils.scryRenderedComponentsWithType(card, Panel)[0]
       })
 
       it('will exist', () => {
-        expect(badge).to.be.ok
+        expect(panel).to.be.ok
       })
 
-      it('will have a flex style property of 1', () => {
-        expect(badge).to.have.property('props')
+      it('will have a collapsible property', () => {
+        expect(panel).to.have.property('props')
+          .that.have.property('collapsible')
+          .that.is.true
+      })
+
+      it('will have an expanded property', () => {
+        expect(panel).to.have.property('props')
+          .that.have.property('expanded')
+          .that.equal(candidate.state.showCategory)
+      })
+
+      it('will have a borderless style', () => {
+        expect(panel).to.have.property('props')
           .that.have.property('style')
-          .that.have.property('flex')
-          .that.equal(1)
+          .that.have.property('border')
+          .that.equal('none')
+      })
+
+      it('will have an unset box-shadow style', () => {
+        expect(panel).to.have.property('props')
+          .that.have.property('style')
+          .that.have.property('boxShadow')
+          .that.equal('none')
       })
     })
   })
 
-  context('panel', () => {
-    let panel
-
-    beforeEach(() => {
-      panel = TestUtils.scryRenderedComponentsWithType(candidate, Panel)[0]
-    })
-
-    it('will exist', () => {
-      expect(panel).to.be.ok
-    })
-
-    it('will have a collapsible property', () => {
-      expect(panel).to.have.property('props')
-        .that.have.property('collapsible')
-        .that.is.true
-    })
-
-    it('will have an expanded property', () => {
-      expect(panel).to.have.property('props')
-        .that.have.property('expanded')
-        .that.equal(candidate.state.showCategory)
-    })
-
-    it('will have a borderless style', () => {
-      expect(panel).to.have.property('props')
-        .that.have.property('style')
-        .that.have.property('border')
-        .that.equal('none')
-    })
-
-    it('will have an unset box-shadow style', () => {
-      expect(panel).to.have.property('props')
-        .that.have.property('style')
-        .that.have.property('boxShadow')
-        .that.equal('none')
-    })
-  })
 })

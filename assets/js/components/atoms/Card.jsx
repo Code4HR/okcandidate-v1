@@ -23,7 +23,7 @@ class Card extends Component {
 
   render() {
     return (
-      <section style={this.getStyle.call(this)}>
+      <section className={this.props.className} style={this.getStyle.call(this)}>
         {this.props.children}
       </section>
     )
@@ -33,7 +33,8 @@ class Card extends Component {
 
 Card.propTypes = {
   children: PropTypes.any,
-  style: PropTypes.object
+  style: PropTypes.object,
+  className: PropTypes.string
 }
 
 export default Card

@@ -1,36 +1,26 @@
 import React, { PropTypes, Component } from 'react'
-import CandidateMatchQuestion from './../organisms/CandidateMatchQuestion.jsx'
+import { Panel } from 'react-bootstrap'
+
+import CandidateMatchRating from '../atoms/CandidateMatchRating.jsx'
 
 class CandidateMatchCategory extends Component {
-
   constructor(props) {
     super(props)
   }
 
   render() {
     return (
-      <section>
-        <h6>{this.props.categoryName}</h6>
-        <dl>
-          <dt>Category Match</dt>
-          <dd>{this.props.categoryMatch}</dd>
-        </dl>
-        <h6>Questions</h6>
-        {
-          this.props.questions.map((question, index) => {
-            return (
-              <CandidateMatchQuestion
-                key={index}
-                questionText={question.questionText}
-                voterAnswerText={question.voterAnswerText}
-                candidateAnswerLabel={question.candidateAnswerLabel} />
-            )
-          })
-        }
-      </section>
+      <Panel style={{paddingTop: '0px'}}>
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          <h4 style={{flexGrow: 1}}>
+            {this.props.categoryName}
+          </h4>
+          <CandidateMatchRating
+            compositeMatchScore={this.props.categoryMatch} />
+        </div>
+      </Panel>
     )
   }
-
 }
 
 CandidateMatchCategory.propTypes = {
