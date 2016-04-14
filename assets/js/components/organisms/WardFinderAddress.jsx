@@ -32,6 +32,13 @@ class WardFinderAddress extends Component {
     this.props.dispatch(submitStreetAddress(this.props.ward.address.value))
   }
 
+  onEnter(e) {
+    const code = (e.keyCode ? e.keyCode : e.which);
+    if (code === 13) {
+      this.submitAddress()
+    }
+  }
+
   render() {
 
     return (
@@ -44,6 +51,7 @@ class WardFinderAddress extends Component {
           bsSize="large"
           bsStyle={this.props.ward.address.help ? 'warning' : null}
           placeholder="111 Granby St"
+          onKeyDown={this.onEnter.bind(this)}
           buttonAfter={
             <Button
               onClick={this.submitAddress.bind(this)}

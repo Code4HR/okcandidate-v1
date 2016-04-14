@@ -226,6 +226,13 @@ export function submitStreetAddress(street) {
       return
     }
 
+    if (street.length < 3) {
+      dispatch(setStreetAddress({
+        help: 'Please enter a longer address'
+      }))
+      return
+    }
+
     return fetch('/api/geography/ward', {
       method: 'post',
       headers: {
