@@ -6,5 +6,10 @@ module.exports = {
   darkBlue: '#33425B',
   black: '#29252C',
   white: '#FDFDFD',
-  lightGray: '#efefef'
+  lightGray: '#efefef',
+
+  // threshold colours
+  green: '#84ba71',
+  yellow: '#e0cc47',
+  orange: '#e89f31'
 }
