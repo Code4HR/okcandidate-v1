@@ -10,3 +10,8 @@ body, html {
     font-size: 48px;
     padding: 3px 0;
 }
+
+.candidate-card .collapse > .panel-body {
+    padding-left: 0px;
+    padding-right: 0px;
+}

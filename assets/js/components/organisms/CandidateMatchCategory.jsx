@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import { Panel, Label } from 'react-bootstrap'
 
+import CandidateMatchRating from '../atoms/CandidateMatchRating.jsx'
+
 class CandidateMatchCategory extends Component {
   constructor(props) {
     super(props)
@@ -8,14 +10,13 @@ class CandidateMatchCategory extends Component {
 
   render() {
     return (
-      <Panel>
+      <Panel style={{paddingTop: '0px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
-          <h5 style={{flexGrow: 1}}>
+          <h4 style={{flexGrow: 1}}>
             {this.props.categoryName}
-          </h5>
-          <Label bsStyle="danger">
-            {this.props.categoryMatch}%
-          </Label>
+          </h4>
+          <CandidateMatchRating
+            compositeMatchScore={this.props.categoryMatch} />
         </div>
       </Panel>
     )

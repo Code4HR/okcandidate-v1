@@ -1,10 +1,14 @@
 import React from 'react'
-import { Panel, Label } from 'react-bootstrap'
+import ReactDOM from 'react-dom'
+import { Panel } from 'react-bootstrap'
 import TestUtils from 'react-addons-test-utils'
 import { expect } from 'chai'
 
 import CandidateMatchCategory
   from '../../../../assets/js/components/organisms/CandidateMatchCategory'
+
+import CandidateMatchRating
+  from '../../../../assets/js/components/atoms/CandidateMatchRating'
 
 describe('The candidate match category component', () => {
   let category
@@ -76,7 +80,7 @@ describe('The candidate match category component', () => {
       let header
 
       beforeEach(() => {
-        header = TestUtils.scryRenderedDOMComponentsWithTag(panel, 'h5')[0]
+        header = TestUtils.scryRenderedDOMComponentsWithTag(panel, 'h4')[0]
       })
 
       it('will exist', () => {
@@ -95,26 +99,21 @@ describe('The candidate match category component', () => {
       })
     })
 
-    context('label', () => {
-      let label
+    context('match rating', () => {
+      let rating
 
       beforeEach(() => {
-        label = TestUtils.scryRenderedComponentsWithType(panel, Label)[0]
+        rating = TestUtils.scryRenderedComponentsWithType(panel,
+          CandidateMatchRating)[0]
       })
 
       it('will exist', () => {
-        expect(label).to.be.ok
+        expect(rating).to.exist
       })
 
-      it('will have a danger bsStyle', () => {
-        expect(label).to.have.property('props')
-          .that.have.property('bsStyle')
-          .that.equal('danger')
-      })
-
-      it('will have the match as a percentage for its children', () => {
-        expect(label.props.children.join(''))
-          .to.equal(`${category.props.categoryMatch}%`)
+      it('will have the match as a percentage for its text content', () => {
+        expect(ReactDOM.findDOMNode(rating).textContent)
+          .to.contain(`${category.props.categoryMatch}%`)
       })
     })
   })

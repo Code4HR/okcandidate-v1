@@ -23,7 +23,7 @@ class Card extends Component {
 
   render() {
     return (
-      <section style={this.getStyle.call(this)}>
+      <section className={this.props.className} style={this.getStyle.call(this)}>
         {this.props.children}
       </section>
     )
