@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { Panel, Label } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 
 import CandidateMatchRating from '../atoms/CandidateMatchRating.jsx'
 

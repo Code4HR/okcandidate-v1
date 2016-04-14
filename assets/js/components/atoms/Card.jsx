@@ -33,7 +33,8 @@ class Card extends Component {
 
 Card.propTypes = {
   children: PropTypes.any,
-  style: PropTypes.object
+  style: PropTypes.object,
+  className: PropTypes.string
 }
 
 export default Card
