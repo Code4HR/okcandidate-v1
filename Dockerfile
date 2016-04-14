@@ -6,7 +6,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # you can change this at build time to control npm packages
-# with --build-arg NODE_ENV=produciton
+# use this to build for prod: --build-arg NODE_ENV=production
 ARG NODE_ENV=development
 
 COPY package.json /usr/src/app/
