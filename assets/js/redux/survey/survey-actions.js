@@ -165,7 +165,7 @@ export function submitSurveyAnswers(responses) {
     .then(response => response.json())
     .then(response => {
       dispatch(submitSurveyAnswersSuccess(response))
-      browserHistory.push(`/survey/results/${response[0].survey_response_id}`)
+      browserHistory.push(`/results/${response[0].survey_response_id}`)
     })
     .catch(error => {
       dispatch(submitSurveyAnswersFailure(error))
@@ -342,7 +342,7 @@ export function fetchSurveyResponseId(surveyId, geographyId) {
     .then(response => response.json())
     .then(response => {
       dispatch(fetchSurveyResponseIdSuccess(response))
-      browserHistory.push('/survey/questions')
+      browserHistory.push('/survey')
     })
     .catch(error => {
       dispatch(fetchSurveyResponseIdFailure(error))

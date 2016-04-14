@@ -16,25 +16,20 @@ const store = createStore(
 
 // Top Level Components
 import Frame from './environments/Frame.jsx'
-import SplashPage from './environments/SplashPage.jsx'
 import AdminDashboard from './environments/AdminDashboard.jsx'
 import WardFinderPage from './ecosystems/WardFinderPage.jsx'
 import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
-import SurveyPageNav from './environments/SurveyPageNav.jsx'
 
 class App extends Component {
   render() {
     return (
       <Router history={browserHistory}>
         <Route path="/" component={Frame}>
-          <IndexRoute component={SplashPage} />
+          <IndexRoute component={WardFinderPage} />
+          <Route path="survey" component={SurveyPage} />
+          <Route path="results/:id" component={ResultsPage} />
           <Route path="admin" component={AdminDashboard}/>
-          <Route path="survey" component={SurveyPageNav}>
-            <IndexRoute component={WardFinderPage} />
-            <Route path="questions" component={SurveyPage} />
-            <Route path="results/:id" component={ResultsPage} />
-          </Route>
         </Route>
       </Router>
     )

@@ -37,21 +37,7 @@ module.exports = (server) => {
     },
     {
       method: 'GET',
-      path: '/survey/',
-      handler: {
-        view: 'Default'
-      }
-    },
-    {
-      method: 'GET',
-      path: '/survey/questions',
-      handler: {
-        view: 'Default'
-      }
-    },
-    {
-      method: 'GET',
-      path: '/survey/results/{id}',
+      path: '/results/{id}',
       handler: {
         view: 'Default'
       }
