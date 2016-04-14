@@ -27,6 +27,9 @@ We are going to publish a platform and web application in which:
 - News editors and other supporters will promote the app to voters
 - Volunteers will build the app
 
+## Contributing
+When you open a pull request, please ask to merge against the `develop` branch.  Merged pull requests will automatically be deployed to a staging server.  When we want to release into production, the `develop` branch will be merged into `master`, which automatically deploys to an Azure box.
+
 ## Installation
 ```
 git clone git@github.com:Code4HR/okcandidate.git
