@@ -1,0 +1,29 @@
+okc:
+  build: ./
+  command: npm run dev-docker
+  ports:
+    - '8000:8000'
+  links:
+    - okcpostgres
+  volumes:
+    - .:/usr/src/app
+  environment:
+    - OKC_DB_HOST=okcpostgres
+    - OKC_DB_NAME=okc
+    - OKC_DB_USER=okc
+    - OKC_DB_PASSWORD=complicatedPassword
+    - SMARTY_STREETS_AUTH_ID=GUID-FROM-SMARTY-STREETS
+    - SMARTY_STREETS_AUTH_TOKEN=tokenIdFromSmartyStreets
+    - NODE_ENV=development
+okcpostgres:
+  image: sameersbn/postgresql:latest
+  environment:
+    - PG_PASSWORD=rootPSQLPasswordYouWant
+    - DB_NAME=okc
+    - DB_PASS=complicatedPassword
+    - DB_USER=okc
+  volumes:
+    - postgres-data:/var/lib/postgresql
+  ports:
+    - '5432:5432'
+  mem_limit: 500M
