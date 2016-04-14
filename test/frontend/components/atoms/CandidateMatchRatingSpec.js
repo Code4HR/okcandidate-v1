@@ -76,7 +76,7 @@ describe('The candidate match rating component', () => {
 
       it('will have an orange background', () => {
         expect(style).to.have.property('background')
-          .that.equal('orange')
+          .that.equal(colours.orange)
       })
     })
 
@@ -90,7 +90,7 @@ describe('The candidate match rating component', () => {
 
       it('will have a yellow background', () => {
         expect(style).to.have.property('background')
-          .that.equal('yellow')
+          .that.equal(colours.yellow)
       })
     })
 
@@ -104,7 +104,7 @@ describe('The candidate match rating component', () => {
 
       it('will have a green background', () => {
         expect(style).to.have.property('background')
-          .that.equal('green')
+          .that.equal(colours.green)
       })
     })
   })
