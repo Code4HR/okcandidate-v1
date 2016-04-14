@@ -1,7 +1,7 @@
 {
-  "name": "react-todo",
-  "version": "1.4.0",
-  "description": "Another basic todo app in React and Flux",
+  "name": "okcandidate",
+  "version": "1.0.0",
+  "description": "A platform for matching candidates with voters",
   "main": "server.js",
   "dependencies": {
     "babel-preset-es2015": "^6.3.13",
@@ -43,18 +43,19 @@
     "start": "node server.js",
     "build": "webpack -p --progress --colors",
     "dev": "webpack --progress --colors --watch & nodemon",
+    "dev-docker": "webpack --no-colors --watch & ./node_modules/nodemon/bin/nodemon.js",
     "lint": "eslint --ignore-pattern **/bundle*.js --ext .js,.jsx assets/**"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tribou/react-todo.git"
+    "url": "git+https://github.com/code4hr/okcandidate.git"
   },
-  "author": "tribou",
+  "author": "Code for Hampton Roads",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tribou/react-todo/issues"
+    "url": "https://github.com/code4hr/okcandidate/issues"
   },
-  "homepage": "https://github.com/tribou/react-todo#readme",
+  "homepage": "https://github.com/code4hr/okcandidate#readme",
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-eslint": "^5.0.0-beta6",
@@ -68,6 +69,7 @@
     "eslint-plugin-react": "^3.13.0",
     "mocha-jsdom": "^1.1.0",
     "redux-devtools": "^3.1.1",
-    "webpack": "^1.12.9"
+    "webpack": "^1.12.9",
+    "nodemon": "^1.9.1"
   }
 }

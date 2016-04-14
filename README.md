@@ -78,8 +78,26 @@ export SMARTY_STREETS_AUTH_TOKEN=smartystreetsauthtoken
 ```
 ... replacing `databasename`, `username`, and `password` with the information used during setup of the database.
 
+If database is on a separate machine, you can use `export OKC_DB_HOST=hostname` to overwrite the default localhost.
+
 You should always add these variables to the environment before starting the server.  For example, if I named
 my file `okcandidate_dev_blaine` I would run this from the terminal.
+
 ```
 source okcandidate_dev_blaine
 ```
+
+## Docker
+
+We auto-build a container from the `master` github branch on Docker Hub: https://hub.docker.com/r/code4hr/okcandidate/
+
+To run it in production with a separate postgres container you could use docker-compose using something like our docker-compose-sample.yml
+
+To run locally for development with postgres and node running in containers, with nodemon watching for file changes on your local machines clone of this repo, follow these steps:
+
+ - install Docker Toolbox (Mac/Windows), the Docker for Mac/Windows Beta, or Docker binaries docker-engine and docker-compose directly (Linux/Mac/Windows)
+ - clone this repo
+ - in repo directory, run docker compose with our dev yaml file: `docker-compose -f docker-compose-dev.yml up -d`
+ - edit files in repo directory on your machine, and point to either http://192.168.99.100:8000 or http://docker.local:8000
+
+
