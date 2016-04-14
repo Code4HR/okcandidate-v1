@@ -1,5 +1,5 @@
 {
-  "name": "okcanidate",
+  "name": "okcandidate",
   "version": "1.0.0",
   "description": "A platform for matching candidates with voters",
   "main": "server.js",
