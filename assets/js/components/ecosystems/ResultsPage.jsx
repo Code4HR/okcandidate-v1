@@ -6,6 +6,12 @@ import {
   fetchSurveyCandidateMatches
 } from './../../redux/survey/survey-actions'
 
+import {
+  Col,
+  Grid,
+  Row
+} from 'react-bootstrap'
+
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
 
 class ResultsPage extends Component {
@@ -21,30 +27,35 @@ class ResultsPage extends Component {
 
   render() {
     return (
-      <article className="container">
-        <h1>Matches</h1>
-        {
-          this.props.survey.candidateMatch.survey &&
-          this.props.survey.candidateMatch.survey.map((race, index) => {
-            return (
-              <section key={index}>
-                <h2>{race.candidateTypeName}</h2>
-                {
-                  race.candidates.map((candidate, index) => {
-                    return (
-                      <CandidateMatchCandidate
-                        key={index}
-                        candidateName={candidate.candidateName}
-                        compositeMatchScore={candidate.compositeMatchScore}
-                        categoryMatchScores={candidate.categoryMatchScores} />
-                    )
-                  })
-                }
-              </section>
-            )
-          })
-        }
-
+      <article>
+        <Grid>
+          <Row>
+            <Col xs={12} sm={8} smOffset={2}>
+              <h1>Matches</h1>
+              {
+                this.props.survey.candidateMatch.survey &&
+                this.props.survey.candidateMatch.survey.map((race, index) => {
+                  return (
+                    <section key={index}>
+                      <h2>{race.candidateTypeName}</h2>
+                      {
+                        race.candidates.map((candidate, index) => {
+                          return (
+                            <CandidateMatchCandidate
+                              key={index}
+                              candidateName={candidate.candidateName}
+                              compositeMatchScore={candidate.compositeMatchScore}
+                              categoryMatchScores={candidate.categoryMatchScores} />
+                          )
+                        })
+                      }
+                    </section>
+                  )
+                })
+              }
+            </Col>
+          </Row>
+        </Grid>
       </article>
     )
   }
