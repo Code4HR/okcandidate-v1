@@ -8,12 +8,13 @@ const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
 const routes = require('./api/routes')
+const port = process.env['PORT'] || '8000'
 
 // Basic Hapi.js connection stuff
 const server = new Hapi.Server({ debug: { request: ['error'] }})
 server.connection({
   host: '0.0.0.0',
-  port: 8000
+  port: port
 })
 
 const host = process.env['OKC_DB_HOST'] || '127.0.0.1'

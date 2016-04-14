@@ -82,13 +82,17 @@ CREATE TABLE IF NOT EXISTS candidate_type (
 CREATE TABLE IF NOT EXISTS candidate (
 	id SERIAL PRIMARY KEY,
 	candidate_name varchar(100),
+  candidate_img varchar(100),
+  candidate_website varchar(100),
 	candidate_type_id int NOT NULL REFERENCES candidate_type
 );
 
 CREATE TABLE IF NOT EXISTS candidate_answer (
 	id SERIAL PRIMARY KEY,
+  candidate_id int NOT NULL REFERENCES candidate,
+  question_id int NOT NULL REFERENCES question,
 	answer_id int NOT NULL REFERENCES answer,
-	candidate_id int NOT NULL REFERENCES candidate
+  intensity int
 );
 
 CREATE TABLE IF NOT EXISTS candidate_geography (
