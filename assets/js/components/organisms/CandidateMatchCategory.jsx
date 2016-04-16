@@ -5,11 +5,7 @@ import CandidateMatchRating from '../atoms/CandidateMatchRating.jsx'
 
 const style = {
   panel: {
-    // border: 'none',
-    // boxShadow: 'none',
     marginBottom: '.5em',
-    // paddingLeft: 0,
-    // paddingRight: 0,
     marginLeft: -15,
     marginRight: -15
   }
