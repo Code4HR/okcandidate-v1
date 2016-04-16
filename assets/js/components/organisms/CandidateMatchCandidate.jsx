@@ -6,6 +6,14 @@ import CandidateMatchProfileBadge from './../molecules/CandidateMatchProfileBadg
 import CandidateMatchCategory from './../organisms/CandidateMatchCategory.jsx'
 import Card from './../atoms/Card.jsx'
 
+const style = {
+  panel: {
+    border: 'none',
+    boxShadow: 'none',
+    marginBottom: 0
+  }
+}
+
 class CandidateMatchCandidate extends Component {
 
   constructor(props) {
@@ -33,15 +41,14 @@ class CandidateMatchCandidate extends Component {
             candidateName={this.props.candidateName}
             compositeMatchScore={this.props.compositeMatchScore}
             style={{flex: 1}} />
-          <Button onClick={event => this.toggleCategories()}>
+          <Button onClick={() => this.toggleCategories()}>
             <Glyphicon glyph={this.glyph} />
           </Button>
         </div>
 
         <Panel collapsible expanded={this.state.showCategory}
-          style={{border: 'none', boxShadow: 'none'}}>
+          style={style.panel}>
           {
-            this.state.showCategory ?
             this.props.categoryMatchScores.map((category, index) => {
               return (
                 <CandidateMatchCategory
@@ -51,8 +58,6 @@ class CandidateMatchCandidate extends Component {
                   questions={category.questions} />
               )
             })
-            :
-            null
           }
         </Panel>
 
