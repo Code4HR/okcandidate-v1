@@ -41,11 +41,6 @@ CREATE TABLE IF NOT EXISTS category (
 	category_name varchar(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS data_type (
-	id SERIAL PRIMARY KEY,
-	type_name varchar(100) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS question (
 	id SERIAL PRIMARY KEY,
 	survey_id int NOT NULL REFERENCES survey,
@@ -82,8 +77,8 @@ CREATE TABLE IF NOT EXISTS candidate_type (
 CREATE TABLE IF NOT EXISTS candidate (
 	id SERIAL PRIMARY KEY,
 	candidate_name varchar(100),
-  candidate_img varchar(100),
-  candidate_website varchar(100),
+	candidate_img varchar(100),
+	candidate_website varchar(100),
 	candidate_type_id int NOT NULL REFERENCES candidate_type
 );
 

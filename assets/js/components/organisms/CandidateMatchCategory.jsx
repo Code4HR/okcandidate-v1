@@ -3,6 +3,14 @@ import { Panel } from 'react-bootstrap'
 
 import CandidateMatchRating from '../atoms/CandidateMatchRating.jsx'
 
+const style = {
+  panel: {
+    marginBottom: '.5em',
+    marginLeft: -15,
+    marginRight: -15
+  }
+}
+
 class CandidateMatchCategory extends Component {
   constructor(props) {
     super(props)
@@ -10,7 +18,7 @@ class CandidateMatchCategory extends Component {
 
   render() {
     return (
-      <Panel style={{paddingTop: '0px'}}>
+      <Panel style={style.panel}>
         <div style={{display: 'flex', alignItems: 'center'}}>
           <h4 style={{flexGrow: 1}}>
             {this.props.categoryName}

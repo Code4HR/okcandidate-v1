@@ -37,7 +37,7 @@ class SurveyQuestionPager extends Component {
       this.decrementIndex()
     }
     else {
-      browserHistory.push('/survey')
+      browserHistory.push('/')
     }
   }
 
