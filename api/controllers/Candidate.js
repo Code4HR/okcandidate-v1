@@ -12,6 +12,8 @@ module.exports = function (server) {
       answer_builder.column('survey_response.geography_id')
       answer_builder.column('candidate_answer.candidate_id')
       answer_builder.column('candidate.candidate_name')
+      answer_builder.column('candidate.candidate_img')
+      answer_builder.column('candidate.candidate_website')
       answer_builder.column('candidate_type.id as type_id')
       answer_builder.column('candidate_type.type_name ')
       answer_builder.column('category.id as category_id')
@@ -80,9 +82,11 @@ module.exports = function (server) {
 
           candidate.candidateId = candidateId
           candidate.candidateName = matchArray.findWhere({'candidateId': candidateId}).get('candidateName')
-          candidate.compositeMatchScore = Math.round((candidateList.reduce((p, n) => {
+          candidate.candidateImg = matchArray.findWhere({'candidateId': candidateId}).get('candidateImg')
+          candidate.candidateWebsite = matchArray.findWhere({'candidateId': candidateId}).get('candidateWebsite')
+          candidate.compositeMatchScore = (Math.round((candidateList.reduce((p, n) => {
             return p + parseFloat(n.get('score'))
-          }, 0.0)*100) / (candidateList.length))
+          }, 0.0)*100) / (candidateList.length))).toString()
 
           candidate.categoryMatchScores = categories.filter((categoryId) => {
             if (matchArray.findWhere({'typeId': typeId,
@@ -104,9 +108,9 @@ module.exports = function (server) {
 
              category.categoryId = categoryId
              category.categoryName = matchArray.findWhere({'categoryId': categoryId}).get('categoryName')
-             category.categoryMatch = Math.round((categoryList.reduce((p, n) => {
+             category.categoryMatch = (Math.round((categoryList.reduce((p, n) => {
                return p + parseFloat(n.get('score'))
-             }, 0.0)*100) / categoryList.length)
+             }, 0.0)*100) / categoryList.length)).toString()
 
              category.questions = categoryList.map((item) => {
                return {
