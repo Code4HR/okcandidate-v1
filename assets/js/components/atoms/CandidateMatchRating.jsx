@@ -33,15 +33,19 @@ class CandidateMatchRating extends Component {
   }
 
   get colour() {
-    const thresholds = [
-        { level: 80, colour: colors.yellow },
-        { level: 60, colour: colors.orange },
-        { level: 50, colour: colors.red}
-      ], match = parseInt(this.props.compositeMatchScore)
-    return thresholds.reduce((colour, threshold) =>
-      match < threshold.level ?
-        threshold.colour :
-        colour, colors.green)
+    const match = this.props.compositeMatchScore
+    if (match >= 80) {
+      return colors.green
+    }
+    if (match < 80 && match >= 60) {
+      return colors.yellow
+    }
+    if (match < 60 && match >= 50) {
+      return colors.orange
+    }
+    else {
+      return colors.red
+    }
   }
 
   getContainerStyle() {

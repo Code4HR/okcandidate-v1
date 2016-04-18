@@ -30,7 +30,7 @@ class CandidatePicture extends Component {
 
     switch (name) {
         case 'Kenneth Cooper Alexander':
-          imgPath = 'a/img/candidates/alexander.jpg'
+          imgPath = '/img/candidates/alexander.jpg'
           break
 
         case 'Robert J. McCabe':
