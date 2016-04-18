@@ -59,7 +59,7 @@ describe('The candidate match rating component', () => {
         )
         style = rating.getContainerStyle()
       })
-      
+
       it('will have a red background', () => {
         expect(style).to.have.property('background')
           .that.equal(colours.red)
