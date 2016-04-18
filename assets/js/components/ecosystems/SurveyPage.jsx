@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
 
@@ -21,6 +22,13 @@ class SurveyPage extends Component {
   }
 
   componentWillMount() {
+
+    // If survey response is undefined, redirect to front page so we can get it.
+    // Otherwise, the frontend won't be able to submit the survey.
+    if (!this.props.survey.surveyResponseId) {
+      browserHistory.push('/')
+    }
+
     this.props.dispatch(fetchActiveSurveys())
   }
 
@@ -73,6 +81,7 @@ class SurveyPage extends Component {
 }
 
 SurveyPage.propTypes = {
+  location: PropTypes.object,
   survey: PropTypes.object,
   dispatch: PropTypes.func
 }

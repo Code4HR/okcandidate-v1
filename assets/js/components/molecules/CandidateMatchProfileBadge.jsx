@@ -27,8 +27,8 @@ class CandidateMatchProfileBadge extends Component {
 
     return (
       <section style={this.containerStyle}>
-        <CandidateMatchPicture />
-        <div style={{marginLeft: '.5em'}}>
+        <CandidateMatchPicture candidateName={this.props.candidateName} />
+        <div style={{marginLeft: '1em'}}>
           <h3 style={style.label}>{this.props.candidateName}</h3>
           <CandidateMatchRating
             compositeMatchScore={this.props.compositeMatchScore}

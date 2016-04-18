@@ -32,8 +32,25 @@ class CandidateMatchRating extends Component {
     super(props)
   }
 
+  get colour() {
+    const match = this.props.compositeMatchScore
+    if (match >= 80) {
+      return colors.green
+    }
+    if (match < 80 && match >= 60) {
+      return colors.yellow
+    }
+    if (match < 60 && match >= 50) {
+      return colors.orange
+    }
+    else {
+      return colors.red
+    }
+  }
+
   getContainerStyle() {
-    return Object.assign({}, style.container, this.props.style)
+    return Object.assign({}, style.container, this.props.style,
+      { background: this.colour })
   }
 
   render() {
