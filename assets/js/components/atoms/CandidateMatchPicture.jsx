@@ -57,7 +57,7 @@ class CandidatePicture extends Component {
           imgPath = '/img/candidates/candela.jpg'
           break
 
-        case 'G.W. \'Billy\' Cook, Jr.':
+        case 'G.W. \"Billy\" Cook, Jr.':
           imgPath = '/img/candidates/cook.jpg'
           break
 
