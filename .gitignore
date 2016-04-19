@@ -38,3 +38,6 @@ assets/js/bundle.js
 
 # Swap files
 *.swp
+
+# Docker
+docker-compose.yml
