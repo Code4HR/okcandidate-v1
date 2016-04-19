@@ -67,51 +67,63 @@ module.exports = function (server) {
         candidateType.candidateTypeId = typeId
         candidateType.candidateTypeName = matchArray.findWhere({'typeId': typeId}).get('typeName')
 
-        candidateType.candidates = candidates.map((candidateId) => {
+        candidateType.candidates = candidates.filter((candidateId) => {
+          if (matchArray.findWhere({'typeId': typeId, 'candidateId': candidateId}))
+          {
+            return true
+          }
+          return false
+        }).map((candidateId) => {
           var candidateList = matchArray.where({'typeId': typeId, 'candidateId': candidateId})
 
-          if (candidateList)
-          {
-            var candidate = {}
+          var candidate = {}
 
-            candidate.candidateId = candidateId
-            candidate.candidateName = matchArray.findWhere({'candidateId': candidateId}).get('candidateName')
-            candidate.compositeMatchScore = Math.round((candidateList.reduce((p, n) => {
-              return p + parseFloat(n.get('score'))
-            }, 0.0)*100) / (candidateList.length))
+          candidate.candidateId = candidateId
+          candidate.candidateName = matchArray.findWhere({'candidateId': candidateId}).get('candidateName')
+          candidate.compositeMatchScore = Math.round((candidateList.reduce((p, n) => {
+            return p + parseFloat(n.get('score'))
+          }, 0.0)*100) / (candidateList.length))
 
-            candidate.categoryMatchScores = categories.map((categoryId) => {
-              var categoryList = matchArray.where({'typeId': typeId,
-                                                   'categoryId': categoryId,
-                                                   'candidateId': candidateId})
+          candidate.categoryMatchScores = categories.filter((categoryId) => {
+            if (matchArray.findWhere({'typeId': typeId,
+                                      'categoryId': categoryId,
+                                      'candidateId': candidateId}))
+            {
+              return true
+            }
+            return false
+          })
+          .map((categoryId) => {
+            var categoryList = matchArray.where({'typeId': typeId,
+                                                 'categoryId': categoryId,
+                                                 'candidateId': candidateId})
 
-             if (categoryList)
-             {
-               var category = {}
+           if (categoryList.length > 0)
+           {
+             var category = {}
 
-               category.categoryId = categoryId
-               category.categoryName = matchArray.findWhere({'categoryId': categoryId}).get('categoryName')
-               category.categoryMatch = Math.round((categoryList.reduce((p, n) => {
-                 return p + parseFloat(n.get('score'))
-               }, 0.0)*100) / categoryList.length)
+             category.categoryId = categoryId
+             category.categoryName = matchArray.findWhere({'categoryId': categoryId}).get('categoryName')
+             category.categoryMatch = Math.round((categoryList.reduce((p, n) => {
+               return p + parseFloat(n.get('score'))
+             }, 0.0)*100) / categoryList.length)
 
-               category.questions = categoryList.map((item) => {
-                 return {
-                   questionId: item.get('questionId'),
-                   questionText: item.get('questionText'),
-                   candidateAnswerId: item.get('candidateAnswerId'),
-                   candidateAnswerLabel: item.get('candidateAnswerText'),
-                   voterAnswerId: item.get('answerId'),
-                   voterAnswerText: item.get('answerText')
-                 }
-               })
-               
-               return category
-             }
-            })
+             category.questions = categoryList.map((item) => {
+               return {
+                 questionId: item.get('questionId'),
+                 questionText: item.get('questionText'),
+                 candidateAnswerId: item.get('candidateAnswerId'),
+                 candidateAnswerLabel: item.get('candidateAnswerText'),
+                 voterAnswerId: item.get('answerId'),
+                 voterAnswerText: item.get('answerText')
+               }
+             })
 
-            return candidate
-          }
+             return category
+           }
+          })
+
+          return candidate
         })
 
         return candidateType
