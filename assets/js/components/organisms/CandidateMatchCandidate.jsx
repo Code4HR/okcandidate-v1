@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { Panel, Button, Glyphicon } from 'react-bootstrap'
+import _ from 'lodash'
 
 import CandidateMatchProfileBadge from './../molecules/CandidateMatchProfileBadge.jsx'
 
@@ -33,6 +34,12 @@ class CandidateMatchCandidate extends Component {
     })
   }
 
+  sortCategories(categories) {
+    return _.sortBy(categories, category => {
+      return category.categoryMatch
+    }).reverse()
+  }
+
   render() {
     return (
       <Card className="candidate-card" style={{marginBottom: '1em'}}>
@@ -49,7 +56,7 @@ class CandidateMatchCandidate extends Component {
         <Panel collapsible expanded={this.state.showCategory}
           style={style.panel}>
           {
-            this.props.categoryMatchScores.map((category, index) => {
+            this.sortCategories(this.props.categoryMatchScores).map((category, index) => {
               return (
                 <CandidateMatchCategory
                   key={index}
