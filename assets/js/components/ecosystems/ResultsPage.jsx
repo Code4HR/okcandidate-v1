@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-
+import _ from 'lodash'
 import { connect } from 'react-redux'
 
 import {
@@ -25,6 +25,18 @@ class ResultsPage extends Component {
 
   }
 
+  sortRaces(races) {
+    return _.sortBy(races, race => {
+      return race.candidateTypeName
+    })
+  }
+
+  sortCandidates(candidates) {
+    return _.sortBy(candidates, candidate => {
+      return candidate.compositeMatchScore
+    }).reverse()
+  }
+
   render() {
     return (
       <article>
@@ -34,12 +46,12 @@ class ResultsPage extends Component {
               <h1>Matches</h1>
               {
                 this.props.survey.candidateMatch.survey &&
-                this.props.survey.candidateMatch.survey.map((race, index) => {
+                this.sortRaces(this.props.survey.candidateMatch.survey).map((race, index) => {
                   return (
                     <section key={index}>
                       <h2>{race.candidateTypeName}</h2>
                       {
-                        race.candidates.map((candidate, index) => {
+                        this.sortCandidates(race.candidates).map((candidate, index) => {
                           return (
                             <CandidateMatchCandidate
                               key={index}
