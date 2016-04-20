@@ -27,7 +27,7 @@ class SurveyQuestionPager extends Component {
     super(props)
     this.state = {
       index: 0,
-      alerts: [],
+      alerts: {},
       finalSkip: false
     }
   }
