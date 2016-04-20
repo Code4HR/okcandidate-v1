@@ -53,23 +53,6 @@ describe('The loading indicator component', () => {
       .that.equal(message)
   })
 
-  context('spinner', () => {
-    let spinner
-
-    beforeEach(() => {
-      spinner = TestUtils.scryRenderedDOMComponentsWithTag(indicator, 'i')[0]
-    })
-
-    it('will exist', () => {
-      expect(spinner).to.be.ok
-    })
-
-    it('will have a spinner class', () => {
-      expect(spinner).to.have.property('className')
-        .that.contain('fa-spinner')
-    })
-  })
-
   context('message element', () => {
     let element
 

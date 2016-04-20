@@ -4,7 +4,6 @@ class LoadingIndicator extends Component {
   render() {
     return (
       <p>
-        <i className="fa fa-spinner"></i>
         <span>{this.props.message}</span>
       </p>
     )
