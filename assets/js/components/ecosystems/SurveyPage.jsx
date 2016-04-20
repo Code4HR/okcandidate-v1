@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 
 import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
+import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
 import {
   fetchActiveSurveys,
@@ -64,13 +65,13 @@ class SurveyPage extends Component {
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
               {
-                !this.props.survey.isFetching && questions.length ?
+                this.props.survey.isFetching && questions.length === 0 ?
+                  <LoadingIndicator message="Loading Questions" />
+                :
                   <SurveyQuestionPager
                     onSubmit={this.submit.bind(this)}
                     questions={questions}
                     dispatch={this.props.dispatch} />
-                :
-                <p>Loading Questions</p>
               }
             </Col>
           </Row>
@@ -89,5 +90,7 @@ SurveyPage.propTypes = {
 export default connect(
   state => ({
     survey: state.survey
-  })
+  }), null, null, {
+    withRef: true
+  }
 )(SurveyPage)
