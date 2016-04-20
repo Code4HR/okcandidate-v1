@@ -1,5 +1,6 @@
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
+import { browserHistory } from 'react-router'
 import { expect } from 'chai'
 import sinon from 'sinon'
 
@@ -8,9 +9,10 @@ import LoadingIndicator
   from '../../../../assets/js/components/atoms/LoadingIndicator'
 
 describe('The survey page component', () => {
-  let page, state, store, dispatch
+  let page, state, store, dispatch, push
 
   beforeEach(() => {
+    push = sinon.stub(browserHistory, 'push')
     state = sinon.stub()
     dispatch = sinon.stub()
     store = {
@@ -20,7 +22,10 @@ describe('The survey page component', () => {
     }
     state.returns({
       survey: {
-        questions: [],
+        questions: [{
+          questionText: 'test question',
+          answers: []
+        }],
         responses: [],
         isFetching: false
       }
@@ -52,6 +57,10 @@ describe('The survey page component', () => {
             isFetching: true
           }
         })
+
+        page = TestUtils.renderIntoDocument(
+          <SurveyPage store={store} />
+        ).getWrappedInstance()
       })
 
       it('will have an indicator', () => {
@@ -60,5 +69,9 @@ describe('The survey page component', () => {
         expect(indicators).to.not.be.empty
       })
     })
+  })
+
+  afterEach(() => {
+    push.restore()
   })
 })
