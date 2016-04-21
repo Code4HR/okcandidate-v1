@@ -53,6 +53,46 @@ describe('The loading indicator component', () => {
       .that.equal(message)
   })
 
+  context('message container', () => {
+    let container
+
+    beforeEach(() => {
+      container = TestUtils.scryRenderedDOMComponentsWithTag(indicator, 'div')[0]
+    })
+
+    it('will exist', () => {
+      expect(container).to.be.ok
+    })
+
+    context('style', () => {
+      let style
+
+      beforeEach(() => {
+        style = container.style
+      })
+
+      it('will exist', () => {
+        expect(style).to.be.ok
+      })
+
+      it('will have a text-align rule', () => {
+        expect(style).to.have.property('textAlign')
+      })
+
+      it('will have a text-align of "center"', () => {
+        expect(style.textAlign).to.equal('center')
+      })
+
+      it('will have a padding-top rule', () => {
+        expect(style).to.have.property('paddingTop')
+      })
+
+      it('will have a 2em top padding', () => {
+        expect(style.paddingTop).to.equal('2em')
+      })
+    })
+  })
+
   context('message element', () => {
     let element
 
@@ -67,6 +107,26 @@ describe('The loading indicator component', () => {
     it('will have the message property as its text', () => {
       expect(element).to.have.property('textContent')
         .that.equal(indicator.props.message)
+    })
+
+    context('style', () => {
+      let style
+
+      beforeEach(() => {
+        style = element.style
+      })
+
+      it('will exist', () => {
+        expect(style).to.be.ok
+      })
+
+      it('will have a font-size attribute', () => {
+        expect(style).to.have.property('fontSize')
+      })
+
+      it('will have a font-size of 1.5ems', () => {
+        expect(style.fontSize).to.equal('1.5em')
+      })
     })
   })
 })

@@ -3,9 +3,11 @@ import React, { Component, PropTypes } from 'react'
 class LoadingIndicator extends Component {
   render() {
     return (
-      <p>
-        <span>{this.props.message}</span>
-      </p>
+      <div style={{textAlign: "center", paddingTop: "2em"}}>
+        <p>
+          <span style={{fontSize: '1.5em'}}>{this.props.message}</span>
+        </p>
+      </div>
     )
   }
 }
