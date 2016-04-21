@@ -12,22 +12,25 @@ describe('Survey Question Pager', () => {
 
   let component, stub
 
+  beforeEach(() => {
+    stub = sinon.stub(browserHistory, 'push', (() => true))
+
+    component = TestUtils.renderIntoDocument(
+      <SurveyQuestionPager questions={questions} />
+    )
+  })
+
+  it('will exist', () => {
+    expect(component).to.be.ok
+  })
+
+  it('will have an initial alerts object in its state', () => {
+    expect(component).to.have.property('state')
+      .that.have.property('alerts')
+      .that.is.an('object')
+  })
+
   context('Survey Question Pager', () => {
-
-    beforeEach(() => {
-
-      stub = sinon.stub(browserHistory, 'push', (() => true))
-
-      component = TestUtils.renderIntoDocument(
-        <SurveyQuestionPager questions={questions} />
-      )
-    })
-
-    afterEach(() => {
-
-      stub.restore()
-
-    })
 
     context('Back Button', () => {
 
@@ -110,4 +113,7 @@ describe('Survey Question Pager', () => {
 
   })
 
+  afterEach(() => {
+    stub.restore()
+  })
 })
