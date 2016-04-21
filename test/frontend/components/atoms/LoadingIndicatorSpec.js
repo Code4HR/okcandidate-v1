@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { expect } from 'chai'
 
+import Loader from 'react-loaders'
 import LoadingIndicator
   from '../../../../assets/js/components/atoms/LoadingIndicator'
 
@@ -90,6 +91,30 @@ describe('The loading indicator component', () => {
       it('will have a 2em top padding', () => {
         expect(style.paddingTop).to.equal('2em')
       })
+    })
+  })
+
+  context('loader', () => {
+    let loader
+
+    beforeEach(() => {
+      loader = TestUtils.scryRenderedComponentsWithType(indicator, Loader)[0]
+    })
+
+    it('will exist', () => {
+      expect(loader).to.be.ok
+    })
+
+    it('will have an active property', () => {
+      expect(loader).to.have.property('props')
+        .that.have.property('active')
+        .that.equal('true')
+    })
+
+    it('will have a ball-pulse type', () => {
+      expect(loader).to.have.property('props')
+        .that.have.property('type')
+        .that.equal('ball-pulse')
     })
   })
 
