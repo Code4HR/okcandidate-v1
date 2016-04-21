@@ -65,7 +65,7 @@ class SurveyPage extends Component {
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
               {
-                this.props.survey.isFetching && questions.length === 0 ?
+                this.props.survey.isFetching || questions.length === 0 ?
                   <LoadingIndicator message="Loading Questions" />
                 :
                   <SurveyQuestionPager
