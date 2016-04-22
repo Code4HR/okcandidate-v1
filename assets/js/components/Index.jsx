@@ -2,6 +2,7 @@ import React, { Component} from 'react';
 import ReactDOM from 'react-dom'
 import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
+import ga from 'react-ga'
 import { applyMiddleware, createStore } from 'redux'
 import reducer from './../redux/reducer'
 import createLogger from 'redux-logger'
@@ -23,7 +24,13 @@ import WardFinderPage from './ecosystems/WardFinderPage.jsx'
 import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
 
+ga.initialize('UA-39303796-10')
+browserHistory.listen(location => {
+  ga.pageview(location.pathname)
+})
+
 class App extends Component {
+
   render() {
     return (
       <Router history={browserHistory}>
@@ -44,3 +51,5 @@ ReactDOM.render(
   </Provider>,
   document.body
 );
+
+export default App
