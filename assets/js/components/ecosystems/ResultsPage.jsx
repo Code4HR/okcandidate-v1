@@ -13,6 +13,7 @@ import {
 } from 'react-bootstrap'
 
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
+import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
 class ResultsPage extends Component {
 
@@ -38,6 +39,8 @@ class ResultsPage extends Component {
   }
 
   render() {
+    const survey = this.props.survey,
+      races = survey.candidateMatch.survey
     return (
       <article>
         <Grid>
@@ -45,25 +48,27 @@ class ResultsPage extends Component {
             <Col xs={12} sm={8} smOffset={2}>
               <h1>Matches</h1>
               {
-                this.props.survey.candidateMatch.survey &&
-                this.sortRaces(this.props.survey.candidateMatch.survey).map((race, index) => {
-                  return (
-                    <section key={index}>
-                      <h2>{race.candidateTypeName}</h2>
-                      {
-                        this.sortCandidates(race.candidates).map((candidate, index) => {
-                          return (
-                            <CandidateMatchCandidate
-                              key={index}
-                              candidateName={candidate.candidateName}
-                              compositeMatchScore={candidate.compositeMatchScore}
-                              categoryMatchScores={candidate.categoryMatchScores} />
-                          )
-                        })
-                      }
-                    </section>
-                  )
-                })
+                survey.isFetching || (races && races.length === 0) ?
+                  <LoadingIndicator message="Loading Matches" /> :
+                  this.sortRaces(races).map((race, index) => {
+                    return (
+                      <section key={index}>
+                        <h2>{race.candidateTypeName}</h2>
+                        {
+                          this.sortCandidates(race.candidates)
+                            .map((candidate, index) => {
+                              return (
+                                <CandidateMatchCandidate
+                                  key={index}
+                                  candidateName={candidate.candidateName}
+                                  compositeMatchScore={candidate.compositeMatchScore}
+                                  categoryMatchScores={candidate.categoryMatchScores} />
+                              )
+                            })
+                        }
+                      </section>
+                    )
+                  })
               }
             </Col>
           </Row>
