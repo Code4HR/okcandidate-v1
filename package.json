@@ -66,13 +66,15 @@
     "browser-sync": "^2.10.1",
     "browser-sync-webpack-plugin": "^1.0.1",
     "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
     "eslint": "^2.3.0",
     "eslint-config-trails": "^1.0.4",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-react": "^3.13.0",
     "mocha-jsdom": "^1.1.0",
+    "nodemon": "^1.9.1",
     "redux-devtools": "^3.1.1",
-    "webpack": "^1.12.9",
-    "nodemon": "^1.9.1"
+    "style-loader": "^0.13.1",
+    "webpack": "^1.12.9"
   }
 }
