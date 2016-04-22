@@ -23,11 +23,15 @@ import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
 
 ga.initialize('UA-39303796-10')
+browserHistory.listen(location => {
+  ga.pageview(location.pathname)
+})
 
 class App extends Component {
+
   render() {
     return (
-      <Router history={browserHistory} onUpdate={() => ga.pageView(this.state.location.pathname)}>
+      <Router history={browserHistory}>
         <Route path="/" component={Frame}>
           <IndexRoute component={WardFinderPage} />
           <Route path="survey" component={SurveyPage} />
