@@ -78,6 +78,7 @@ export OKC_DB_USER=username
 export OKC_DB_PASSWORD=password
 export SMARTY_STREETS_AUTH_ID=smartystreetsauthid
 export SMARTY_STREETS_AUTH_TOKEN=smartystreetsauthtoken
+export GOOGLE_ANALYTICS=UC-12345678-90
 ```
 ... replacing `databasename`, `username`, and `password` with the information used during setup of the database.
 
