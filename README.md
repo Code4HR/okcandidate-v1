@@ -32,6 +32,7 @@ When you open a pull request, please ask to merge against the `develop` branch. 
 
 ## Installation
 ```
+sudo npm install -g envify
 git clone git@github.com:Code4HR/okcandidate.git
 npm install
 npm run dev
