@@ -61,7 +61,7 @@ class QuestionBuilder extends Component {
     this.setState(state)
   }
 
-  submitQuestion(id) {
+  submitQuestion() {
     // Update the question object, make an API call, untoggle editable state.
     this.props.submitQuestion({
       id: this.props.id,

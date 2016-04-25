@@ -7,7 +7,7 @@ import {
 
 class QuestionBuilderAnswer extends Component {
 
-  removeAnswerField(event) {
+  removeAnswerField() {
     this.props.remove(this.props.id)
   }
 
