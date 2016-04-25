@@ -41,7 +41,7 @@ const style = {
     top: '2em'
   },
   marketingContainer: {
-    padding: '3em 0 2em 0',
+    padding: '4em 0 2em 0',
     marginBottom: '1em',
     backgroundColor: '#ffffff'
   },
@@ -50,25 +50,25 @@ const style = {
   },
   surveyIcon: {
     margin: '0 auto',
-    height: 200,
-    width: 200,
+    height: 150,
+    width: 150,
     backgroundImage: 'url("/img/survey-icons.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain'
   },
   politicianIcon: {
     margin: '0 auto',
-    height: 200,
-    width: 200,
-    backgroundImage: 'url("/img/survey-icons.png")',
+    height: 150,
+    width: 150,
+    backgroundImage: 'url("/img/politician.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain'
   },
   ballotBoxIcon: {
     margin: '0 auto',
-    height: 200,
-    width: 200,
-    backgroundImage: 'url("/img/survey-icons.png")',
+    height: 150,
+    width: 150,
+    backgroundImage: 'url("/img/ballot-box.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain'
   }
@@ -131,12 +131,12 @@ class WardFinderPage extends Component {
                 <p>Candidates and voters take our survey</p>
               </Col>
               <Col xs={12} sm={4} style={style.marketingColumns}>
-                <div style={style.surveyIcon}></div>
+                <div style={style.politicianIcon}></div>
                 <h2>2. Match</h2>
                 <p>We match voters with candidates based on the results</p>
               </Col>
               <Col xs={12} sm={4} style={style.marketingColumns}>
-                <div style={style.surveyIcon}></div>
+                <div style={style.ballotBoxIcon}></div>
                 <h2>3. Vote</h2>
                 <p>Voters go to the polls knowing exactly who they want in every office</p>
               </Col>
