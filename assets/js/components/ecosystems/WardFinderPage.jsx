@@ -19,10 +19,6 @@ import Card from './../atoms/Card.jsx'
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
 import Credits from './../atoms/Credits.jsx'
-import surveyIcons from './../../../img/survey-icons.svg'
-import politician from './../../../img/survey-icons.svg'
-import ballotBox from './../../../img/survey-icons.svg'
-
 
 const style = {
   header: {
@@ -51,6 +47,30 @@ const style = {
   },
   marketingColumns: {
     textAlign: 'center'
+  },
+  surveyIcon: {
+    margin: '0 auto',
+    height: 200,
+    width: 200,
+    backgroundImage: 'url("/img/survey-icons.png")',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain'
+  },
+  politicianIcon: {
+    margin: '0 auto',
+    height: 200,
+    width: 200,
+    backgroundImage: 'url("/img/survey-icons.png")',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain'
+  },
+  ballotBoxIcon: {
+    margin: '0 auto',
+    height: 200,
+    width: 200,
+    backgroundImage: 'url("/img/survey-icons.png")',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain'
   }
 }
 
@@ -106,17 +126,17 @@ class WardFinderPage extends Component {
           <Grid>
             <Row>
               <Col xs={12} sm={4} style={style.marketingColumns}>
-                <img src={surveyIcons} />
+                <div style={style.surveyIcon}></div>
                 <h2>1. Ask</h2>
                 <p>Candidates and voters take our survey</p>
               </Col>
               <Col xs={12} sm={4} style={style.marketingColumns}>
-                <img src={politician} />
+                <div style={style.surveyIcon}></div>
                 <h2>2. Match</h2>
                 <p>We match voters with candidates based on the results</p>
               </Col>
               <Col xs={12} sm={4} style={style.marketingColumns}>
-                <img src={ballotBox} />
+                <div style={style.surveyIcon}></div>
                 <h2>3. Vote</h2>
                 <p>Voters go to the polls knowing exactly who they want in every office</p>
               </Col>
