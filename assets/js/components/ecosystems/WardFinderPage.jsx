@@ -20,6 +20,9 @@ import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
 import Credits from './../atoms/Credits.jsx'
 import surveyIcons from './../../../img/survey-icons.svg'
+import politician from './../../../img/survey-icons.svg'
+import ballotBox from './../../../img/survey-icons.svg'
+
 
 const style = {
   header: {
@@ -103,14 +106,17 @@ class WardFinderPage extends Component {
           <Grid>
             <Row>
               <Col xs={12} sm={4} style={style.marketingColumns}>
+                <img src={surveyIcons} />
                 <h2>1. Ask</h2>
                 <p>Candidates and voters take our survey</p>
               </Col>
               <Col xs={12} sm={4} style={style.marketingColumns}>
+                <img src={politician} />
                 <h2>2. Match</h2>
                 <p>We match voters with candidates based on the results</p>
               </Col>
               <Col xs={12} sm={4} style={style.marketingColumns}>
+                <img src={ballotBox} />
                 <h2>3. Vote</h2>
                 <p>Voters go to the polls knowing exactly who they want in every office</p>
               </Col>
