@@ -19,6 +19,7 @@ import Card from './../atoms/Card.jsx'
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
 import Credits from './../atoms/Credits.jsx'
+import surveyIcons from './../../../img/survey-icons.svg'
 
 const style = {
   header: {
