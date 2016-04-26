@@ -32,6 +32,7 @@ When you open a pull request, please ask to merge against the `develop` branch. 
 
 ## Installation
 ```
+sudo npm install -g envify
 git clone git@github.com:Code4HR/okcandidate.git
 npm install
 npm run dev
@@ -78,6 +79,7 @@ export OKC_DB_USER=username
 export OKC_DB_PASSWORD=password
 export SMARTY_STREETS_AUTH_ID=smartystreetsauthid
 export SMARTY_STREETS_AUTH_TOKEN=smartystreetsauthtoken
+export GOOGLE_ANALYTICS=UA-39303796-11
 ```
 ... replacing `databasename`, `username`, and `password` with the information used during setup of the database.
 

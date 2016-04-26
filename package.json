@@ -67,6 +67,7 @@
     "browser-sync-webpack-plugin": "^1.0.1",
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
+    "envify-loader": "^0.1.0",
     "eslint": "^2.3.0",
     "eslint-config-trails": "^1.0.4",
     "eslint-loader": "^1.1.1",

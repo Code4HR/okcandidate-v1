@@ -19,6 +19,10 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx$|\.js$/,
+        loader: 'envify-loader',
+        exclude: /node_modules/
+      }, {
+        test: /\.jsx$|\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       }, {
