@@ -23,7 +23,7 @@ class SurveyBuilder extends Component {
     this.props.dispatch(fetchActiveSurveys())
   }
 
-  selectSurvey(event) {
+  selectSurvey() {
     // this may not actually see any action until there is more than
     // one survey to select.
   }

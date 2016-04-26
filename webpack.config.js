@@ -27,13 +27,13 @@ module.exports = {
         exclude: /node_modules/
       }, {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: 'style-loader!css-loader'
       }, {
         test: /\.png$/,
-        loader: "url-loader?limit=100000"
+        loader: 'url-loader?limit=100000'
       }, {
         test: /\.jpg$/,
-        loader: "file-loader"
+        loader: 'file-loader'
       }
     ]
   },
@@ -43,4 +43,3 @@ module.exports = {
     })
   ]
 };
-

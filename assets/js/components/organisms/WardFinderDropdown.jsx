@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-import { browserHistory } from 'react-router'
-
 import {
   Input
 } from 'react-bootstrap'
