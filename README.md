@@ -27,10 +27,37 @@ We are going to publish a platform and web application in which:
 - News editors and other supporters will promote the app to voters
 - Volunteers will build the app
 
+## Continious Deployment
+ - We auto-build a Docker container from the `master` github branch, [store it on Docker Hub](https://hub.docker.com/r/code4hr/okcandidate/), and update production within ~10 min of each commit to `master`.
+ - We do the same for our hosted staging (http://okcandidate-staging.code4hr.org) with the `develop` github branch.
+ - All Docker images, cloud servers, and deployment process are managed by Docker Cloud, and reported to our Slack team #hrva-devops channel.
+
 ## Contributing
 When you open a pull request, please ask to merge against the `develop` branch.  Merged pull requests will automatically be deployed to a staging server.  When we want to release into production, the `develop` branch will be merged into `master`, which automatically deploys to an Azure box.
 
-## Installation
+## Local Development with Docker
+
+Using Docker to develop on OKC locally is ideal (but not required). Benifits:
+ - Using Docker Compose, it will auto create the node and psql environment for you.
+ - You'll be using the exact same setup/versions we do in production.
+ - Use a simple one-line command (below) to start or stop whole environment.
+ - When you're done, just delete the Docker container and image and not have to worry about "cleaning up".
+
+To run locally for development with postgres and node running in Docker containers, with nodemon watching for file changes on your local machines clone of this repo, follow these steps:
+ - Install [Docker Toolbox](https://www.docker.com/products/overview#/docker_toolbox) (Mac/Windows), the [Docker for Mac/Windows Beta](https://beta.docker.com), or Docker binaries docker-engine and docker-compose directly (Linux/Mac/Windows)
+ - Clone this repo
+ - In repo directory, run docker-compose with our dev yaml file: `docker-compose -f docker-compose-dev.yml up -d`. This pulls our latest images, builds the local repo, and starts psql and node servers (with nodemon).
+ - Edit files in repo directory on your machine, and point to either http://192.168.99.100:8000 or http://localhost:8000 (depending on your Docker setup and host OS).
+ - Want to check container status? try `docker-compose -f docker-compose-dev.yml ps`.
+ - Need to see logs? try `docker-compose -f docker-compose-dev.yml logs` (you can also follow logs, and just list logs for specific container, use `--help`).
+ - Want to make commands easier? copy `docker-compose-dev.yml` to `docker-compose.yml` and then you can just do `docker-compose ps` etc.
+ - Once your change is ready, just commit to local git feature-branch and push like you normally would.
+ - When you're done for the day, stop the OKC containers: `docker-compose -f docker-compose-dev.yml stop -d`
+ - When you're done forever, and want to cleanup: `docker-compose -f docker-compose-dev.yml down -v --rmi all`
+
+Note: To run OKC in the cloud (e.g. your cities staging/production) with a separate postgres container you could use docker-compose with something like our docker-compose-sample.yml
+
+## Local Dev Installation (without Docker)
 ```
 sudo npm install -g envify
 git clone git@github.com:Code4HR/okcandidate.git
@@ -38,7 +65,7 @@ npm install
 npm run dev
 ```
 
-## Database Setup
+## Database Setup (without Docker)
 OKCandidate uses Postgres as its database.  A couple of fixture files are available to create the initial tables and populate them with fixture data. There are two approaches to setting up the database:
 
 1. __Using PGAdmin3__
@@ -69,7 +96,7 @@ GRANT USAGE, SELECT
 ON ALL SEQUENCES IN SCHEMA public TO username;
 ```
 
-## Work with local database
+## Work with local database (without Docker)
 
 We can configure OKCandidate to work with your local database using environment variables.
 Make a file (don't put it in source control) that has the following...
@@ -91,18 +118,3 @@ my file `okcandidate_dev_blaine` I would run this from the terminal.
 ```
 source okcandidate_dev_blaine
 ```
-
-## Docker
-
-We auto-build a container from the `master` github branch on Docker Hub: https://hub.docker.com/r/code4hr/okcandidate/
-
-To run it in production with a separate postgres container you could use docker-compose using something like our docker-compose-sample.yml
-
-To run locally for development with postgres and node running in containers, with nodemon watching for file changes on your local machines clone of this repo, follow these steps:
-
- - install Docker Toolbox (Mac/Windows), the Docker for Mac/Windows Beta, or Docker binaries docker-engine and docker-compose directly (Linux/Mac/Windows)
- - clone this repo
- - in repo directory, run docker compose with our dev yaml file: `docker-compose -f docker-compose-dev.yml up -d`
- - edit files in repo directory on your machine, and point to either http://192.168.99.100:8000 or http://docker.local:8000
-
-
