@@ -47,6 +47,9 @@ To run locally for development with postgres and node running in Docker containe
  - Install [Docker Toolbox](https://www.docker.com/products/overview#/docker_toolbox) (Mac/Windows), the [Docker for Mac/Windows Beta](https://beta.docker.com), or Docker binaries docker-engine and docker-compose directly (Linux/Mac/Windows)
  - Clone this repo
  - In repo directory, run docker-compose with our dev yaml file: `docker-compose -f docker-compose-dev.yml up -d`. This pulls our latest images, builds the local repo, and starts psql and node servers (with nodemon).
+ - First time starting these containers? You'll need to put in some sample data to postgres. Run these two docker commands which will spin up a tempory container, import data to postgres, then stop/remove themselves. Enter `complicatedPassword` from your `docker-compose-dev.yml` file when it asks for it.
+   - `docker run -it --link okcandidate_okcpostgres_1:postgres -v $(pwd)/database:/var/import --rm postgres sh -c 'exec psql -h postgres -U okc okc < /var/import/okcandidate_database_create.sql'`
+   - `docker run -it --link okcandidate_okcpostgres_1:postgres -v $(pwd)/database:/var/import --rm postgres sh -c 'exec psql -h postgres -U okc okc < /var/import/okcandidate_database_sampledata.sql'`
  - Edit files in repo directory on your machine, and point to either http://192.168.99.100:8000 or http://localhost:8000 (depending on your Docker setup and host OS).
  - Want to check container status? try `docker-compose -f docker-compose-dev.yml ps`.
  - Need to see logs? try `docker-compose -f docker-compose-dev.yml logs` (you can also follow logs, and just list logs for specific container, use `--help`).
