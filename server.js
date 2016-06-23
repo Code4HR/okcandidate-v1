@@ -1,13 +1,18 @@
 // Create a basic Hapi.js server
+
 require('babel-register')({
   presets: ['es2015', 'react']
 })
 
 const Hapi = require('hapi')
+const AuthCookie = require('hapi-auth-cookie')
+const Hoek = require('hoek')
 const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
 const routes = require('./api/routes')
+const auth = require('./api/auth/index.js')
+
 const port = process.env['PORT'] || '8000'
 
 // Basic Hapi.js connection stuff
@@ -21,6 +26,8 @@ const host = process.env['OKC_DB_HOST'] || '127.0.0.1'
 const database = process.env['OKC_DB_NAME']
 const user = process.env['OKC_DB_USER']
 const password = process.env['OKC_DB_PASSWORD']
+
+module.exports = server
 
 server.register(
   {
@@ -69,6 +76,8 @@ server.register([{
   register: require('inert')
 }, {
   register: require('vision')
+}, {
+  register: auth  
 }], function(err) {
 
   if (err) return console.error(err)
