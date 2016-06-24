@@ -15,7 +15,8 @@ exports.register = function(server, options, next){
   })
 
   server.app.cache = cache
-
+  
+  // Register cookie authorization library
   server.register([
 	  {
 	  	register: require('hapi-auth-cookie')
@@ -26,7 +27,7 @@ exports.register = function(server, options, next){
 			throw err
 		}
   })
-
+  // Create strategy	
   server.auth.strategy('standard', 'cookie',{
 	cookie: 'cookiename',
 	password: 'cookiepass',
@@ -82,20 +83,17 @@ exports.register = function(server, options, next){
 		  .then(function (user) {
 
 			if (user) {
+
 				const sid = String(++uuid)
 
 				request.server.app.cache.set(sid, { account: user}, 0, (err) =>{
 					Hoek.assert(!err, err)
 					request.cookieAuth.set({sid: sid})
-
 					return reply.redirect('/admin')
 				}) 
 			} else {
-
 				return reply(Boom.badImplementation())
 			}
-
-			
 		  })
 
 		  .catch(function (err) {
@@ -121,6 +119,9 @@ exports.register.attributes = {
   name: 'auth'
 }
 
+
+// Placeholder function for users database
+// Must update to connect to OKCDB with hapi-shelf
 function getValidatedUser(email, password){
   return new Promise(function (fulfill, reject) {
 	var users = [{
@@ -134,12 +135,14 @@ function getValidatedUser(email, password){
 	  scope: ['user']
 	}]
 
+	// Delete pw from memory after validating
 	function grabCleanUser(user) {
 	  var user = user
 	  delete user.password
 	  return user
 	}
 
+	// I'm sure there's a good library for user lookup
 	if (email === users[0].email && password === users[0].password) {
 	  return fulfill(grabCleanUser(users[0]))
 	} else if (email === users[1].email && password === users[1].password) {
