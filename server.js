@@ -55,7 +55,8 @@ server.register(
         './api/models/Candidate',
         './api/models/CandidateAnswer',
         './api/models/CandidateGeography',
-        './api/models/CandidateType'
+        './api/models/CandidateType',
+        './api/models/Users'
       ]
     }
   },

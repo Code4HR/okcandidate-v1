@@ -1,7 +1,7 @@
 
 const Joi = require('joi')
 const Boom = require('boom')
-const Promise = require('bluebird')
+const Bluebird = require('bluebird')
 const Hoek = require('hoek')
 
 const time_logged_in = 2 * 60 * 1000
@@ -123,7 +123,7 @@ exports.register.attributes = {
 // Placeholder function for users database
 // Must update to connect to OKCDB with hapi-shelf
 function getValidatedUser(email, password){
-  return new Promise(function (fulfill, reject) {
+  return new Bluebird(function (fulfill, reject) {
 	var users = [{
 	  email: 'p',
 	  password: 'paulopass',
