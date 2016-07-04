@@ -27,7 +27,7 @@ We are going to publish a platform and web application in which:
 - News editors and other supporters will promote the app to voters
 - Volunteers will build the app
 
-## Continious Deployment
+## Continuous Deployment
  - We auto-build a Docker container from the `master` github branch, [store it on Docker Hub](https://hub.docker.com/r/code4hr/okcandidate/), and update production within ~10 min of each commit to `master`.
  - We do the same for our hosted staging (http://okcandidate-staging.code4hr.org) with the `develop` github branch.
  - All Docker images, cloud servers, and deployment process are managed by Docker Cloud, and reported to our Slack team #hrva-devops channel.
@@ -37,7 +37,7 @@ When you open a pull request, please ask to merge against the `develop` branch. 
 
 ## Local Development with Docker
 
-Using Docker to develop on OKC locally is ideal (but not required). Benifits:
+Using Docker to develop on OKC locally is ideal (but not required). Benefits:
  - Using Docker Compose, it will auto create the node and psql environment for you.
  - You'll be using the exact same setup/versions we do in production.
  - Use a simple one-line command (below) to start or stop whole environment.
@@ -58,7 +58,7 @@ To run locally for development with postgres and node running in Docker containe
  - When you're done for the day, stop the OKC containers: `docker-compose -f docker-compose-dev.yml stop -d`
  - When you're done forever, and want to cleanup: `docker-compose -f docker-compose-dev.yml down -v --rmi all`
 
-Note: To run OKC in the cloud (e.g. your cities staging/production) with a separate postgres container you could use docker-compose with something like our docker-compose-sample.yml
+Note: To run OKC in the cloud (e.g. your city's staging/production) with a separate postgres container you could use docker-compose with something like our docker-compose-sample.yml
 
 ## Local Dev Installation (without Docker)
 ```
