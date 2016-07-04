@@ -1,6 +1,9 @@
 'use strict'
 
 module.exports = (server) => {
+  const Joi = require('joi')
+  const Boom = require('boom')
+  const Promise = require('bluebird')
 
   const API_ROUTES = [].concat(
      require('./controllers/Category')(server),
@@ -24,6 +27,12 @@ module.exports = (server) => {
     {
       method: 'GET',
       path: '/admin',
+      config: {
+        auth: {
+          strategy: 'standard',
+          scope: 'admin'
+        }
+      },
       handler: {
         view: 'Default'
       }
