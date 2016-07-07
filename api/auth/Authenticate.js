@@ -1,14 +1,17 @@
+'use strict'
 
 const Joi = require('joi')
 const Boom = require('boom')
 const Bluebird = require('bluebird')
 const Hoek = require('hoek')
 
-const time_logged_in = 2 * 60 * 1000
+
+const time_logged_in = 24 * 60 * 60 * 1000
 let uuid = 1
 
 exports.register = function(server, options, next){
 
+	// Caching their cookie allowance
   const cache = server.cache({
 	segment: 'standard',
 	expiresIn: time_logged_in
@@ -16,7 +19,7 @@ exports.register = function(server, options, next){
 
   server.app.cache = cache
   
-  // Register cookie authorization library
+  // Register cookie authorization library, won't compile without callback function
   server.register([
 	  {
 	  	register: require('hapi-auth-cookie')
@@ -27,29 +30,31 @@ exports.register = function(server, options, next){
 			throw err
 		}
   })
+
   // Create strategy	
   server.auth.strategy('standard', 'cookie',{
-	cookie: 'cookiename',
-	password: 'cookiepass',
-	isSecure: true,
-	ttl: time_logged_in,
-	validateFunc: function (request, session, callback) {
+		cookie: 'cookiename',
+		password: 'cookiepass',
+		isSecure: true,
+		ttl: time_logged_in,
+		validateFunc: function (request, session, callback) {
 
-		cache.get(session.sid, (err, cached) => {
-			if (err) {
-				return callback(err, false)
-			}
-			if (!cached) {
-				return callback(null, false)
-			}
-			return callback(null, true, cached.account)
-		})
-
-	}
+			cache.get(session.sid, (err, cached) => {
+				if (err) {
+					return callback(err, false)
+				}
+				if (!cached) {
+					return callback(null, false)
+				}
+				return callback(null, true, cached.account)
+			})
+		}
   })
 
+  // Routes for authentication
   server.route([
 	{
+		// Create main login route with placeholder HTML until we route it correctly
 	  method: 'GET',
 	  path: '/logger',
 	  config: {
@@ -60,13 +65,15 @@ exports.register = function(server, options, next){
 						'Email:<br><input type="text" name="email" ><br>' +
 						'Password:<br><input type="password" name="password"><br/><br/>' +
 						'<input type="submit" value="Login"></form></body></html>')
-		}
+			}
 	  }
 	},
 	{
+		// Where the action happens. Sends info grabbed from the input forms to the getValidatedUser function (below)
+		// inside of which the DB is queried to see if the given info is a match. If yes, they're authenticated
 	  method: 'POST',
 	  path: '/logger',
-	  config: {
+	  config:{
 		auth: false,
 		validate: {
 		  payload: {
@@ -79,11 +86,11 @@ exports.register = function(server, options, next){
 		  const email = request.payload.email
 		  const password = request.payload.password
 
-		  getValidatedUser(request.payload.email,request.payload.password)
+		  getValidatedUser(server, request.payload.email,request.payload.password)
 		  .then(function (user) {
-
+		 
 			if (user) {
-
+				//They're in!
 				const sid = String(++uuid)
 
 				request.server.app.cache.set(sid, { account: user}, 0, (err) =>{
@@ -92,16 +99,17 @@ exports.register = function(server, options, next){
 					return reply.redirect('/admin')
 				}) 
 			} else {
+				// GTFO
 				return reply(Boom.badImplementation())
-			}
+				}
 		  })
 
 		  .catch(function (err) {
 			return reply(Boom.badImplementation())
-		  })
+		  })} 
 		}
-	  }
 	}, {
+		// Bye bye now
 		method: 'GET',
 		path: '/logout',
 		config: {
@@ -111,7 +119,8 @@ exports.register = function(server, options, next){
 				return reply('Logged out')
 			}
 		}
-	}])
+	}
+])
   next()
 }
 
@@ -120,36 +129,12 @@ exports.register.attributes = {
 }
 
 
-// Placeholder function for users database
-// Must update to connect to OKCDB with hapi-shelf
-function getValidatedUser(email, password){
-  return new Bluebird(function (fulfill, reject) {
-	var users = [{
-	  email: 'p',
-	  password: 'paulopass',
-	  scope: ['user', 'admin']
-	},
-	{
-	  email: 'other@other.com',
-	  password: 'otherpass',
-	  scope: ['user']
-	}]
+function getValidatedUser(server, email, password){
+	// Grab the table from DB and make it happen
+	const User = server.plugins['hapi-shelf'].model('Users')
 
-	// Delete pw from memory after validating
-	function grabCleanUser(user) {
-	  var user = user
-	  delete user.password
-	  return user
-	}
-
-	// I'm sure there's a good library for user lookup
-	if (email === users[0].email && password === users[0].password) {
-	  return fulfill(grabCleanUser(users[0]))
-	} else if (email === users[1].email && password === users[1].password) {
-	  return fulfill(grabCleanUser(users[1]))
-	} else {
-	  return reject(null)
-	}
-
-  })
+	return User
+			.where({'email': email,
+					'password': password })
+			.fetch()
 }

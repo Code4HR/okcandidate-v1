@@ -1,4 +1,11 @@
-﻿---------------
+﻿---
+-- Password Temp --
+---
+INSERT INTO users (username, email, scope, password, survey) VALUES
+('blueberry', 'katyperry@january.apothecary','admin', 'evolutionary', 0),
+('other', 'other@keepinitreal.com','user', 'otherpass', 1);
+
+---------------
 -- Geography --
 ---------------
 INSERT INTO geography (id, geography_name)
