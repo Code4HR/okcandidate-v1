@@ -94,7 +94,9 @@ class WardFinderPage extends Component {
               <Col xs={12} sm={8} smOffset={2}>
                 <header>
                   <div style={style.logo}></div>
-                  <h1 style={style.heading}>Find out which candidates for local office are a match for you!</h1>
+                  <h1 style={style.heading}>
+                    Find out which candidates for local office are a match for you!
+                  </h1>
                 </header>
               </Col>
             </Row>
@@ -103,7 +105,10 @@ class WardFinderPage extends Component {
               <Col xs={12} sm={6} smOffset={3}>
                 <Card style={style.card}>
                   <h2>Get Started!</h2>
-                  <p>We can find candidates running for office in your area by using any Norfolk street address.</p>
+                  <p>
+                    We can find candidates running for office in your area by using any Norfolk
+                    street address.
+                  </p>
                   <WardFinderAddress
                     ward={this.props.ward}
                     dispatch={this.props.dispatch} />

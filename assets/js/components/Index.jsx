@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component} from 'react'
 import ReactDOM from 'react-dom'
 import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
@@ -50,6 +50,6 @@ ReactDOM.render(
     <App />
   </Provider>,
   document.body
-);
+)
 
 export default App
