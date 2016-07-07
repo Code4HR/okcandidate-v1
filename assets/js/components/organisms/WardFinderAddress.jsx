@@ -33,7 +33,7 @@ class WardFinderAddress extends Component {
   }
 
   onEnter(e) {
-    const code = (e.keyCode ? e.keyCode : e.which);
+    const code = (e.keyCode ? e.keyCode : e.which)
     if (code === 13) {
       this.submitAddress()
     }
