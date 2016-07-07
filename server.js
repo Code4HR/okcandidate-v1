@@ -11,7 +11,9 @@ const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
 const routes = require('./api/routes')
-const auth = require('./api/auth/index.js')
+const auth = require('./api/auth/Authenticate.js')
+const newuser = require('./api/auth/CreateUser.js')
+
 
 const port = process.env['PORT'] || '8000'
 
@@ -79,6 +81,8 @@ server.register([{
   register: require('vision')
 }, {
   register: auth  
+},{
+  register: newuser
 }], function(err) {
 
   if (err) return console.error(err)
