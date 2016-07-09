@@ -108,6 +108,7 @@ server.register([{
       }
     })
 
+    // Should this say 'api' instead of app?
     // Add main app route
     server.route(routes(server))
 

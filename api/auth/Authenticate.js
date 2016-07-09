@@ -56,23 +56,19 @@ exports.register = function(server, options, next){
 	{
 		// Create main login route with placeholder HTML until we route it correctly
 	  method: 'GET',
-	  path: '/logger',
+	  path: '/login',
 	  config: {
 	  	  auth: false,
-		  handler: function(request, reply) {
-			return reply('<html><head><title>Login page</title></head><body>' +
-						'<form method="post" action="/logger">' +
-						'Email:<br><input type="text" name="email" ><br>' +
-						'Password:<br><input type="password" name="password"><br/><br/>' +
-						'<input type="submit" value="Login"></form></body></html>')
+			handler: {
+				view: 'LoginDefault'
 			}
-	  }
+	  } 
 	},
 	{
 		// Where the action happens. Sends info grabbed from the input forms to the getValidatedUser function (below)
 		// inside of which the DB is queried to see if the given info is a match. If yes, they're authenticated
 	  method: 'POST',
-	  path: '/logger',
+	  path: '/login',
 	  config:{
 		auth: false,
 		validate: {

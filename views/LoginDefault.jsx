@@ -16,6 +16,8 @@ const Default = React.createClass({
 
         <body>
           <h1>Admin Login Screen</h1>
+            <div id="app"></div>
+            <script src="/js/bundle.js"></script>
         </body>
       </html>
     );
