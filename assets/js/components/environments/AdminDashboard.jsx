@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import SurveyBuilder from './../ecosystems/SurveyBuilder.jsx'
 
+import NewRaceForm from './../ecosystems/NewRaceForm.jsx'
+
 class AdminDashboard extends Component {
 
   constructor(props) {
@@ -14,9 +16,7 @@ class AdminDashboard extends Component {
       <article>
         <h1>Admin Dashboard</h1>
 
-        <SurveyBuilder
-          survey={this.props.survey}
-          dispatch={this.props.dispatch} />
+        <NewRaceForm />
 
       </article>
     )

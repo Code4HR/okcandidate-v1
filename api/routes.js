@@ -27,12 +27,12 @@ module.exports = (server) => {
     {
       method: 'GET',
       path: '/admin',
-      config: {
-        auth: {
-          strategy: 'standard',
-          scope: 'admin'
-        }
-      },
+      // config: {
+      //   auth: {
+      //     strategy: 'standard',
+      //     scope: 'admin'
+      //   }
+      // },
       handler: {
         view: 'Default'
       }
