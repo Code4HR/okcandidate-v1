@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 
 import SurveyBuilder from './../ecosystems/SurveyBuilder.jsx'
 
-import NewRaceForm from './../ecosystems/NewRaceForm.js'
-
 class AdminDashboard extends Component {
 
   constructor(props) {
