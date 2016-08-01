@@ -26,23 +26,23 @@ class NewRaceForm extends Component {
           name: 'Suffolk'
         }
       ],
-      selectedSubdivision: '',
+      selectedSubdivisions: [],
       subdivisions: [
         {
           id: 1,
-          name: "Subdivision A"
+          name: 'Subdivision A'
         },
         {
           id: 2,
-          name: "Subdivision B"
+          name: 'Subdivision B'
         },
         {
           id: 3,
-          name: "Subdivision C"
+          name: 'Subdivision C'
         },
         {
           id: 4,
-          name: "Subdivision D"
+          name: 'Subdivision D'
         }
       ]
     }
@@ -60,20 +60,33 @@ class NewRaceForm extends Component {
 
   selectSubdivision(subdivision){
     const id = subdivision.id
-    this.setState({selectedSubdivision: id})
+    const exists = this.state.selectedSubdivisions.find(subdivisionId => subdivisionId === id)
+    if (exists) {
+      this.setState({
+        selectedSubdivisions: this.state.selectedSubdivisions.filter(subdivisionId => subdivisionId !== id)
+      })
+    }
+    else {
+      this.setState({
+        selectedSubdivisions: [
+          ...this.state.selectedSubdivisions,
+          id
+        ]
+      })
+    }
   }
 
-  getSelectedSubdivision(subdivision) {
-    return this.state.selectedSubdivision === subdivision.id
+  isSelected(subdivision) {
+    const id = subdivision.id
+    return this.state.selectedSubdivisions.find(subdivisionId => subdivisionId === id)
   }
 
   render(){
     return (
       <Card>
         <h2>New Race</h2>
-        <p>{this.state.raceName}</p>
         <div className="pure-g">
-          <div className="pure-u-3-5">
+          <div className="pure-u-3-5 column">
             <Input
               type="text"
               label="Name"
@@ -96,15 +109,15 @@ class NewRaceForm extends Component {
               }
             </Input>
           </div>
-          <div className="pure-u-2-5">
+          <div className="pure-u-2-5 column">
             <label>Subdivision</label>
             {
               this.state.subdivisions.map(subdivision => {
                 return (
                   <Input
-                    checked={this.getSelectedSubdivision.call(this, subdivision)}
-                    onClick={this.selectSubdivision.bind(this, subdivision)}
-                    type="radio"
+                    checked={this.isSelected.call(this, subdivision)}
+                    onChange={this.selectSubdivision.bind(this, subdivision)}
+                    type="checkbox"
                     label={subdivision.name} >
                   </Input>
                 )
