@@ -20,3 +20,8 @@ body, html {
     padding-left: 0px;
     padding-right: 0px;
 }*/
+
+/* Padding for columns */
+.column {
+  padding: 0.5em;
+}

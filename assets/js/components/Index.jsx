@@ -8,6 +8,7 @@ import reducer from './../redux/reducer'
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import './../../../node_modules/loaders.css/loaders.min.css'
+import './../../../node_modules/purecss/build/pure-min.css'
 import './../../style/main.css'
 
 // Redux Setup
@@ -21,6 +22,7 @@ const store = createStore(
 import Frame from './environments/Frame.jsx'
 import AdminLogin from './environments/AdminLogin.jsx'
 import AdminDashboard from './environments/AdminDashboard.jsx'
+import RaceManager from './ecosystems/RaceManager.jsx'
 import WardFinderPage from './ecosystems/WardFinderPage.jsx'
 import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
@@ -39,8 +41,9 @@ class App extends Component {
           <IndexRoute component={WardFinderPage} />
           <Route path="survey" component={SurveyPage} />
           <Route path="results/:id" component={ResultsPage} />
+          <Route path="admin" component={AdminDashboard}/>
+          <Route path="admin/races" component={RaceManager}/>
           <Route path="login" component={AdminLogin} />
-          <Route path="admin" component={AdminDashboard} />
         </Route>
       </Router>
     )
