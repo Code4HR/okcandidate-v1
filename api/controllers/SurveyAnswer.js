@@ -3,13 +3,6 @@ module.exports = function (server) {
 
   return [    {
     method: 'GET',
-    path: '/login',
-    handler: {
-      view: 'Login'
-    }
-  },
-  {
-    method: 'GET',
     path: '/api/survey_answer',
     handler: (request, reply) => {
       SurveyAnswer

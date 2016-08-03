@@ -20,6 +20,7 @@ const store = createStore(
 
 // Top Level Components
 import Frame from './environments/Frame.jsx'
+import AdminLogin from './environments/AdminLogin.jsx'
 import AdminDashboard from './environments/AdminDashboard.jsx'
 import RaceManager from './ecosystems/RaceManager.jsx'
 import WardFinderPage from './ecosystems/WardFinderPage.jsx'
@@ -42,6 +43,7 @@ class App extends Component {
           <Route path="results/:id" component={ResultsPage} />
           <Route path="admin" component={AdminDashboard}/>
           <Route path="admin/races" component={RaceManager}/>
+          <Route path="login" component={AdminLogin} />
         </Route>
       </Router>
     )

@@ -1,5 +1,5 @@
 // Webpack config file
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   entry: './assets/js/components/Index.jsx',

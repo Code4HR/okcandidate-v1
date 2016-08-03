@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import SurveyBuilder from './../ecosystems/SurveyBuilder.jsx'
-
 class AdminDashboard extends Component {
 
   constructor(props) {
@@ -12,20 +10,16 @@ class AdminDashboard extends Component {
   render() {
     return (
       <article>
-        <h1>Admin Dashboard</h1>
-        
-        <SurveyBuilder
-          survey={this.props.survey}
-          dispatch={this.props.dispatch} />
+        <h1>Admin Login Screen</h1>
 
+        <form method="post" action="/login">
+          Email:<br><input type="text" name="email" /></br> 
+          Password:<br><input type="password" name="password" /></br>
+          <input type="submit" value="Login" />
+        </form>
       </article>
     )
   }
-}
-
-AdminDashboard.propTypes = {
-  survey: PropTypes.object,
-  dispatch: PropTypes.func
 }
 
 export default connect(
