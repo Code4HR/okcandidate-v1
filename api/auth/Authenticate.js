@@ -6,7 +6,7 @@ const Bluebird = require('bluebird')
 const Hoek = require('hoek')
 
 
-const time_logged_in = 24 * 60 * 60 * 1000
+const time_logged_in = 5184000000
 let uuid = 1
 
 exports.register = function(server, options, next){
