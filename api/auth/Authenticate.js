@@ -5,8 +5,8 @@ const Boom = require('boom')
 const Bluebird = require('bluebird')
 const Hoek = require('hoek')
 
-
-const time_logged_in = 24 * 60 * 60 * 1000
+// User will be logged in for one day (86400000 milliseconds)
+const time_logged_in = 86400000
 let uuid = 1
 
 exports.register = function(server, options, next){
