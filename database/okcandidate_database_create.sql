@@ -67,7 +67,9 @@ CREATE TABLE IF NOT EXISTS answer (
 CREATE TABLE IF NOT EXISTS survey_response (
 	id SERIAL PRIMARY KEY,
 	survey_id int NOT NULL REFERENCES survey,
-	geography_id int NOT NULL REFERENCES geography
+	geography_id int NOT NULL REFERENCES geography,
+  user_email varchar(100),
+  user_phone varchar(50)
 );
 
 CREATE TABLE IF NOT EXISTS survey_answer (
