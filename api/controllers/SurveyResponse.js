@@ -33,6 +33,8 @@ module.exports = function (server) {
           .save({
             survey_id: request.payload.surveyId,
             geography_id: request.payload.geographyId,
+            user_email: request.payload.userEmail,
+            user_phone: request.payload.userPhone,
           })
           .then(function (newSurveyResponse) {
             reply(newSurveyResponse)
@@ -51,6 +53,8 @@ module.exports = function (server) {
             survey_response.save({
               survey_id: request.payload.surveyId,
               geography_id: request.payload.geographyId
+              user_email: request.payload.userEmail,
+              user_phone: request.payload.userPhone,
             })
               .then(function (surveyResponse) {
                 reply(surveyResponse)
