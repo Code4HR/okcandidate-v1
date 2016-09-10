@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 
 import {
-  Button
+  Button, ButtonToolbar
 } from 'react-bootstrap'
 
 import Card from './../atoms/Card.jsx'
@@ -41,21 +41,29 @@ class SurveyQuestionPager extends Component {
     }
   }
 
-  goForward() {
+  skipForward() {
+    this.goForward()
+  }
+
+  answerForward() {
     try {
       this.validateSelections()
-      this.state.alerts = {}
-      if (this.state.index < this.props.questions.length - 1) {
-        this.incrementIndex()
-      }
-      else {
-        this.props.onSubmit()
-      }
+      this.goForward()
     }
     catch (errors) {
       this.setState({
         alerts: errors
       })
+    }
+  }
+
+  goForward() {
+    this.state.alerts = {}
+    if (this.state.index < this.props.questions.length - 1) {
+      this.incrementIndex()
+    }
+    else {
+      this.props.onSubmit()
     }
   }
 
@@ -74,15 +82,13 @@ class SurveyQuestionPager extends Component {
   validateSelections() {
     const errors = {}
     const currentQuestion = this.props.questions[this.state.index]
-    if (!currentQuestion.selectedAnswer && !currentQuestion.intensity) {
-      return
-    }
+
     if (!currentQuestion.selectedAnswer) {
       errors.answer = 'Please select an answer'
-    }
-    if (!currentQuestion.intensity) {
+    } else if (!currentQuestion.intensity) {
       errors.intensity = 'How do you feel about this?'
     }
+
     if (errors.intensity || errors.answer) {
       throw errors
     }
@@ -114,11 +120,19 @@ class SurveyQuestionPager extends Component {
 
               <div style={style.buttonTray.spacer}></div>
 
-              <Button
-                ref="nextButton"
-                bsStyle="primary"
-                bsSize="large"
-                onClick={this.goForward.bind(this)}>Next</Button>
+              <ButtonToolbar>
+                <Button
+                  ref="skipButton"
+                  bsStyle="warning"
+                  bsSize="large"
+                  onClick={this.skipForward.bind(this)}>Skip</Button>
+
+                <Button
+                  ref="nextButton"
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={this.answerForward.bind(this)}>Next</Button>
+              </ButtonToolbar>
             </div>
         </Card>
 
