@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Rating from 'react-rating'
 
 import {
-  Input,
+  Radio,
   Alert
 } from 'react-bootstrap'
 
@@ -21,6 +21,7 @@ const style = {
 class SurveyQuestion extends Component {
 
   makeSelection(answer) {
+
     this.props.dispatch(
       selectSurveyQuestionResponse(
         this.props.question.id,
@@ -55,13 +56,14 @@ class SurveyQuestion extends Component {
             null
         }
         {
-          this.props.question.answers.map(answer => {
+          this.props.question.answers.map((answer, index) => {
             return (
-              <Input
+              <Radio
+                key={index}
                 checked={this.getChecked.call(this, answer)}
-                onClick={this.makeSelection.bind(this, answer)}
-                type="radio"
-                label={answer.answerLabel} />
+                onClick={this.makeSelection.bind(this, answer)}>
+                {answer.answerLabel}
+              </Radio>
             )
           })
         }

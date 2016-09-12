@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input
+  FieldGroup
 } from 'react-bootstrap'
 
 import SurveyBuilderQuestion from './../organisms/SurveyBuilderQuestion.jsx'
@@ -44,7 +44,7 @@ class SurveyBuilder extends Component {
   render() {
     return (
       <section>
-        <Input
+        <FieldGroup
           type="select"
           label="Select Campaign"
           placeholder="Active Campaign"
@@ -56,7 +56,7 @@ class SurveyBuilder extends Component {
               )
             })
           }
-        </Input>
+        </FieldGroup>
 
         {
           this.props.survey.questions.map(question => {

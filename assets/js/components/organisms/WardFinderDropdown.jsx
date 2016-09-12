@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input
+  FormGroup,
+  ControlLabel,
+  FormControl
 } from 'react-bootstrap'
 
 import {
@@ -20,31 +22,36 @@ class WardFinderDropdown extends Component {
     super(props)
   }
 
-  selectGeography() {
-    const selection = parseInt(this.refs.selectGeography.getValue(), 10)
+  selectGeography(event) {
+    const selection = parseInt(event.target.value, 10)
     this.props.dispatch(selectGeography(selection))
   }
 
   render() {
     return (
       <div style={style.container}>
-        <Input
-          ref="selectGeography"
-          onChange={this.selectGeography.bind(this)}
+        <FormGroup
           bsSize="large"
-          type="select"
-          label="Select a Super Ward"
-          value={this.props.ward.id}
-          placeholder="select">
-          <option value={0}>...</option>
-          {
-            this.props.ward.results.map(ward => {
-              return (
-                <option value={ward.id}>{ward.geographyName}</option>
-              )
-            })
-          }
-        </Input>
+          controlId="selectGeography">
+          <ControlLabel>Select a Super Ward</ControlLabel>
+          <FormControl
+            onChange={this.selectGeography.bind(this)}
+            label="Select a Super Ward"
+            value={this.props.ward.id}
+            componentClass="select"
+            placeholder="select">
+            {
+              [
+                {id: null, geographyName: 'Select...'},
+                ...this.props.ward.results
+              ].map(ward => {
+                return (
+                  <option value={ward.id}>{ward.geographyName}</option>
+                )
+              })
+            }
+          </FormControl>
+        </FormGroup>
       </div>
     )
   }
