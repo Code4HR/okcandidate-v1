@@ -8,6 +8,8 @@ import ResultsPage
   from '../../../../assets/js/components/ecosystems/ResultsPage'
 import LoadingIndicator
   from '../../../../assets/js/components/atoms/LoadingIndicator'
+import ElectionDayReminderPrompt
+  from '../../../../assets/js/components/organisms/ElectionDayReminderPrompt'
 
 describe('The results page', () => {
   let page, state, dispatch, store
@@ -22,6 +24,9 @@ describe('The results page', () => {
     }
     state.returns({
       survey: {
+        electionDayReminder: {
+          displayPrompt: true
+        },
         candidateMatch: {
           survey: [
           ]
@@ -35,6 +40,47 @@ describe('The results page', () => {
 
   it('will exist', () => {
     expect(page).to.be.ok
+  })
+
+  context('Election Day Reminder Prompt', () => {
+
+    let prompt
+
+    beforeEach(() => {
+      prompt = TestUtils.scryRenderedComponentsWithType(page, ElectionDayReminderPrompt)
+    })
+
+    it('will exist' ,() => {
+      expect(prompt).to.be.ok
+    })
+
+    context('If user has dismissed the alert', () => {
+      let page
+      beforeEach(() => {
+        state.returns({
+          survey: {
+            electionDayReminder: {
+              displayPrompt: false
+            },
+            isFetching: true,
+            candidateMatch: {
+              survey: [
+              ]
+            }
+          }
+        })
+        page = TestUtils.renderIntoDocument(
+          <ResultsPage store={store} params={{ id: '' }} />
+        )
+      })
+
+      it('should not exist', () => {
+        prompt = TestUtils.scryRenderedComponentsWithType(page, ElectionDayReminderPrompt)
+        expect(prompt).to.have.length(0)
+      })
+
+    })
+
   })
 
   context('column', () => {
@@ -60,6 +106,9 @@ describe('The results page', () => {
       beforeEach(() => {
         state.returns({
           survey: {
+            electionDayReminder: {
+              displayPrompt: true
+            },
             isFetching: true,
             candidateMatch: {
               survey: [
@@ -83,6 +132,9 @@ describe('The results page', () => {
       beforeEach(() => {
         state.returns({
           survey: {
+            electionDayReminder: {
+              displayPrompt: true
+            },
             candidateMatch: {
               survey: [{
                 type: 'match'
