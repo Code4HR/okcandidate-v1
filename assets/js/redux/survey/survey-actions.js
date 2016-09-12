@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import checkStatus from './../utils/checkStatus'
 import { browserHistory } from 'react-router'
+import validator from 'validator'
 
 export const FETCH_ACTIVE_SURVEYS_REQUEST = 'FETCH_ACTIVE_SURVEYS_REQUEST'
 export const FETCH_ACTIVE_SURVEYS_SUCCESS = 'FETCH_ACTIVE_SURVEYS_SUCCESS'
@@ -396,10 +397,179 @@ export function fetchSurveyCandidateMatches(id) {
   }
 }
 
-export const HIDE_ELECTION_DAY_REMINDER_PROMPT = 'HIDE_ELECTION_DAY_REMINDER_PROMPT'
+export const HIDE_ELECTION_DAY_REMINDER_PROMPT =
+  'HIDE_ELECTION_DAY_REMINDER_PROMPT'
+export const SHOW_ELECTION_DAY_REMINDER_MODAL =
+  'SHOW_ELECTION_DAY_REMINDER_MODAL'
+export const HIDE_ELECTION_DAY_REMINDER_MODAL =
+  'HIDE_ELECTION_DAY_REMINDER_MODAL'
+
+export const SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS =
+  'SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS'
+export const SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER =
+  'SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER'
+
+export const SUBMIT_ELECTION_DAY_REMINDER_REQUEST = 'SUBMIT_ELECTION_DAY_REMINDER_REQUEST'
+export const SUBMIT_ELECTION_DAY_REMINDER_SUCCESS = 'SUBMIT_ELECTION_DAY_REMINDER_SUCCESS'
+export const SUBMIT_ELECTION_DAY_REMINDER_FAILURE = 'SUBMIT_ELECTION_DAY_REMINDER_FAILURE'
 
 export function hideElectionDayReminderPrompt () {
   return {
     type: HIDE_ELECTION_DAY_REMINDER_PROMPT
+  }
+}
+
+export function showElectionDayReminderModal() {
+  return {
+    type: SHOW_ELECTION_DAY_REMINDER_MODAL
+  }
+}
+
+export function hideElectionDayReminderModal() {
+  return {
+    type: HIDE_ELECTION_DAY_REMINDER_MODAL
+  }
+}
+
+export function setElectionDayReminderEmailAddress(value, error = '') {
+  return {
+    type: SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS,
+    value,
+    error
+  }
+}
+
+export function setElectionDayReminderTelephoneNumber(value, error = '') {
+  return {
+    type: SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER,
+    value,
+    error
+  }
+}
+
+export function submitElectionDayReminderRequest() {
+  return {
+    type: SUBMIT_ELECTION_DAY_REMINDER_REQUEST
+  }
+}
+
+export function submitElectionDayReminderSuccess(response) {
+  return {
+    type: SUBMIT_ELECTION_DAY_REMINDER_SUCCESS,
+    response
+  }
+}
+
+export function submitElectionDayReminderFailure(error) {
+  return {
+    type: SUBMIT_ELECTION_DAY_REMINDER_FAILURE,
+    error
+  }
+}
+
+export function validateElectionDayReminderRequest(email, telephone) {
+
+  // Both email and telephone are defined.
+  if (email.value && telephone.value) {
+    // validate email and telephone addresses
+    if (!(validator.isEmail(email.value) &&
+          validator.isMobilePhone(telephone.value, 'en-US'))) {
+      return {
+        error: {
+          message: 'Please fix the errors below',
+          severity: 'warning'
+        },
+        email: {
+          value: email.value,
+          error: 'This is not a valid email address'
+        },
+        telephone: {
+          value: telephone.value,
+          error: 'This is not a valid telephone number.'
+        }
+      }
+    }
+  }
+
+  // Only email is defined
+  else if (email.value && !telephone.value) {
+    // validate email address
+    if (!(validator.isEmail(email.value))) {
+      return {
+        error: {
+          message: 'Please fix the error below',
+          severity: 'warning'
+        },
+        email: {
+          value: email.value,
+          error: 'This is not a valid email address'
+        }
+      }
+    }
+  }
+
+  // Only telephone is defined
+  else if (!email.value && telephone.value) {
+    // validate telephone address
+    if (!(validator.isMobilePhone(telephone.value, 'en-US'))) {
+      return {
+        error: {
+          message: 'Please fix the error below',
+          severity: 'warning'
+        },
+        telephone: {
+          value: telephone.value,
+          error: 'This is not a valid telephone number'
+        }
+      }
+    }
+  }
+
+  // Nothing is defined.
+  else if (!email.value && !telephone.value) {
+    // dispatch the failure function.
+    return {
+      error: {
+        message: 'At least one piece of contact information should be provided',
+        severity: 'warning'
+      }
+    }
+  }
+
+}
+
+export function submitElectionDayReminder(email, telephone, surveyId) {
+  return function(dispatch) {
+
+    dispatch(submitElectionDayReminderRequest())
+    const errors = validateElectionDayReminderRequest(email, telephone)
+    if (errors) {
+      return dispatch(submitElectionDayReminderFailure(errors))
+    }
+    fetch(`/api/survey_response/contact_info/${surveyId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userEmail: email.value,
+        userPhone: telephone.value
+      })
+    })
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(submitElectionDayReminderSuccess(response))
+    })
+    .catch(() => {
+      dispatch(submitElectionDayReminderFailure({
+        error: {
+          message: 'There was an error saving your contact information',
+          severity: 'danger'
+        }
+      }))
+    })
+
   }
 }
