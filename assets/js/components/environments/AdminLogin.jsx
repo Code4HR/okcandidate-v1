@@ -13,13 +13,17 @@ class AdminDashboard extends Component {
         <h1>Admin Login Screen</h1>
 
         <form method="post" action="/login">
-          Email:<br><input type="text" name="email" /></br> 
+          Email:<br><input type="text" name="email" /></br>
           Password:<br><input type="password" name="password" /></br>
           <input type="submit" value="Login" />
         </form>
       </article>
     )
   }
+}
+
+AdminDashboard.propTypes = {
+  survey: PropTypes.object
 }
 
 export default connect(

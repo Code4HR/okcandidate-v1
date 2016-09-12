@@ -41,7 +41,7 @@ class CandidateMatchProfileBadge extends Component {
 }
 
 CandidateMatchProfileBadge.propTypes = {
-  compositeMatchScore: PropTypes.string,
+  compositeMatchScore: PropTypes.number,
   candidateName: PropTypes.string,
   style: PropTypes.object
 }

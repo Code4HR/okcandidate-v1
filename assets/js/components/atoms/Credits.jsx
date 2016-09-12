@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 
 import colors from './../style/colors'
-import {
-  Col,
-  Grid,
-  Row
-} from 'react-bootstrap'
 
 const style = {
   container: {
@@ -41,7 +36,7 @@ class Credits extends Component {
            <a style={style.adminLink} href="http://pilotonline.com/">Admin Dashboard</a>
         </p>
       </div>
-          
+
     )
   }
 

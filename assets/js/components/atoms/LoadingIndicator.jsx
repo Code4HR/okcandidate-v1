@@ -5,7 +5,7 @@ class LoadingIndicator extends Component {
   render() {
     return (
       <div style={{textAlign: 'center', paddingTop: '2em'}}>
-        <Loader type="ball-pulse" active="true" />
+        <Loader type="ball-pulse" active />
         <p>
           <span style={{fontSize: '1.5em'}}>{this.props.message}</span>
         </p>
