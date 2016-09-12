@@ -15,13 +15,19 @@ class ElectionDayReminderPrompt extends Component {
     this.props.dispatch(hideElectionDayReminderPrompt())
   }
 
+  showElectionDayReminderForm() {
+    alert('should show election day reminder form')
+  }
+
   render() {
     return (
       <Alert bsStyle="success">
         <h4>Election Day Reminder</h4>
         <p>Would you like us to email or text you these results on election day?</p>
         <div style={{textAlign: 'right', marginTop: '0.5em'}}>
-          <Button bsStyle="success">Sure!</Button>{' '}
+          <Button
+            onClick={this.showElectionDayReminderForm.bind(this)}
+            bsStyle="success">Sure!</Button>{' '}
           <Button
             onClick={this.hideElectionDayReminderPrompt.bind(this)}
             bsStyle="default">No thanks</Button>
