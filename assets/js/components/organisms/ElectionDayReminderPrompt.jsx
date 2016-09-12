@@ -20,7 +20,7 @@ class ElectionDayReminderPrompt extends Component {
       <Alert bsStyle="success">
         <h4>Election Day Reminder</h4>
         <p>Would you like us to email or text you these results on election day?</p>
-        <div style={{'text-align': 'right', 'margin-top': '0.5em'}}>
+        <div style={{textAlign: 'right', marginTop: '0.5em'}}>
           <Button bsStyle="success">Sure!</Button>{' '}
           <Button
             onClick={this.hideElectionDayReminderPrompt.bind(this)}
