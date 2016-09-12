@@ -52,9 +52,9 @@ module.exports = function (server) {
           .then(function (survey_response) {
             survey_response.save({
               survey_id: request.payload.surveyId,
-              geography_id: request.payload.geographyId
+              geography_id: request.payload.geographyId,
               user_email: request.payload.userEmail,
-              user_phone: request.payload.userPhone,
+              user_phone: request.payload.userPhone
             })
               .then(function (surveyResponse) {
                 reply(surveyResponse)
