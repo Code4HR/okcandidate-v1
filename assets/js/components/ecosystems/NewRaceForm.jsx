@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 import {
   Input
@@ -63,7 +63,8 @@ class NewRaceForm extends Component {
     const exists = this.state.selectedSubdivisions.find(subdivisionId => subdivisionId === id)
     if (exists) {
       this.setState({
-        selectedSubdivisions: this.state.selectedSubdivisions.filter(subdivisionId => subdivisionId !== id)
+        selectedSubdivisions:
+          this.state.selectedSubdivisions.filter(subdivisionId => subdivisionId !== id)
       })
     }
     else {

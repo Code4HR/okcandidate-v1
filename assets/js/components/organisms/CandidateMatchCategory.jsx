@@ -33,7 +33,7 @@ class CandidateMatchCategory extends Component {
 
 CandidateMatchCategory.propTypes = {
   categoryName: PropTypes.string,
-  categoryMatch: PropTypes.string,
+  categoryMatch: PropTypes.number,
   questions: PropTypes.array
 }
 

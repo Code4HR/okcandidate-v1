@@ -13,7 +13,7 @@ class AdminDashboard extends Component {
     return (
       <article>
         <h1>Admin Dashboard</h1>
-        
+
         <SurveyBuilder
           survey={this.props.survey}
           dispatch={this.props.dispatch} />

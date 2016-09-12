@@ -66,7 +66,7 @@ class CandidateMatchRating extends Component {
 }
 
 CandidateMatchRating.propTypes = {
-  compositeMatchScore: PropTypes.string,
+  compositeMatchScore: PropTypes.number,
   style: PropTypes.object
 }
 

@@ -108,7 +108,6 @@ describe('The loading indicator component', () => {
     it('will have an active property', () => {
       expect(loader).to.have.property('props')
         .that.have.property('active')
-        .that.equal('true')
     })
 
     it('will have a ball-pulse type', () => {
@@ -155,4 +154,3 @@ describe('The loading indicator component', () => {
     })
   })
 })
-
