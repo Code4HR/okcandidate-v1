@@ -23,7 +23,8 @@ import {
   FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST,
   FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS,
   FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE,
-  TOGGLE_WARDFINDER_WARD_DROPDOWN
+  TOGGLE_WARDFINDER_WARD_DROPDOWN,
+  HIDE_ELECTION_DAY_REMINDER_PROMPT
 } from './survey-actions'
 
 export const initialState = {
@@ -33,6 +34,9 @@ export const initialState = {
     address: { value: '', help: '' },
     id: null,
     results: []
+  },
+  electionDayReminder: {
+    displayPrompt: true
   },
   alerts: [],
   isFetching: false,
@@ -246,6 +250,13 @@ export default function (state = initialState, action) {
       case FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE:
         return Object.assign({}, state, {
           isFetching: false
+        })
+
+      case HIDE_ELECTION_DAY_REMINDER_PROMPT:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, {
+            displayPrompt: false
+          })
         })
 
       default:

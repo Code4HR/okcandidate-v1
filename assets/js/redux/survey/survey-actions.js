@@ -395,3 +395,11 @@ export function fetchSurveyCandidateMatches(id) {
     })
   }
 }
+
+export const HIDE_ELECTION_DAY_REMINDER_PROMPT = 'HIDE_ELECTION_DAY_REMINDER_PROMPT'
+
+export function hideElectionDayReminderPrompt () {
+  return {
+    type: HIDE_ELECTION_DAY_REMINDER_PROMPT
+  }
+}
