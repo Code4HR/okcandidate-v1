@@ -13,6 +13,7 @@ import {
 } from 'react-bootstrap'
 
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
+import ElectionDayReminderPrompt from './../organisms/ElectionDayReminderPrompt.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
 class ResultsPage extends Component {
@@ -46,6 +47,13 @@ class ResultsPage extends Component {
         <Grid>
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
+
+              { this.props.survey.electionDayReminder.displayPrompt &&
+                <ElectionDayReminderPrompt
+                  electionDayReminder={this.props.survey.electionDayReminder}
+                  dispatch={this.props.dispatch} />
+              }
+
               <h1>Matches</h1>
               {
                 survey.isFetching || (races && races.length === 0) ?
