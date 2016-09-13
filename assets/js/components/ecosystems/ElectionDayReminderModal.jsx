@@ -44,7 +44,7 @@ class ElectionDayReminderModal extends Component {
           <ElectionDayReminderForm
             telephone={this.props.electionDayReminder.telephone}
             email={this.props.electionDayReminder.email}
-            error={this.props.electionDayReminder.error}
+            alert={this.props.electionDayReminder.alert}
             onSubmit={this.submitElectionDayReminder.bind(this)}
             dispatch={this.props.dispatch} />
         </Modal.Body>

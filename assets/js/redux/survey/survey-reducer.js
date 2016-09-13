@@ -45,7 +45,7 @@ export const initialState = {
     displayPrompt: true,
     displayModal: false,
     submitted: false,
-    error: {
+    alert: {
       message: '',
       severity: ''
     },
@@ -326,9 +326,9 @@ export default function (state = initialState, action) {
       case SUBMIT_ELECTION_DAY_REMINDER_FAILURE:
         return Object.assign({}, state, {
           electionDayReminder: Object.assign({}, state.electionDayReminder, {
-            error: action.error.error,
-            email: action.error.email || {},
-            telephone: action.error.telephone || {}
+            alert: action.error.alert,
+            email: action.error.email || state.electionDayReminder.email,
+            telephone: action.error.telephone || state.electionDayReminder.telephone
           })
         })
 

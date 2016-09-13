@@ -55,9 +55,9 @@ class ElectionDayReminderForm extends Component {
     return (
       <form onKeyDown={this.onEnter.bind(this)}>
 
-        { this.props.error.message &&
-          <Alert bsStyle={this.props.error.severity}>
-            {this.props.error.message}
+        { this.props.alert.message &&
+          <Alert bsStyle={this.props.alert.severity}>
+            {this.props.alert.message}
           </Alert>
         }
 
@@ -110,7 +110,7 @@ class ElectionDayReminderForm extends Component {
 ElectionDayReminderForm.propTypes = {
   telephone: PropTypes.object,
   email: PropTypes.object,
-  error: PropTypes.object,
+  alert: PropTypes.object,
   onSubmit: PropTypes.func,
   dispatch: PropTypes.func
 }

@@ -469,71 +469,64 @@ export function submitElectionDayReminderFailure(error) {
 
 export function validateElectionDayReminderRequest(email, telephone) {
 
-  // Both email and telephone are defined.
-  if (email.value && telephone.value) {
-    // validate email and telephone addresses
-    if (!(validator.isEmail(email.value) &&
-          validator.isMobilePhone(telephone.value, 'en-US'))) {
-      return {
-        error: {
-          message: 'Please fix the errors below',
-          severity: 'warning'
-        },
-        email: {
-          value: email.value,
-          error: 'This is not a valid email address'
-        },
-        telephone: {
-          value: telephone.value,
-          error: 'This is not a valid telephone number.'
-        }
+  const errors = {}
+
+  function validateEmailAddress() {
+    if (!validator.isEmail(email.value)) {
+      errors.email = {
+        value: email.value,
+        error: 'This is not a valid email address'
       }
     }
   }
 
-  // Only email is defined
-  else if (email.value && !telephone.value) {
-    // validate email address
-    if (!(validator.isEmail(email.value))) {
-      return {
-        error: {
-          message: 'Please fix the error below',
-          severity: 'warning'
-        },
-        email: {
-          value: email.value,
-          error: 'This is not a valid email address'
-        }
+  function validateTelephoneNumber() {
+    if (!validator.isMobilePhone(telephone.value, 'en-US')) {
+      errors.telephone = {
+        value: telephone.value,
+        error: 'This is not a valid telephone number.'
       }
     }
   }
 
-  // Only telephone is defined
-  else if (!email.value && telephone.value) {
-    // validate telephone address
-    if (!(validator.isMobilePhone(telephone.value, 'en-US'))) {
-      return {
-        error: {
-          message: 'Please fix the error below',
-          severity: 'warning'
-        },
-        telephone: {
-          value: telephone.value,
-          error: 'This is not a valid telephone number'
-        }
-      }
-    }
+  // If an email address was provided:
+  if (email.value) {
+    validateEmailAddress()
+  }
+
+  // If a telephone number was provided:
+  if (telephone.value) {
+    validateTelephoneNumber()
   }
 
   // Nothing is defined.
   else if (!email.value && !telephone.value) {
-    // dispatch the failure function.
-    return {
-      error: {
-        message: 'At least one piece of contact information should be provided',
+    errors.alert = {
+      message: 'At least one piece of contact information should be provided',
+      severity: 'warning'
+    }
+    return errors
+  }
+
+  // If errors were found, return the error object.  If not, return undefined.
+  const numberOfErrors = Object.keys(errors).length
+  if (numberOfErrors) {
+
+    if (numberOfErrors === 1) {
+      errors.alert = {
+        message: 'Please correct the error below',
         severity: 'warning'
       }
     }
+    else if (numberOfErrors > 1) {
+      errors.alert = {
+        message: 'Please correct the errors below',
+        severity: 'warning'
+      }
+    }
+
+    return errors
+
   }
 
 }
