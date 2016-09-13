@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input,
+  FieldGroup,
   Button
 } from 'react-bootstrap'
 
@@ -75,7 +75,7 @@ class QuestionBuilder extends Component {
       <section>
 
         <label>Question</label>
-        <Input
+        <FieldGroup
           type="text"
           value={this.state.questionText.value}
           placeholder="Enter the question here"

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input,
+  FieldGroup,
   Button
 } from 'react-bootstrap'
 
@@ -34,7 +34,7 @@ class QuestionBuilderAnswer extends Component {
         bsStyle="danger">Remove Answer</Button>
 
     return (
-      <Input
+      <FieldGroup
         style={{display: 'flex'}}
         type="text"
         placeholder="Enter the text of the candidate's answer here."

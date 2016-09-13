@@ -1,11 +1,11 @@
-import React from 'react/addons'
+import React from 'react'
 import { expect } from 'chai'
 import sinon from 'sinon'
 import { Breadcrumb } from 'react-bootstrap'
 import SurveyQuestion from '../../../../assets/js/components/organisms/SurveyQuestion'
 import SurveyPageNav from '../../../../assets/js/components/environments/SurveyPageNav'
 
-var TestUtils = React.addons.TestUtils
+import TestUtils from 'react-addons-test-utils'
 
 describe.skip('The survey page navigator', () => {
   let nav, state, store
@@ -13,9 +13,9 @@ describe.skip('The survey page navigator', () => {
   beforeEach(() => {
     state = sinon.stub()
     store = {
-        getState: state,
-        subscribe: sinon.stub()
-      }
+      getState: state,
+      subscribe: sinon.stub()
+    }
     state.returns({
       survey: {
         ward: {},

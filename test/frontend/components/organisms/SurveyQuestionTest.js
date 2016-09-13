@@ -1,12 +1,12 @@
-import React from 'react/addons'
+import React from 'react'
 import { expect } from 'chai'
 import Rating from 'react-rating'
 import SurveyQuestion from '../../../../assets/js/components/organisms/SurveyQuestion'
 
-const TestUtils = React.addons.TestUtils;
+import TestUtils from 'react-addons-test-utils'
 
 describe('The survey question component', () => {
-  let surveyQuestion;
+  let surveyQuestion
 
   beforeEach(() => {
     const question = {

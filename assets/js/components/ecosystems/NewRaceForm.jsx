@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 
 import {
-  Input
+  FormGroup,
+  FieldGroup,
+  FormControl,
+  ControlLabel,
+  Checkbox
 } from 'react-bootstrap'
 
 import Card from './../atoms/Card.jsx'
@@ -88,39 +92,42 @@ class NewRaceForm extends Component {
         <h2>New Race</h2>
         <div className="pure-g">
           <div className="pure-u-3-5 column">
-            <Input
-              type="text"
+
+            <FieldGroup
               label="Name"
+              id="mayoralRaceName"
+              type="text"
               placeholder="Mayoral Race"
               value={this.state.raceName}
-              onChange={this.setRaceName.bind(this)}>
-            </Input>
-            <Input
-              type="select"
-              label="City"
-              placeholder="Virginia Beach"
-              value={this.state.selectedCity}
-              onChange={this.setCity.bind(this)}>
-              {
-                this.state.cities.map(city => {
-                  return (
-                    <option value={city.id}>{city.name}</option>
-                  )
-                })
-              }
-            </Input>
+              onChange={this.setRaceName.bind(this)} />
+
+            <FormGroup controlId="citySelector">
+              <ControlLabel>City</ControlLabel>
+              <FormControl
+                placeholder="Virginia Beach"
+                value={this.state.selectedCity}
+                onChange={this.setCity.bind(this)}>
+                {
+                  this.state.cities.map(city => {
+                    return (
+                      <option value={city.id}>{city.name}</option>
+                    )
+                  })
+                }
+              </FormControl>
+            </FormGroup>
+
           </div>
           <div className="pure-u-2-5 column">
             <label>Subdivision</label>
             {
               this.state.subdivisions.map(subdivision => {
                 return (
-                  <Input
+                  <Checkbox
                     checked={this.isSelected.call(this, subdivision)}
-                    onChange={this.selectSubdivision.bind(this, subdivision)}
-                    type="checkbox"
-                    label={subdivision.name} >
-                  </Input>
+                    onChange={this.selectSubdivision.bind(this, subdivision)}>
+                    {subdivision.name}
+                  </Checkbox>
                 )
               })
             }
