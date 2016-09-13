@@ -475,7 +475,7 @@ export function validateElectionDayReminderRequest(email, telephone) {
     if (!validator.isEmail(email.value)) {
       errors.email = {
         value: email.value,
-        error: 'This is not a valid email address'
+        error: 'Please enter a valid email address (like person@provider.com).'
       }
     }
   }
@@ -484,7 +484,7 @@ export function validateElectionDayReminderRequest(email, telephone) {
     if (!validator.isMobilePhone(telephone.value, 'en-US')) {
       errors.telephone = {
         value: telephone.value,
-        error: 'This is not a valid telephone number.'
+        error: 'Please enter a 10-digit phone number (like 555-555-5555).'
       }
     }
   }
