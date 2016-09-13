@@ -557,7 +557,7 @@ export function submitElectionDayReminder(email, telephone, surveyId) {
     })
     .catch(() => {
       dispatch(submitElectionDayReminderFailure({
-        error: {
+        alert: {
           message: 'There was an error saving your contact information',
           severity: 'danger'
         }
