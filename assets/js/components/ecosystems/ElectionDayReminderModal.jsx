@@ -32,12 +32,15 @@ class ElectionDayReminderModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.electionDayReminder.displayModal} onDismiss={this.closeModal.bind(this)}>
+      <Modal
+        show={this.props.electionDayReminder.displayModal}
+        onDismiss={this.closeModal.bind(this)}>
         <Modal.Header>
           <Modal.Title>Set Up Election Day Reminder</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>We can remind you of your OKCandidate Results before you head to the polls on election day!</p>
+          <p>We can remind you of your OKCandidate Results before you head to
+             the polls on election day!</p>
           <ElectionDayReminderForm
             telephone={this.props.electionDayReminder.telephone}
             email={this.props.electionDayReminder.email}
