@@ -500,27 +500,22 @@ export function validateElectionDayReminderRequest(email, telephone) {
   }
 
   // Nothing is defined.
-  else if (!email.value && !telephone.value) {
+  if (!email.value && !telephone.value) {
     errors.alert = {
       message: 'At least one piece of contact information should be provided',
       severity: 'warning'
     }
-    return errors
   }
 
   // If errors were found, return the error object.  If not, return undefined.
   const numberOfErrors = Object.keys(errors).length
-  if (numberOfErrors) {
 
-    if (numberOfErrors === 1) {
+  if (numberOfErrors > 0) {
+
+    // If a specific alert hasn't been defined already...
+    if (!errors.alert) {
       errors.alert = {
-        message: 'Please correct the error below',
-        severity: 'warning'
-      }
-    }
-    else if (numberOfErrors > 1) {
-      errors.alert = {
-        message: 'Please correct the errors below',
+        message: `Please correct the ${numberOfErrors > 1 ? 'errors' : 'error'} below`,
         severity: 'warning'
       }
     }
