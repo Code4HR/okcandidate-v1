@@ -470,38 +470,40 @@ export function submitElectionDayReminderFailure(error) {
 export function validateElectionDayReminderRequest(email, telephone) {
 
   const errors = {}
-  telephone.value = telephone.value.replace(/[^\d]/g, '')
+  if (telephone) {
+    telephone = telephone.replace(/[^\d]/g, '')
+  }
 
   function validateEmailAddress() {
-    if (!validator.isEmail(email.value)) {
+    if (!validator.isEmail(email)) {
       errors.email = {
-        value: email.value,
+        value: email,
         error: 'Please enter a valid email address (like person@provider.com).'
       }
     }
   }
 
   function validateTelephoneNumber() {
-    if (!validator.isMobilePhone(telephone.value, 'en-US')) {
+    if (!validator.isMobilePhone(telephone, 'en-US')) {
       errors.telephone = {
-        value: telephone.value,
+        value: telephone,
         error: 'Please enter a 10-digit phone number (like 555-555-5555).'
       }
     }
   }
 
   // If an email address was provided:
-  if (email.value) {
+  if (email) {
     validateEmailAddress()
   }
 
   // If a telephone number was provided:
-  if (telephone.value) {
+  if (telephone) {
     validateTelephoneNumber()
   }
 
   // Nothing is defined.
-  if (!email.value && !telephone.value) {
+  if (!email && !telephone) {
     errors.alert = {
       message: 'At least one piece of contact information should be provided',
       severity: 'warning'
@@ -531,7 +533,7 @@ export function submitElectionDayReminder(email, telephone, surveyId) {
   return function(dispatch) {
 
     dispatch(submitElectionDayReminderRequest())
-    const errors = validateElectionDayReminderRequest(email, telephone)
+    const errors = validateElectionDayReminderRequest(email.value, telephone.value)
     if (errors) {
       return dispatch(submitElectionDayReminderFailure(errors))
     }
