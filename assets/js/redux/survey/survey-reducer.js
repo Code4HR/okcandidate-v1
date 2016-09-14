@@ -147,7 +147,8 @@ export default function (state = initialState, action) {
       case SELECT_ACTIVE_SURVEY_SUCCESS:
         return Object.assign({}, state, {
           isFetching: false,
-          questions: [...action.response.questions]
+          questions: action.response.questions,
+          categories: action.response.categories
         })
 
       case SELECT_ACTIVE_SURVEY_FAILURE:

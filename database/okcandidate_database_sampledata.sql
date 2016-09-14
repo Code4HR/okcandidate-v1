@@ -20,14 +20,14 @@ VALUES (1, '2016 Norfolk Mayor & Council Race');
 --------------
 -- Category --
 --------------
-INSERT INTO category (id, category_name) VALUES
-(1, 'Transportation'),
-(2, 'Economic Development'),
-(3, 'City Engagement & Government'),
-(4, 'Public Safety & Crime'),
-(5, 'Sea Level Rise & The Environment'),
-(6, 'Neighborhoods and Quality of Life'),
-(7, 'Education');
+INSERT INTO category (id, category_name, survey_id) VALUES
+(1, 'Transportation', 1),
+(2, 'Economic Development', 1),
+(3, 'City Engagement & Government', 1),
+(4, 'Public Safety & Crime', 1),
+(5, 'Sea Level Rise & The Environment', 1),
+(6, 'Neighborhoods and Quality of Life', 1),
+(7, 'Education', 1);
 
 --------------
 -- Question --

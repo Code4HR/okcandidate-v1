@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS survey (
 
 CREATE TABLE IF NOT EXISTS category (
 	id SERIAL PRIMARY KEY,
-	category_name varchar(100) NOT NULL
+	category_name varchar(100) NOT NULL,
+  survey_id int NOT NULL references survey
 );
 
 CREATE TABLE IF NOT EXISTS question (

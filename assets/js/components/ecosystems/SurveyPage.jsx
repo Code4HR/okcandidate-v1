@@ -71,6 +71,7 @@ class SurveyPage extends Component {
                   <SurveyQuestionPager
                     onSubmit={this.submit.bind(this)}
                     questions={questions}
+                    categories={this.props.survey.categories}
                     dispatch={this.props.dispatch} />
               }
             </Col>

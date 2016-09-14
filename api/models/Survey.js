@@ -7,6 +7,9 @@ module.exports = function(bookshelf) {
     tableName: 'survey',
     questions: function() {
       return this.hasMany(bookshelf.model('Question'))
+    },
+    categories: function() {
+      return this.hasMany(bookshelf.model('Category'))
     }
   })
 
