@@ -470,6 +470,7 @@ export function submitElectionDayReminderFailure(error) {
 export function validateElectionDayReminderRequest(email, telephone) {
 
   const errors = {}
+  telephone.value = telephone.value.replace(/[^\d]/g, '')
 
   function validateEmailAddress() {
     if (!validator.isEmail(email.value)) {
