@@ -9,6 +9,7 @@ import {
 import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 import SurveyQuestionCounter from './../molecules/SurveyQuestionCounter.jsx'
+import SurveyQuestionCategory from './../organisms/SurveyQuestionCategory.jsx'
 
 const style = {
   buttonTray: {
@@ -98,6 +99,8 @@ class SurveyQuestionPager extends Component {
         <SurveyQuestionCounter
           index={this.state.index}
           total={this.props.questions.length} />
+
+        <SurveyQuestionCategory />
 
         <Card>
           <SurveyQuestion
