@@ -22,6 +22,7 @@ const style = {
   },
   label: {
     fontSize: '1em',
+    padding: '.5em',
     marginLeft: '.5em'
   }
 }
