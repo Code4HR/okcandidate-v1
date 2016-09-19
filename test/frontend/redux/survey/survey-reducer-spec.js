@@ -18,4 +18,3 @@ describe('The survey reducer', () => {
     expect(state).to.have.property('candidateMatch').that.is.an('object')
   })
 })
-

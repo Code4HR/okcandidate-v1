@@ -45,6 +45,7 @@
     "redux-thunk": "^2.0.1",
     "sinon": "^1.17.3",
     "turf": "^2.0.2",
+    "validator": "^5.7.0",
     "vision": "^4.0.1"
   },
   "scripts": {

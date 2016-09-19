@@ -24,7 +24,13 @@ import {
   FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS,
   FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE,
   TOGGLE_WARDFINDER_WARD_DROPDOWN,
-  HIDE_ELECTION_DAY_REMINDER_PROMPT
+  HIDE_ELECTION_DAY_REMINDER_PROMPT,
+  SHOW_ELECTION_DAY_REMINDER_MODAL,
+  HIDE_ELECTION_DAY_REMINDER_MODAL,
+  SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS,
+  SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER,
+  SUBMIT_ELECTION_DAY_REMINDER_SUCCESS,
+  SUBMIT_ELECTION_DAY_REMINDER_FAILURE
 } from './survey-actions'
 
 export const initialState = {
@@ -36,7 +42,21 @@ export const initialState = {
     results: []
   },
   electionDayReminder: {
-    displayPrompt: true
+    displayPrompt: true,
+    displayModal: false,
+    submitted: false,
+    alert: {
+      message: '',
+      severity: ''
+    },
+    telephone: {
+      value: '',
+      error: ''
+    },
+    email: {
+      value: '',
+      error: ''
+    }
   },
   alerts: [],
   isFetching: false,
@@ -257,6 +277,59 @@ export default function (state = initialState, action) {
         return Object.assign({}, state, {
           electionDayReminder: Object.assign({}, {
             displayPrompt: false
+          })
+        })
+
+      case SHOW_ELECTION_DAY_REMINDER_MODAL:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            displayModal: true
+          })
+        })
+
+      case HIDE_ELECTION_DAY_REMINDER_MODAL:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            displayModal: false
+          })
+        })
+
+      case SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            email: {
+              value: action.value,
+              error: action.error
+            }
+          })
+        })
+
+      case SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            telephone: {
+              value: action.value,
+              error: action.error
+            }
+          })
+        })
+
+      case SUBMIT_ELECTION_DAY_REMINDER_SUCCESS:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            displayModal: false,
+            submitted: true,
+            email: initialState.electionDayReminder.email,
+            telephone: initialState.electionDayReminder.telephone
+          })
+        })
+
+      case SUBMIT_ELECTION_DAY_REMINDER_FAILURE:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            alert: action.error.alert,
+            email: action.error.email || state.electionDayReminder.email,
+            telephone: action.error.telephone || state.electionDayReminder.telephone
           })
         })
 

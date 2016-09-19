@@ -6,7 +6,8 @@ import {
 } from 'react-bootstrap'
 
 import {
-  hideElectionDayReminderPrompt
+  hideElectionDayReminderPrompt,
+  showElectionDayReminderModal
 } from './../../redux/survey/survey-actions'
 
 class ElectionDayReminderPrompt extends Component {
@@ -16,23 +17,29 @@ class ElectionDayReminderPrompt extends Component {
   }
 
   showElectionDayReminderForm() {
-    alert('should show election day reminder form')
+    this.props.dispatch(showElectionDayReminderModal())
   }
 
   render() {
     return (
-      <Alert bsStyle="success">
-        <h4>Election Day Reminder</h4>
-        <p>Would you like us to email or text you these results on election day?</p>
-        <div style={{textAlign: 'right', marginTop: '0.5em'}}>
-          <Button
-            onClick={this.showElectionDayReminderForm.bind(this)}
-            bsStyle="success">Sure!</Button>{' '}
-          <Button
-            onClick={this.hideElectionDayReminderPrompt.bind(this)}
-            bsStyle="default">No thanks</Button>
-        </div>
-      </Alert>
+      this.props.electionDayReminder.submitted ?
+        <Alert bsStyle="success">
+          <h4>Election Day Reminder Submitted</h4>
+          <p>We'll contact you on election day with these results.</p>
+        </Alert>
+      :
+        <Alert bsStyle="info">
+          <h4>Election Day Reminder</h4>
+          <p>Would you like us to email or text you these results on election day?</p>
+          <div style={{marginTop: '.5em'}}>
+            <Button
+              onClick={this.showElectionDayReminderForm.bind(this)}
+              bsStyle="info">Sure!</Button>{' '}
+            <Button
+              onClick={this.hideElectionDayReminderPrompt.bind(this)}
+              bsStyle="default">No thanks</Button>
+          </div>
+        </Alert>
     )
   }
 
