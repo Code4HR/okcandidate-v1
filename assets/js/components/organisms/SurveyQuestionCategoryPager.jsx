@@ -49,7 +49,7 @@ class SurveyQuestionCategoryPager extends Component {
    */
   selectCategory(event) {
     const categoryId = parseInt(event.target.value, 10)
-    const category = this.getCategory(this.props.categories, categoryId)
+    const category = this.props.categories[this.getCategoryIndex(this.props.categories, categoryId)]
     this.props.setIndex(category.firstQuestionIndex)
   }
 
@@ -143,8 +143,6 @@ SurveyQuestionCategoryPager.propTypes = {
   categories: PropTypes.array,
   question: PropTypes.object,
   setIndex: PropTypes.func,
-  prevCategory: PropTypes.func,
-  nextCategory: PropTypes.func,
   dispatch: PropTypes.func
 }
 
