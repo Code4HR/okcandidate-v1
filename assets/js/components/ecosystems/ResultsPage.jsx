@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap'
 
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
-import ElectionDayReminderPrompt from './../organisms/ElectionDayReminderPrompt.jsx'
+import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
 class ResultsPage extends Component {
@@ -48,11 +48,10 @@ class ResultsPage extends Component {
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
 
-              { this.props.survey.electionDayReminder.displayPrompt &&
-                <ElectionDayReminderPrompt
-                  electionDayReminder={this.props.survey.electionDayReminder}
-                  dispatch={this.props.dispatch} />
-              }
+              <ElectionDayReminder
+                electionDayReminder={this.props.survey.electionDayReminder}
+                surveyId={this.props.survey.surveyResponseId}
+                dispatch={this.props.dispatch} />
 
               <h1>Matches</h1>
               {

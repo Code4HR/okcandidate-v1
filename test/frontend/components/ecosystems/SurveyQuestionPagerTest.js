@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { expect } from 'chai'
 import { browserHistory } from 'react-router'
 import questions from './../fixtures/questions'
+import categories from './../fixtures/categories'
 import TestUtils from 'react-addons-test-utils'
 import sinon from 'sinon'
 
@@ -15,9 +16,10 @@ describe('Survey Question Pager', () => {
 
   beforeEach(() => {
     stub = sinon.stub(browserHistory, 'push', (() => true))
-
     component = TestUtils.renderIntoDocument(
-      <SurveyQuestionPager questions={questions} />
+      <SurveyQuestionPager
+        categories={categories}
+        questions={questions} />
     )
   })
 

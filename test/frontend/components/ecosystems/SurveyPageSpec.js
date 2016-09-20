@@ -4,6 +4,9 @@ import { browserHistory } from 'react-router'
 import { expect } from 'chai'
 import sinon from 'sinon'
 
+import questions from './../fixtures/questions'
+import categories from './../fixtures/categories'
+
 import SurveyPage from '../../../../assets/js/components/ecosystems/SurveyPage'
 import LoadingIndicator
   from '../../../../assets/js/components/atoms/LoadingIndicator'
@@ -22,10 +25,8 @@ describe('The survey page component', () => {
     }
     state.returns({
       survey: {
-        questions: [{
-          questionText: 'test question',
-          answers: []
-        }],
+        categories: categories,
+        questions: questions,
         responses: [],
         isFetching: false
       }

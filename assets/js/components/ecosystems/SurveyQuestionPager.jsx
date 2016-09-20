@@ -10,6 +10,7 @@ import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 import SurveyQuestionCounter from './../molecules/SurveyQuestionCounter.jsx'
 import SurveyQuestionCategory from './../organisms/SurveyQuestionCategory.jsx'
+import SurveyQuestionCategoryPager from './../organisms/SurveyQuestionCategoryPager.jsx'
 
 const style = {
   buttonTray: {
@@ -72,6 +73,12 @@ class SurveyQuestionPager extends Component {
     })
   }
 
+  setIndex(index) {
+    this.setState({
+      index
+    })
+  }
+
   validateSelections() {
     const errors = {}
     const currentQuestion = this.props.questions[this.state.index]
@@ -100,7 +107,15 @@ class SurveyQuestionPager extends Component {
           index={this.state.index}
           total={this.props.questions.length} />
 
+<<<<<<< HEAD
         <SurveyQuestionCategory />
+=======
+        <SurveyQuestionCategoryPager
+          categories={this.props.categories}
+          question={currentQuestion}
+          setIndex={this.setIndex.bind(this)}
+          dispatch={this.props.categories} />
+>>>>>>> a45f4d5b8ca3c9b004e6b3aaddc787273d1f1323
 
         <Card>
           <SurveyQuestion
@@ -134,6 +149,7 @@ class SurveyQuestionPager extends Component {
 SurveyQuestionPager.propTypes = {
   onSubmit: PropTypes.func,
   questions: PropTypes.array,
+  categories: PropTypes.array,
   dispatch: PropTypes.func
 }
 
