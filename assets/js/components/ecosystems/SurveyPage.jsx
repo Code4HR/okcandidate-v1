@@ -38,11 +38,17 @@ class SurveyPage extends Component {
       const answer = responses.find(response => {
         return question.id === response.questionId
       })
+
       if (answer) {
-        question.intensity = answer.intensity
-        question.selectedAnswer = answer.answerId
+        return Object.assign({}, question, {
+          intensity: answer.intensity,
+          selectedAnswer: answer.answerId
+        })
       }
-      return question
+
+      else {
+        return question
+      }
     })
   }
 

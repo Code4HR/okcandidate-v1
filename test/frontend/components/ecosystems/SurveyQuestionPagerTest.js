@@ -8,18 +8,23 @@ import TestUtils from 'react-addons-test-utils'
 import sinon from 'sinon'
 
 import SurveyQuestionPager
-  from '../../../../assets/js/components/ecosystems/SurveyQuestionPager.jsx'
+  from './../../../../assets/js/components/ecosystems/SurveyQuestionPager.jsx'
+import {
+  removeSurveyQuestionResponseAndIntensity
+} from './../../../../assets/js/redux/survey/survey-actions.js'
 
 describe('Survey Question Pager', () => {
 
-  let component, stub
+  let component, stub, dispatch
 
   beforeEach(() => {
+    dispatch = sinon.stub()
     stub = sinon.stub(browserHistory, 'push', (() => true))
     component = TestUtils.renderIntoDocument(
       <SurveyQuestionPager
         categories={categories}
-        questions={questions} />
+        questions={questions}
+        dispatch={dispatch} />
     )
   })
 
@@ -56,6 +61,31 @@ describe('Survey Question Pager', () => {
         TestUtils.Simulate.click(backButton)
         expect(component.state.index).to.equal(0)
         expect(stub).to.have.been.called
+
+      })
+
+    })
+
+    context('Skip Button', () => {
+
+      it('should allow the use to skip to the next question', () => {
+
+        const skipButton = ReactDOM.findDOMNode(component.refs.skipButton)
+
+        component.state.index = 0
+        TestUtils.Simulate.click(skipButton)
+        expect(component.state.index).to.equal(1)
+
+      })
+
+      it('should dispatch an action to remove this response', () => {
+
+        const skipButton = ReactDOM.findDOMNode(component.refs.skipButton)
+
+        component.state.index = 0
+        TestUtils.Simulate.click(skipButton)
+        expect(component.state.index).to.equal(1)
+        sinon.assert.calledWith(dispatch, removeSurveyQuestionResponseAndIntensity(1))
 
       })
 

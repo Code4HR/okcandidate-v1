@@ -11,6 +11,7 @@ import {
   UPDATE_SURVEY_BUILDER_QUESTION,
   SELECT_SURVEY_QUESTION_RESPONSE,
   SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY,
+  REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY,
   SET_STREET_ADDRESS,
   SUBMIT_STREET_ADDRESS_REQUEST,
   SUBMIT_STREET_ADDRESS_SUCCESS,
@@ -225,11 +226,11 @@ export default function (state = initialState, action) {
             responses: [
               ...state.responses,
               makeSurveyAnswer(
-              state.surveyResponseId,
-              action.questionId,
-              action.answer,
-              action.intensity
-            )
+                state.surveyResponseId,
+                action.questionId,
+                action.answer,
+                action.intensity
+              )
             ]
           })
         }
@@ -251,6 +252,13 @@ export default function (state = initialState, action) {
         }
       // otherwise just return state
         return state
+
+      case REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY:
+        return Object.assign({}, state, {
+          responses: state.responses.filter(response => {
+            return response.questionId !== action.questionId
+          })
+        })
 
       case FETCH_SURVEY_RESPONSE_ID_SUCCESS:
         return Object.assign({}, state, {
