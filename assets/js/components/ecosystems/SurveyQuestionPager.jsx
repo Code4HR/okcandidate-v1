@@ -11,10 +11,15 @@ import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 import SurveyQuestionCounter from './../molecules/SurveyQuestionCounter.jsx'
 import SurveyQuestionCategoryPager from './../organisms/SurveyQuestionCategoryPager.jsx'
 
+import {
+  removeSurveyQuestionResponseAndIntensity
+} from './../../redux/survey/survey-actions'
+
 const style = {
   buttonTray: {
     container: {
-      display: 'flex'
+      display: 'flex',
+      justifyContent: 'space-between'
     },
     spacer: {
       flex: '1'
@@ -42,16 +47,26 @@ class SurveyQuestionPager extends Component {
     }
   }
 
+  nextQuestionOrSubmit() {
+    if (this.state.index < this.props.questions.length - 1) {
+      this.incrementIndex()
+    }
+    else {
+      this.props.onSubmit()
+    }
+  }
+
+  skipQuestion() {
+    const questionId = this.props.questions[this.state.index].id
+    this.props.dispatch(removeSurveyQuestionResponseAndIntensity(questionId))
+    this.nextQuestionOrSubmit()
+  }
+
   goForward() {
     try {
       this.validateSelections()
       this.state.alerts = {}
-      if (this.state.index < this.props.questions.length - 1) {
-        this.incrementIndex()
-      }
-      else {
-        this.props.onSubmit()
-      }
+      this.nextQuestionOrSubmit()
     }
     catch (errors) {
       this.setState({
@@ -123,15 +138,24 @@ class SurveyQuestionPager extends Component {
               <Button
                 ref="backButton"
                 onClick={this.goBack.bind(this)}
-                bsSize="large">Back</Button> {' '}
+                bsSize="large">Back</Button>
 
-              <div style={style.buttonTray.spacer}></div>
+              <div>
+                <Button
+                  ref="skipButton"
+                  bsStyle="warning"
+                  bsSize="large"
+                  onClick={this.skipQuestion.bind(this)}>Skip</Button>
 
-              <Button
-                ref="nextButton"
-                bsStyle="primary"
-                bsSize="large"
-                onClick={this.goForward.bind(this)}>Next</Button>
+                {' '}
+
+                <Button
+                  ref="nextButton"
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={this.goForward.bind(this)}>Next</Button>
+              </div>
+
             </div>
         </Card>
 

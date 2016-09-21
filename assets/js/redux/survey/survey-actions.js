@@ -107,6 +107,8 @@ export function updateSurveyBuilderQuestion(question) {
 export const SELECT_SURVEY_QUESTION_RESPONSE = 'SELECT_SURVEY_QUESTION_RESPONSE'
 export const SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY =
   'SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY'
+export const REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY =
+  'REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY'
 
 export function selectSurveyQuestionResponse(questionId, answer) {
   return {
@@ -121,6 +123,13 @@ export function selectSurveyQuestionResponseIntensity(questionId, intensity) {
     type: SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY,
     questionId,
     intensity
+  }
+}
+
+export function removeSurveyQuestionResponseAndIntensity(questionId) {
+  return {
+    type: REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY,
+    questionId
   }
 }
 
