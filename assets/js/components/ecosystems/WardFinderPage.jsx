@@ -15,10 +15,10 @@ import {
 } from 'react-bootstrap'
 
 import Card from './../atoms/Card.jsx'
-
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
 import Credits from './../atoms/Credits.jsx'
+import colors from './../style/colors.js'
 
 const style = {
   header: {
@@ -26,15 +26,10 @@ const style = {
     textAlign: 'center'
   },
   heading: {
-    color: 'white'
-  },
-  logo: {
-    backgroundImage: 'url("/img/okcandidate-logo.png")',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    width: 300,
-    height: 65,
-    margin: '0 auto'
+    color: colors.darkBlue,
+    fontSize: '2.25em',
+    lineHeight: '1.125',
+    margin: 0
   },
   card: {
     position: 'relative',
@@ -93,7 +88,6 @@ class WardFinderPage extends Component {
             <Row>
               <Col xs={12} sm={8} smOffset={2}>
                 <header>
-                  <div style={style.logo}></div>
                   <h1 style={style.heading}>
                     Find out which candidates for local office are a match for you!
                   </h1>
