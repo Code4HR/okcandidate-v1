@@ -89,6 +89,10 @@ describe('Survey Question Pager', () => {
 
         const nextButton = ReactDOM.findDOMNode(component.refs.nextButton)
 
+        questions[2] = Object.assign(questions[2], {
+          selectedAnswer: 'Potato Brain'
+        })
+
         component.state.index = 2
         TestUtils.Simulate.click(nextButton)
         expect(component.state.index).to.equal(2)
@@ -100,6 +104,10 @@ describe('Survey Question Pager', () => {
 
         const nextButton = ReactDOM.findDOMNode(component.refs.nextButton)
 
+        questions[3] = Object.assign(questions[3], {
+          intensity: 5
+        })
+
         component.state.index = 3
         TestUtils.Simulate.click(nextButton)
         expect(component.state.index).to.equal(3)
@@ -109,10 +117,16 @@ describe('Survey Question Pager', () => {
 
       it('should navigate to the next page if the user is on the last question ' +
          ' and validation passes.', () => {
+
+        questions[35] = Object.assign(questions[3], {
+          intensity: 5,
+          selectedAnswer: 'My Neighbor Totoro'
+        })
+
         const nextButton = ReactDOM.findDOMNode(component.refs.nextButton)
-        component.state.index = 3
+        component.state.index = 35
         TestUtils.Simulate.click(nextButton)
-        expect(component.state.index).to.equal(3)
+        expect(component.state.index).to.equal(35)
         expect(stub).to.have.been.called
       })
 
