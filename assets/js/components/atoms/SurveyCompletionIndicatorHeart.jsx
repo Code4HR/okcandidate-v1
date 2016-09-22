@@ -6,18 +6,15 @@ const style = {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
     height: 48,
-    width: 52,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+    width: 52
   },
   innerHeart: {
-    transition: 'height 2s, width 2s',
+    transition: 'all 2s ease-in-out',
     backgroundImage: 'url("/img/pink-heart.svg")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
-    height: 24,
-    width: 24
+    height: 48,
+    width: 52
   }
 }
 
@@ -27,23 +24,22 @@ class SurveyCompletionIndicatorHeart extends Component {
     level = String(level)
     switch (level) {
         case '1':
-          return [24, 26]
+          return 0.5
         case '2':
-          return [36, 38]
+          return 0.75
         case '3':
-          return [48, 52]
+          return 1
         default:
-          return [12, 14]
+          return 0.25
     }
   }
 
   render() {
 
-    const lengths = this.getHeartSize(this.props.level)
+    const scale = this.getHeartSize(this.props.level)
 
     style.innerHeart = Object.assign({}, style.innerHeart, {
-      height: lengths[0],
-      width: lengths[1]
+      transform: `scale(${scale})`
     })
 
     return (
