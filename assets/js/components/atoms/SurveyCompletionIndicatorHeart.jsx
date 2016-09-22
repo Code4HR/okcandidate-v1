@@ -1,21 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 
-const style = {
-  outerHeart: {
-    backgroundImage: 'url("/img/gray-heart.svg")',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    height: 48,
-    width: 52
-  },
-  innerHeart: {
-    transition: 'all 2s ease-in-out',
-    backgroundImage: 'url("/img/pink-heart.svg")',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    height: 48,
-    width: 52
-  }
+const heartStyle = {
+  backgroundImage: 'url("/img/gray-heart.svg")',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'contain',
+  height: 48,
+  width: 52
 }
 
 class SurveyCompletionIndicatorHeart extends Component {
@@ -38,13 +28,15 @@ class SurveyCompletionIndicatorHeart extends Component {
 
     const scale = this.getHeartSize(this.props.level)
 
-    style.innerHeart = Object.assign({}, style.innerHeart, {
+    const innerHeartStyle = Object.assign({}, heartStyle, {
+      transition: 'all 2s',
+      backgroundImage: 'url("/img/pink-heart.svg")',
       transform: `scale(${scale})`
     })
 
     return (
-      <section style={style.outerHeart}>
-        <div style={style.innerHeart}></div>
+      <section style={heartStyle}>
+        <div style={innerHeartStyle}></div>
       </section>
     )
   }
