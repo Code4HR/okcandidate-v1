@@ -22,23 +22,10 @@ module.exports = function (server) {
           .where({id: request.params.id})
           .fetch({withRelated: ['questions.answers', 'categories']})
           .then(survey => {
-
             survey = survey.toJSON()
-
-            const sortedQuestions = _.sortBy(survey.questions, question => question.categoryId)
-            const indexedCategories = survey.categories.map(category => {
-              return Object.assign({}, category, {
-                firstQuestionIndex: sortedQuestions.findIndex(question => {
-                  return question.categoryId === category.id
-                })
-              })
-            })
-
             reply(Object.assign({}, survey, {
-              questions: sortedQuestions,
-              categories: indexedCategories
+              questions: _.shuffle(survey.questions)
             }))
-
           })
       }
     },

@@ -131,12 +131,6 @@ class SurveyQuestionPager extends Component {
             onSubmit={this.props.onSubmit} />
         </Card>
 
-        <SurveyQuestionCategoryPager
-          categories={this.props.categories}
-          question={currentQuestion}
-          setIndex={this.setIndex.bind(this)}
-          dispatch={this.props.categories} />
-
         <Card>
           <SurveyQuestion
             style={{marginBottom: '2em'}}
