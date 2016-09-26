@@ -52,6 +52,15 @@ class SurveyPage extends Component {
     })
   }
 
+  countCompleteResponses(responses) {
+    return responses.reduce((memo, current) => {
+      if (current.answerId && current.intensity) {
+        memo += 1
+      }
+      return memo
+    }, 0)
+  }
+
   submit() {
     this.props.dispatch(
       submitSurveyAnswers(this.props.survey.responses)
@@ -64,6 +73,7 @@ class SurveyPage extends Component {
       this.props.survey.questions,
       this.props.survey.responses
     )
+    const questionsAnswered = this.countCompleteResponses(this.props.survey.responses)
 
     return (
       <article>
@@ -77,6 +87,7 @@ class SurveyPage extends Component {
                   <SurveyQuestionPager
                     onSubmit={this.submit.bind(this)}
                     questions={questions}
+                    answered={questionsAnswered}
                     categories={this.props.survey.categories}
                     dispatch={this.props.dispatch} />
               }

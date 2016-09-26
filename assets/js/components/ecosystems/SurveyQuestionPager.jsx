@@ -8,8 +8,9 @@ import {
 
 import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
-import SurveyQuestionCounter from './../molecules/SurveyQuestionCounter.jsx'
 import SurveyQuestionCategoryPager from './../organisms/SurveyQuestionCategoryPager.jsx'
+import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
+import colors from './../style/colors'
 
 import {
   removeSurveyQuestionResponseAndIntensity
@@ -24,6 +25,12 @@ const style = {
     spacer: {
       flex: '1'
     }
+  },
+  cardStyle: {
+    marginBottom: '1em',
+    backgroundColor: colors.darkBlue,
+    color: 'white',
+    padding: '1em'
   }
 }
 
@@ -117,15 +124,12 @@ class SurveyQuestionPager extends Component {
     return (
       <section>
 
-        <SurveyQuestionCounter
-          index={this.state.index}
-          total={this.props.questions.length} />
-
-        <SurveyQuestionCategoryPager
-          categories={this.props.categories}
-          question={currentQuestion}
-          setIndex={this.setIndex.bind(this)}
-          dispatch={this.props.categories} />
+        <Card style={style.cardStyle}>
+          <SurveyCompletionIndicator
+            questionsAnswered={this.props.answered}
+            totalQuestions={this.props.questions.length}
+            onSubmit={this.props.onSubmit} />
+        </Card>
 
         <Card>
           <SurveyQuestion
@@ -168,6 +172,7 @@ class SurveyQuestionPager extends Component {
 SurveyQuestionPager.propTypes = {
   onSubmit: PropTypes.func,
   questions: PropTypes.array,
+  answered: PropTypes.number,
   categories: PropTypes.array,
   dispatch: PropTypes.func
 }
