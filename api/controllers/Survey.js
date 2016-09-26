@@ -22,10 +22,7 @@ module.exports = function (server) {
           .where({id: request.params.id})
           .fetch({withRelated: ['questions.answers', 'categories']})
           .then(survey => {
-            survey = survey.toJSON()
-            reply(Object.assign({}, survey, {
-              questions: _.shuffle(survey.questions)
-            }))
+            reply(survey)
           })
       }
     },

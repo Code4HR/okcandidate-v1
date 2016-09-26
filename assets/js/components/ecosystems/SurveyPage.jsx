@@ -30,10 +30,14 @@ class SurveyPage extends Component {
       browserHistory.push('/')
     }
 
-    this.props.dispatch(fetchActiveSurveys())
+    if (this.props.survey.questions.length === 0) {
+      this.props.dispatch(fetchActiveSurveys())
+    }
+
   }
 
   blendQuestionsAndReponses(questions, responses) {
+
     return questions.map(question => {
       const answer = responses.find(response => {
         return question.id === response.questionId
@@ -86,6 +90,7 @@ class SurveyPage extends Component {
                 :
                   <SurveyQuestionPager
                     onSubmit={this.submit.bind(this)}
+                    index={this.props.survey.selectedSurvey.index}
                     questions={questions}
                     answered={questionsAnswered}
                     categories={this.props.survey.categories}

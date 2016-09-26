@@ -25,6 +25,9 @@ describe('The survey page component', () => {
     }
     state.returns({
       survey: {
+        selectedSurvey: {
+          index: 0
+        },
         categories: categories,
         questions: questions,
         responses: [],

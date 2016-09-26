@@ -9,7 +9,10 @@ import sinon from 'sinon'
 
 import SurveyQuestionPager
   from './../../../../assets/js/components/ecosystems/SurveyQuestionPager.jsx'
+
 import {
+  incrementSurveyQuestionIndex,
+  decrementSurveyQuestionIndex,
   removeSurveyQuestionResponseAndIntensity
 } from './../../../../assets/js/redux/survey/survey-actions.js'
 
@@ -17,39 +20,54 @@ describe('Survey Question Pager', () => {
 
   let component, stub, dispatch
 
-  beforeEach(() => {
-    dispatch = sinon.stub()
-    stub = sinon.stub(browserHistory, 'push', (() => true))
-    component = TestUtils.renderIntoDocument(
-      <SurveyQuestionPager
-        categories={categories}
-        questions={questions}
-        dispatch={dispatch} />
-    )
-  })
+  context('Sanity Check', () => {
+    beforeEach(() => {
+      dispatch = sinon.spy()
+      stub = sinon.stub(browserHistory, 'push', (() => true))
+      component = TestUtils.renderIntoDocument(
+        <SurveyQuestionPager
+          categories={categories}
+          questions={questions}
+          index={1}
+          dispatch={dispatch} />
+      )
+    })
 
-  it('will exist', () => {
-    expect(component).to.be.ok
-  })
+    it('will exist', () => {
+      expect(component).to.be.ok
+    })
 
-  it('will have an initial alerts object in its state', () => {
-    expect(component).to.have.property('state')
-      .that.have.property('alerts')
-      .that.is.an('object')
+    it('will have an initial alerts object in its state', () => {
+      expect(component).to.have.property('state')
+        .that.have.property('alerts')
+        .that.is.an('object')
+    })
   })
 
   context('Survey Question Pager', () => {
 
     context('Back Button', () => {
 
+      let component
+
+      before(() => {
+        component = TestUtils.renderIntoDocument(
+          <SurveyQuestionPager
+            categories={categories}
+            questions={questions}
+            index={1}
+            dispatch={dispatch} />
+        )
+      })
+
       it('should show the previous question in the survey if clicked and the ' +
          'use has answered at least one question', () => {
 
         const backButton = ReactDOM.findDOMNode(component.refs.backButton)
 
-        component.state.index = 1
         TestUtils.Simulate.click(backButton)
-        expect(component.state.index).to.equal(0)
+        expect(dispatch).to.be.called
+        sinon.assert.calledWith(dispatch, decrementSurveyQuestionIndex())
 
       })
 
@@ -57,9 +75,7 @@ describe('Survey Question Pager', () => {
 
         const backButton = ReactDOM.findDOMNode(component.refs.backButton)
 
-        component.state.index = 0
         TestUtils.Simulate.click(backButton)
-        expect(component.state.index).to.equal(0)
         expect(stub).to.have.been.called
 
       })
@@ -72,9 +88,8 @@ describe('Survey Question Pager', () => {
 
         const skipButton = ReactDOM.findDOMNode(component.refs.skipButton)
 
-        component.state.index = 0
         TestUtils.Simulate.click(skipButton)
-        expect(component.state.index).to.equal(1)
+        expect(dispatch).to.have.been.called
 
       })
 
@@ -82,10 +97,8 @@ describe('Survey Question Pager', () => {
 
         const skipButton = ReactDOM.findDOMNode(component.refs.skipButton)
 
-        component.state.index = 0
         TestUtils.Simulate.click(skipButton)
-        expect(component.state.index).to.equal(1)
-        sinon.assert.calledWith(dispatch, removeSurveyQuestionResponseAndIntensity(1))
+        sinon.assert.calledWith(dispatch, incrementSurveyQuestionIndex())
 
       })
 
@@ -98,9 +111,8 @@ describe('Survey Question Pager', () => {
 
         const nextButton = ReactDOM.findDOMNode(component.refs.nextButton)
 
-        component.state.index = 0
         TestUtils.Simulate.click(nextButton)
-        expect(component.state.index).to.equal(1)
+        sinon.assert.calledWith(dispatch, incrementSurveyQuestionIndex())
 
       })
 
@@ -109,9 +121,8 @@ describe('Survey Question Pager', () => {
 
         const nextButton = ReactDOM.findDOMNode(component.refs.nextButton)
 
-        component.state.index = 1
         TestUtils.Simulate.click(nextButton)
-        expect(component.state.index).to.equal(2)
+        sinon.assert.calledWith(dispatch, incrementSurveyQuestionIndex())
 
       })
 
@@ -119,13 +130,11 @@ describe('Survey Question Pager', () => {
 
         const nextButton = ReactDOM.findDOMNode(component.refs.nextButton)
 
-        questions[2] = Object.assign(questions[2], {
+        questions[1] = Object.assign(questions[1], {
           selectedAnswer: 'Potato Brain'
         })
 
-        component.state.index = 2
         TestUtils.Simulate.click(nextButton)
-        expect(component.state.index).to.equal(2)
         expect(Object.keys(component.state.alerts).length).to.equal(1)
 
       })

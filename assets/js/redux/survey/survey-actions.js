@@ -59,7 +59,9 @@ export function selectActiveSurvey(survey) {
     return fetch(`/api/survey/${survey.id}`)
     .then(checkStatus)
     .then(response => response.json())
-    .then(response => dispatch(selectActiveSurveySuccess(response)))
+    .then(response => {
+      dispatch(selectActiveSurveySuccess(response))
+    })
     .catch(error => dispatch(selectActiveSurveyFailure(error)))
   }
 
@@ -109,6 +111,10 @@ export const SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY =
   'SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY'
 export const REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY =
   'REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY'
+export const INCREMENT_SURVEY_QUESTION_INDEX =
+  'INCREMENT_SURVEY_QUESTION_INDEX'
+export const DECREMENT_SURVEY_QUESTION_INDEX =
+  'DECREMENT_SURVEY_QUESTION_INDEX'
 
 export function selectSurveyQuestionResponse(questionId, answer) {
   return {
@@ -130,6 +136,18 @@ export function removeSurveyQuestionResponseAndIntensity(questionId) {
   return {
     type: REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY,
     questionId
+  }
+}
+
+export function incrementSurveyQuestionIndex() {
+  return {
+    type: INCREMENT_SURVEY_QUESTION_INDEX
+  }
+}
+
+export function decrementSurveyQuestionIndex() {
+  return {
+    type: DECREMENT_SURVEY_QUESTION_INDEX
   }
 }
 
