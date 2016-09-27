@@ -24,13 +24,17 @@ describe('The results page', () => {
     }
     state.returns({
       survey: {
+        selectedSurvey: {
+          index: 0
+        },
         electionDayReminder: {
           displayPrompt: true
         },
         candidateMatch: {
-          survey: [
-          ]
-        }
+          survey: []
+        },
+        responses: [],
+        questions: []
       }
     })
     page = TestUtils.renderIntoDocument(
@@ -64,9 +68,10 @@ describe('The results page', () => {
             },
             isFetching: true,
             candidateMatch: {
-              survey: [
-              ]
-            }
+              survey: []
+            },
+            questions: [],
+            responses: []
           }
         })
         page = TestUtils.renderIntoDocument(
@@ -111,9 +116,10 @@ describe('The results page', () => {
             },
             isFetching: true,
             candidateMatch: {
-              survey: [
-              ]
-            }
+              survey: []
+            },
+            questions: [],
+            responses: []
           }
         })
         page = TestUtils.renderIntoDocument(
@@ -139,7 +145,9 @@ describe('The results page', () => {
               survey: [{
                 type: 'match'
               }]
-            }
+            },
+            questions: [],
+            responses: []
           }
         })
         page = TestUtils.renderIntoDocument(

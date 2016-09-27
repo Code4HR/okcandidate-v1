@@ -1,4 +1,5 @@
 import makeError from './../utils/makeError'
+import _ from 'lodash'
 
 import {
   FETCH_ACTIVE_SURVEYS_REQUEST,
@@ -11,6 +12,8 @@ import {
   UPDATE_SURVEY_BUILDER_QUESTION,
   SELECT_SURVEY_QUESTION_RESPONSE,
   SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY,
+  INCREMENT_SURVEY_QUESTION_INDEX,
+  DECREMENT_SURVEY_QUESTION_INDEX,
   REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY,
   SET_STREET_ADDRESS,
   SUBMIT_STREET_ADDRESS_REQUEST,
@@ -62,7 +65,11 @@ export const initialState = {
   alerts: [],
   isFetching: false,
   activeSurveys: [],
-  selectedSurvey: {},
+  selectedSurvey: {
+    name: '',
+    id: null,
+    index: 0
+  },
   questions: [],
   responses: [],
   candidateMatch: {}
@@ -162,13 +169,15 @@ export default function (state = initialState, action) {
       case SELECT_ACTIVE_SURVEY_REQUEST:
         return Object.assign({}, state, {
           isFetching: true,
-          selectedSurvey: action.survey
+          selectedSurvey: Object.assign({}, action.survey, {
+            index: 0
+          })
         })
 
       case SELECT_ACTIVE_SURVEY_SUCCESS:
         return Object.assign({}, state, {
           isFetching: false,
-          questions: action.response.questions,
+          questions: _.shuffle(action.response.questions),
           categories: action.response.categories
         })
 
@@ -179,6 +188,20 @@ export default function (state = initialState, action) {
             ...state.alerts,
             makeError('warning', 'There was an error setting the active survey')
           ]
+        })
+
+      case INCREMENT_SURVEY_QUESTION_INDEX:
+        return Object.assign({}, state, {
+          selectedSurvey: Object.assign({}, state.selectedSurvey, {
+            index: state.selectedSurvey.index + 1
+          })
+        })
+
+      case DECREMENT_SURVEY_QUESTION_INDEX:
+        return Object.assign({}, state, {
+          selectedSurvey: Object.assign({}, state.selectedSurvey, {
+            index: state.selectedSurvey.index - 1
+          })
         })
 
       case TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE:

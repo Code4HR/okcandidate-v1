@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 import {
   fetchSurveyCandidateMatches
@@ -13,6 +14,7 @@ import {
 } from 'react-bootstrap'
 
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
+import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
 import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
@@ -39,6 +41,10 @@ class ResultsPage extends Component {
     }).reverse()
   }
 
+  backToSurvey() {
+    browserHistory.push('/survey')
+  }
+
   render() {
     const survey = this.props.survey,
       races = survey.candidateMatch.survey
@@ -52,6 +58,12 @@ class ResultsPage extends Component {
                 electionDayReminder={this.props.survey.electionDayReminder}
                 surveyId={this.props.survey.surveyResponseId}
                 dispatch={this.props.dispatch} />
+
+              <SurveyCompletionIndicator
+                questionsAnswered={this.props.survey.responses.length}
+                totalQuestions={this.props.survey.questions.length}
+                resultsPage
+                onSubmit={this.backToSurvey.bind(this)} />
 
               <h1>Matches</h1>
               {

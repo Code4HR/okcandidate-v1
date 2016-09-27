@@ -8,11 +8,11 @@ import {
 
 import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
-import SurveyQuestionCategoryPager from './../organisms/SurveyQuestionCategoryPager.jsx'
 import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
-import colors from './../style/colors'
 
 import {
+  incrementSurveyQuestionIndex,
+  decrementSurveyQuestionIndex,
   removeSurveyQuestionResponseAndIntensity
 } from './../../redux/survey/survey-actions'
 
@@ -25,12 +25,6 @@ const style = {
     spacer: {
       flex: '1'
     }
-  },
-  cardStyle: {
-    marginBottom: '1em',
-    backgroundColor: colors.darkBlue,
-    color: 'white',
-    padding: '1em'
   }
 }
 
@@ -39,14 +33,13 @@ class SurveyQuestionPager extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      index: 0,
       alerts: {},
       finalSkip: false
     }
   }
 
   goBack() {
-    if (this.state.index > 0) {
+    if (this.props.index > 0) {
       this.decrementIndex()
     }
     else {
@@ -55,7 +48,7 @@ class SurveyQuestionPager extends Component {
   }
 
   nextQuestionOrSubmit() {
-    if (this.state.index < this.props.questions.length - 1) {
+    if (this.props.index < this.props.questions.length - 1) {
       this.incrementIndex()
     }
     else {
@@ -64,7 +57,7 @@ class SurveyQuestionPager extends Component {
   }
 
   skipQuestion() {
-    const questionId = this.props.questions[this.state.index].id
+    const questionId = this.props.questions[this.props.index].id
     this.props.dispatch(removeSurveyQuestionResponseAndIntensity(questionId))
     this.nextQuestionOrSubmit()
   }
@@ -83,26 +76,16 @@ class SurveyQuestionPager extends Component {
   }
 
   incrementIndex() {
-    this.setState({
-      index: this.state.index + 1
-    })
+    this.props.dispatch(incrementSurveyQuestionIndex())
   }
 
   decrementIndex() {
-    this.setState({
-      index: this.state.index - 1
-    })
-  }
-
-  setIndex(index) {
-    this.setState({
-      index
-    })
+    this.props.dispatch(decrementSurveyQuestionIndex())
   }
 
   validateSelections() {
     const errors = {}
-    const currentQuestion = this.props.questions[this.state.index]
+    const currentQuestion = this.props.questions[this.props.index]
     if (!currentQuestion.selectedAnswer && !currentQuestion.intensity) {
       return
     }
@@ -119,17 +102,15 @@ class SurveyQuestionPager extends Component {
 
   render() {
 
-    const currentQuestion = this.props.questions[this.state.index]
+    const currentQuestion = this.props.questions[this.props.index]
 
     return (
       <section>
 
-        <Card style={style.cardStyle}>
-          <SurveyCompletionIndicator
-            questionsAnswered={this.props.answered}
-            totalQuestions={this.props.questions.length}
-            onSubmit={this.props.onSubmit} />
-        </Card>
+        <SurveyCompletionIndicator
+          questionsAnswered={this.props.answered}
+          totalQuestions={this.props.questions.length}
+          onSubmit={this.props.onSubmit} />
 
         <Card>
           <SurveyQuestion
@@ -174,7 +155,8 @@ SurveyQuestionPager.propTypes = {
   questions: PropTypes.array,
   answered: PropTypes.number,
   categories: PropTypes.array,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  index: PropTypes.number
 }
 
 export default SurveyQuestionPager

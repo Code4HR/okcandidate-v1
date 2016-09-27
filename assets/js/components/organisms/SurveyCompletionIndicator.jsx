@@ -5,6 +5,9 @@ import {
   Button
 } from 'react-bootstrap'
 
+import colors from './../style/colors'
+import Card from './../atoms/Card.jsx'
+
 const style = {
   row: {
     display: 'flex',
@@ -34,6 +37,12 @@ const style = {
     left: 0,
     width: '100%',
     textAlign: 'center'
+  },
+  cardStyle: {
+    marginBottom: '1em',
+    backgroundColor: colors.darkBlue,
+    color: 'white',
+    padding: '1em'
   }
 }
 
@@ -89,8 +98,12 @@ class SurveyCompletionIndicator extends Component {
       this.props.totalQuestions
     )
 
+    const buttonText = this.props.resultsPage ?
+                       'Improve Results' :
+                       'Get Results'
+
     return (
-      <section>
+      <Card style={style.cardStyle}>
 
         <div style={style.row}>
           <div style={style.innerRow}>
@@ -104,7 +117,7 @@ class SurveyCompletionIndicator extends Component {
             <Button
               disabled={matchLevel.level < 1}
               onClick={this.props.onSubmit}
-              bsStyle="primary">Get Matches</Button>
+              bsStyle="primary">{buttonText}</Button>
           </div>
         </div>
 
@@ -113,7 +126,7 @@ class SurveyCompletionIndicator extends Component {
           <span style={style.text}>{matchLevel.text}</span>
         </section>
 
-      </section>
+      </Card>
     )
 
   }
@@ -123,7 +136,8 @@ class SurveyCompletionIndicator extends Component {
 SurveyCompletionIndicator.propTypes = {
   onSubmit: PropTypes.func,
   questionsAnswered: PropTypes.number,
-  totalQuestions: PropTypes.number
+  totalQuestions: PropTypes.number,
+  resultsPage: PropTypes.bool
 }
 
 export default SurveyCompletionIndicator

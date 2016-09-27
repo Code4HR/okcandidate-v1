@@ -185,4 +185,25 @@ describe('Survey Completion Indicator', () => {
 
   })
 
+  context('On Results Page', () => {
+
+    beforeEach(() => {
+      component = TestUtils.renderIntoDocument(
+        <SurveyCompletionIndicator
+          questionsAnswered={15}
+          totalQuestions={36}
+          resultsPage
+          onSubmit={onSubmit} />
+      )
+    })
+
+    it('should have a button with text \'Improve Matches\'', () => {
+
+      const button = TestUtils.scryRenderedComponentsWithType(component, Button)[0]
+      expect(button.props.children).to.equal('Improve Results')
+
+    })
+
+  })
+
 })
