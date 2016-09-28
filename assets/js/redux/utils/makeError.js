@@ -1,6 +1,7 @@
-export default function makeError(severity, text) {
+export default function makeError(severity, text, id) {
   return {
     severity,
-    text
+    text,
+    id
   }
 }

@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 
 import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
+import Alerts from './../ecosystems/Alerts.jsx'
 
 import {
   fetchActiveSurveys,
@@ -84,6 +85,11 @@ class SurveyPage extends Component {
         <Grid>
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
+
+              <Alerts
+                alerts={this.props.survey.alerts}
+                dispatch={this.props.dispatch} />
+
               {
                 this.props.survey.isFetching || questions.length === 0 ?
                   <LoadingIndicator message="Loading Questions" />
