@@ -31,7 +31,8 @@ describe('The survey page component', () => {
         categories: categories,
         questions: questions,
         responses: [],
-        isFetching: false
+        isFetching: false,
+        alerts: []
       }
     })
     page = TestUtils.renderIntoDocument(
@@ -58,7 +59,8 @@ describe('The survey page component', () => {
           survey: {
             questions: [],
             responses: [],
-            isFetching: true
+            isFetching: true,
+            alerts: []
           }
         })
 
