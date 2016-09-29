@@ -1,4 +1,5 @@
 import makeError from './../utils/makeError'
+import _ from 'lodash'
 
 import {
   FETCH_ACTIVE_SURVEYS_REQUEST,
@@ -11,6 +12,9 @@ import {
   UPDATE_SURVEY_BUILDER_QUESTION,
   SELECT_SURVEY_QUESTION_RESPONSE,
   SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY,
+  INCREMENT_SURVEY_QUESTION_INDEX,
+  DECREMENT_SURVEY_QUESTION_INDEX,
+  REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY,
   SET_STREET_ADDRESS,
   SUBMIT_STREET_ADDRESS_REQUEST,
   SUBMIT_STREET_ADDRESS_SUCCESS,
@@ -23,7 +27,14 @@ import {
   FETCH_SURVEY_CANDIDATE_MATCHES_REQUEST,
   FETCH_SURVEY_CANDIDATE_MATCHES_SUCCESS,
   FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE,
-  TOGGLE_WARDFINDER_WARD_DROPDOWN
+  TOGGLE_WARDFINDER_WARD_DROPDOWN,
+  HIDE_ELECTION_DAY_REMINDER_PROMPT,
+  SHOW_ELECTION_DAY_REMINDER_MODAL,
+  HIDE_ELECTION_DAY_REMINDER_MODAL,
+  SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS,
+  SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER,
+  SUBMIT_ELECTION_DAY_REMINDER_SUCCESS,
+  SUBMIT_ELECTION_DAY_REMINDER_FAILURE
 } from './survey-actions'
 
 export const initialState = {
@@ -34,10 +45,31 @@ export const initialState = {
     id: null,
     results: []
   },
+  electionDayReminder: {
+    displayPrompt: true,
+    displayModal: false,
+    submitted: false,
+    alert: {
+      message: '',
+      severity: ''
+    },
+    telephone: {
+      value: '',
+      error: ''
+    },
+    email: {
+      value: '',
+      error: ''
+    }
+  },
   alerts: [],
   isFetching: false,
   activeSurveys: [],
-  selectedSurvey: {},
+  selectedSurvey: {
+    name: '',
+    id: null,
+    index: 0
+  },
   questions: [],
   responses: [],
   candidateMatch: {}
@@ -137,13 +169,16 @@ export default function (state = initialState, action) {
       case SELECT_ACTIVE_SURVEY_REQUEST:
         return Object.assign({}, state, {
           isFetching: true,
-          selectedSurvey: action.survey
+          selectedSurvey: Object.assign({}, action.survey, {
+            index: 0
+          })
         })
 
       case SELECT_ACTIVE_SURVEY_SUCCESS:
         return Object.assign({}, state, {
           isFetching: false,
-          questions: [...action.response.questions]
+          questions: _.shuffle(action.response.questions),
+          categories: action.response.categories
         })
 
       case SELECT_ACTIVE_SURVEY_FAILURE:
@@ -153,6 +188,20 @@ export default function (state = initialState, action) {
             ...state.alerts,
             makeError('warning', 'There was an error setting the active survey')
           ]
+        })
+
+      case INCREMENT_SURVEY_QUESTION_INDEX:
+        return Object.assign({}, state, {
+          selectedSurvey: Object.assign({}, state.selectedSurvey, {
+            index: state.selectedSurvey.index + 1
+          })
+        })
+
+      case DECREMENT_SURVEY_QUESTION_INDEX:
+        return Object.assign({}, state, {
+          selectedSurvey: Object.assign({}, state.selectedSurvey, {
+            index: state.selectedSurvey.index - 1
+          })
         })
 
       case TOGGLE_SURVEY_BUILDER_QUESTION_EDITABLE:
@@ -200,11 +249,11 @@ export default function (state = initialState, action) {
             responses: [
               ...state.responses,
               makeSurveyAnswer(
-              state.surveyResponseId,
-              action.questionId,
-              action.answer,
-              action.intensity
-            )
+                state.surveyResponseId,
+                action.questionId,
+                action.answer,
+                action.intensity
+              )
             ]
           })
         }
@@ -227,6 +276,13 @@ export default function (state = initialState, action) {
       // otherwise just return state
         return state
 
+      case REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY:
+        return Object.assign({}, state, {
+          responses: state.responses.filter(response => {
+            return response.questionId !== action.questionId
+          })
+        })
+
       case FETCH_SURVEY_RESPONSE_ID_SUCCESS:
         return Object.assign({}, state, {
           surveyResponseId: action.response.id
@@ -246,6 +302,66 @@ export default function (state = initialState, action) {
       case FETCH_SURVEY_CANDIDATE_MATCHES_FAILURE:
         return Object.assign({}, state, {
           isFetching: false
+        })
+
+      case HIDE_ELECTION_DAY_REMINDER_PROMPT:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, {
+            displayPrompt: false
+          })
+        })
+
+      case SHOW_ELECTION_DAY_REMINDER_MODAL:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            displayModal: true
+          })
+        })
+
+      case HIDE_ELECTION_DAY_REMINDER_MODAL:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            displayModal: false
+          })
+        })
+
+      case SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            email: {
+              value: action.value,
+              error: action.error
+            }
+          })
+        })
+
+      case SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            telephone: {
+              value: action.value,
+              error: action.error
+            }
+          })
+        })
+
+      case SUBMIT_ELECTION_DAY_REMINDER_SUCCESS:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            displayModal: false,
+            submitted: true,
+            email: initialState.electionDayReminder.email,
+            telephone: initialState.electionDayReminder.telephone
+          })
+        })
+
+      case SUBMIT_ELECTION_DAY_REMINDER_FAILURE:
+        return Object.assign({}, state, {
+          electionDayReminder: Object.assign({}, state.electionDayReminder, {
+            alert: action.error.alert,
+            email: action.error.email || state.electionDayReminder.email,
+            telephone: action.error.telephone || state.electionDayReminder.telephone
+          })
         })
 
       default:

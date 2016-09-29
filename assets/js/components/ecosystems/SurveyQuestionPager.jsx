@@ -8,12 +8,19 @@ import {
 
 import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
-import SurveyQuestionCounter from './../molecules/SurveyQuestionCounter.jsx'
+import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
+
+import {
+  incrementSurveyQuestionIndex,
+  decrementSurveyQuestionIndex,
+  removeSurveyQuestionResponseAndIntensity
+} from './../../redux/survey/survey-actions'
 
 const style = {
   buttonTray: {
     container: {
-      display: 'flex'
+      display: 'flex',
+      justifyContent: 'space-between'
     },
     spacer: {
       flex: '1'
@@ -26,14 +33,13 @@ class SurveyQuestionPager extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      index: 0,
       alerts: {},
       finalSkip: false
     }
   }
 
   goBack() {
-    if (this.state.index > 0) {
+    if (this.props.index > 0) {
       this.decrementIndex()
     }
     else {
@@ -41,16 +47,26 @@ class SurveyQuestionPager extends Component {
     }
   }
 
+  nextQuestionOrSubmit() {
+    if (this.props.index < this.props.questions.length - 1) {
+      this.incrementIndex()
+    }
+    else {
+      this.props.onSubmit()
+    }
+  }
+
+  skipQuestion() {
+    const questionId = this.props.questions[this.props.index].id
+    this.props.dispatch(removeSurveyQuestionResponseAndIntensity(questionId))
+    this.nextQuestionOrSubmit()
+  }
+
   goForward() {
     try {
       this.validateSelections()
       this.state.alerts = {}
-      if (this.state.index < this.props.questions.length - 1) {
-        this.incrementIndex()
-      }
-      else {
-        this.props.onSubmit()
-      }
+      this.nextQuestionOrSubmit()
     }
     catch (errors) {
       this.setState({
@@ -60,20 +76,16 @@ class SurveyQuestionPager extends Component {
   }
 
   incrementIndex() {
-    this.setState({
-      index: this.state.index + 1
-    })
+    this.props.dispatch(incrementSurveyQuestionIndex())
   }
 
   decrementIndex() {
-    this.setState({
-      index: this.state.index - 1
-    })
+    this.props.dispatch(decrementSurveyQuestionIndex())
   }
 
   validateSelections() {
     const errors = {}
-    const currentQuestion = this.props.questions[this.state.index]
+    const currentQuestion = this.props.questions[this.props.index]
     if (!currentQuestion.selectedAnswer && !currentQuestion.intensity) {
       return
     }
@@ -90,14 +102,15 @@ class SurveyQuestionPager extends Component {
 
   render() {
 
-    const currentQuestion = this.props.questions[this.state.index]
+    const currentQuestion = this.props.questions[this.props.index]
 
     return (
       <section>
 
-        <SurveyQuestionCounter
-          index={this.state.index}
-          total={this.props.questions.length} />
+        <SurveyCompletionIndicator
+          questionsAnswered={this.props.answered}
+          totalQuestions={this.props.questions.length}
+          onSubmit={this.props.onSubmit} />
 
         <Card>
           <SurveyQuestion
@@ -110,15 +123,24 @@ class SurveyQuestionPager extends Component {
               <Button
                 ref="backButton"
                 onClick={this.goBack.bind(this)}
-                bsSize="large">Back</Button> {' '}
+                bsSize="large">Back</Button>
 
-              <div style={style.buttonTray.spacer}></div>
+              <div>
+                <Button
+                  ref="skipButton"
+                  bsStyle="warning"
+                  bsSize="large"
+                  onClick={this.skipQuestion.bind(this)}>Skip</Button>
 
-              <Button
-                ref="nextButton"
-                bsStyle="primary"
-                bsSize="large"
-                onClick={this.goForward.bind(this)}>Next</Button>
+                {' '}
+
+                <Button
+                  ref="nextButton"
+                  bsStyle="primary"
+                  bsSize="large"
+                  onClick={this.goForward.bind(this)}>Next</Button>
+              </div>
+
             </div>
         </Card>
 
@@ -131,7 +153,10 @@ class SurveyQuestionPager extends Component {
 SurveyQuestionPager.propTypes = {
   onSubmit: PropTypes.func,
   questions: PropTypes.array,
-  dispatch: PropTypes.func
+  answered: PropTypes.number,
+  categories: PropTypes.array,
+  dispatch: PropTypes.func,
+  index: PropTypes.number
 }
 
 export default SurveyQuestionPager

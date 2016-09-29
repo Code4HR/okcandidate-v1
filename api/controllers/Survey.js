@@ -1,23 +1,26 @@
+const _ = require('lodash')
+
 module.exports = function (server) {
   const Survey = server.plugins['hapi-shelf'].model('Survey')
-  return [{
-    method: 'GET',
-    path: '/api/survey',
-    handler: (request, reply) => {
-      Survey
-        .fetchAll()
-        .then(surveys => {
-          reply(surveys)
-        })
-    }
-  },
+  return [
+    {
+      method: 'GET',
+      path: '/api/survey',
+      handler: (request, reply) => {
+        Survey
+          .fetchAll()
+          .then(surveys => {
+            reply(surveys)
+          })
+      }
+    },
     {
       method: 'GET',
       path: '/api/survey/{id}',
       handler: (request, reply) => {
         Survey
           .where({id: request.params.id})
-          .fetch({withRelated: ['questions.answers']})
+          .fetch({withRelated: ['questions.answers', 'categories']})
           .then(survey => {
             reply(survey)
           })
@@ -57,5 +60,6 @@ module.exports = function (server) {
           })
           .catch()
       }
-    }]
+    }
+  ]
 }

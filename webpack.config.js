@@ -1,5 +1,5 @@
 // Webpack config file
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
   entry: './assets/js/components/Index.jsx',
@@ -19,8 +19,21 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx$|\.js$/,
+        loader: 'envify-loader',
+        exclude: /node_modules/
+      }, {
+        test: /\.jsx$|\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
+      }, {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      }, {
+        test: /\.png$/,
+        loader: 'url-loader?limit=100000'
+      }, {
+        test: /\.jpg$/,
+        loader: 'file-loader'
       }
     ]
   },
@@ -30,4 +43,3 @@ module.exports = {
     })
   ]
 };
-

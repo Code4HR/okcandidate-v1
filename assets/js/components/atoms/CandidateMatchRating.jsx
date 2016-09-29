@@ -22,6 +22,7 @@ const style = {
   },
   label: {
     fontSize: '1em',
+    padding: '.5em',
     marginLeft: '.5em'
   }
 }
@@ -66,7 +67,7 @@ class CandidateMatchRating extends Component {
 }
 
 CandidateMatchRating.propTypes = {
-  compositeMatchScore: PropTypes.string,
+  compositeMatchScore: PropTypes.number,
   style: PropTypes.object
 }
 

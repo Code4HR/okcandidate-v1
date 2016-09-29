@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 import {
   fetchSurveyCandidateMatches
@@ -13,6 +14,9 @@ import {
 } from 'react-bootstrap'
 
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
+import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
+import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
+import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
 class ResultsPage extends Component {
 
@@ -37,33 +41,53 @@ class ResultsPage extends Component {
     }).reverse()
   }
 
+  backToSurvey() {
+    browserHistory.push('/survey')
+  }
+
   render() {
+    const survey = this.props.survey,
+      races = survey.candidateMatch.survey
     return (
       <article>
         <Grid>
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
+
+              <ElectionDayReminder
+                electionDayReminder={this.props.survey.electionDayReminder}
+                surveyId={this.props.survey.surveyResponseId}
+                dispatch={this.props.dispatch} />
+
+              <SurveyCompletionIndicator
+                questionsAnswered={this.props.survey.responses.length}
+                totalQuestions={this.props.survey.questions.length}
+                resultsPage
+                onSubmit={this.backToSurvey.bind(this)} />
+
               <h1>Matches</h1>
               {
-                this.props.survey.candidateMatch.survey &&
-                this.sortRaces(this.props.survey.candidateMatch.survey).map((race, index) => {
-                  return (
-                    <section key={index}>
-                      <h2>{race.candidateTypeName}</h2>
-                      {
-                        this.sortCandidates(race.candidates).map((candidate, index) => {
-                          return (
-                            <CandidateMatchCandidate
-                              key={index}
-                              candidateName={candidate.candidateName}
-                              compositeMatchScore={candidate.compositeMatchScore}
-                              categoryMatchScores={candidate.categoryMatchScores} />
-                          )
-                        })
-                      }
-                    </section>
-                  )
-                })
+                survey.isFetching || (races && races.length === 0) ?
+                  <LoadingIndicator message="Loading Matches" /> :
+                  this.sortRaces(races).map((race, index) => {
+                    return (
+                      <section key={index}>
+                        <h2>{race.candidateTypeName}</h2>
+                        {
+                          this.sortCandidates(race.candidates)
+                            .map((candidate, index) => {
+                              return (
+                                <CandidateMatchCandidate
+                                  key={index}
+                                  candidateName={candidate.candidateName}
+                                  compositeMatchScore={candidate.compositeMatchScore}
+                                  categoryMatchScores={candidate.categoryMatchScores} />
+                              )
+                            })
+                        }
+                      </section>
+                    )
+                  })
               }
             </Col>
           </Row>

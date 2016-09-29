@@ -1,14 +1,14 @@
 ﻿--CREATE DATABASE okcandidate WITH ENCODING='UTF8' CONNECTION LIMIT=-1;
 
---CREATE ROLE survey_manager LOGIN ENCRYPTED PASSWORD 'md52e5db3de6105661d19e5f4dd2e7b67cc' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+--CREATE ROLE survey_manager LOGIN ENCRYPTED PASSWORD 'password' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
 
--- GRANT SELECT, INSERT, UPDATE, DELETE
--- ON ALL TABLES IN SCHEMA public
--- TO survey_manager;
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public
+TO pauloblack;
 -- --
--- GRANT USAGE, SELECT
--- ON ALL SEQUENCES IN SCHEMA public
--- TO survey_manager;
+GRANT USAGE, SELECT
+ON ALL SEQUENCES IN SCHEMA public
+TO pauloblack;
 
 DROP TABLE IF EXISTS candidate_geography;
 DROP TABLE IF EXISTS candidate_answer;
@@ -26,6 +26,15 @@ DROP TABLE IF EXISTS geography;
 DROP TABLE IF EXISTS response_type;
 DROP TABLE IF EXISTS users;
 
+CREATE TABLE IF NOT EXISTS users (
+	id SERIAL PRIMARY KEY,
+	username varchar(100),
+	email varchar(255),
+	scope varchar(100),
+	password varchar(100),
+	survey int
+);
+
 CREATE TABLE IF NOT EXISTS geography (
  	id SERIAL PRIMARY KEY,
  	geography_name varchar(100)
@@ -38,7 +47,8 @@ CREATE TABLE IF NOT EXISTS survey (
 
 CREATE TABLE IF NOT EXISTS category (
 	id SERIAL PRIMARY KEY,
-	category_name varchar(100) NOT NULL
+	category_name varchar(100) NOT NULL,
+	survey_id int NOT NULL references survey
 );
 
 CREATE TABLE IF NOT EXISTS question (
@@ -58,7 +68,9 @@ CREATE TABLE IF NOT EXISTS answer (
 CREATE TABLE IF NOT EXISTS survey_response (
 	id SERIAL PRIMARY KEY,
 	survey_id int NOT NULL REFERENCES survey,
-	geography_id int NOT NULL REFERENCES geography
+	geography_id int NOT NULL REFERENCES geography,
+	user_email varchar(100),
+	user_phone varchar(50)
 );
 
 CREATE TABLE IF NOT EXISTS survey_answer (
@@ -84,10 +96,10 @@ CREATE TABLE IF NOT EXISTS candidate (
 
 CREATE TABLE IF NOT EXISTS candidate_answer (
 	id SERIAL PRIMARY KEY,
-  candidate_id int NOT NULL REFERENCES candidate,
-  question_id int NOT NULL REFERENCES question,
+	candidate_id int NOT NULL REFERENCES candidate,
+	question_id int NOT NULL REFERENCES question,
 	answer_id int NOT NULL REFERENCES answer,
-  intensity int
+	intensity int
 );
 
 CREATE TABLE IF NOT EXISTS candidate_geography (

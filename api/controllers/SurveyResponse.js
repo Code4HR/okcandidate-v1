@@ -1,17 +1,17 @@
 module.exports = function (server) {
   const SurveyResponse = server.plugins['hapi-shelf'].model('SurveyResponse')
-
-  return [    {
-    method: 'GET',
-    path: '/api/survey_response',
-    handler: (request, reply) => {
-      SurveyResponse
-        .fetchAll()
-        .then(survey_responses => {
-          reply(survey_responses)
-        })
-    }
-  },
+  return [
+    {
+      method: 'GET',
+      path: '/api/survey_response',
+      handler: (request, reply) => {
+        SurveyResponse
+          .fetchAll()
+          .then(survey_responses => {
+            reply(survey_responses)
+          })
+      }
+    },
     {
       method: 'GET',
       path: '/api/survey_response/{id}',
@@ -33,6 +33,8 @@ module.exports = function (server) {
           .save({
             survey_id: request.payload.surveyId,
             geography_id: request.payload.geographyId,
+            user_email: request.payload.userEmail,
+            user_phone: request.payload.userPhone,
           })
           .then(function (newSurveyResponse) {
             reply(newSurveyResponse)
@@ -44,13 +46,16 @@ module.exports = function (server) {
       method: 'POST',
       path: '/api/survey_response/{id}',
       handler: (request, reply) => {
+        const survey_response = new SurveyResponse()
         survey_response
           .where({id: request.params.id})
           .fetch()
           .then(function (survey_response) {
             survey_response.save({
               survey_id: request.payload.surveyId,
-              geography_id: request.payload.geographyId
+              geography_id: request.payload.geographyId,
+              user_email: request.payload.userEmail,
+              user_phone: request.payload.userPhone
             })
               .then(function (surveyResponse) {
                 reply(surveyResponse)
@@ -59,5 +64,27 @@ module.exports = function (server) {
           })
           .catch()
       }
-    }]
+    },
+    {
+      method: 'POST',
+      path: '/api/survey_response/contact_info/{id}',
+      handler: (request, reply) => {
+        const survey_response = new SurveyResponse()
+        survey_response
+          .where({id: request.params.id})
+          .fetch()
+          .then(survey_response => {
+            survey_response.save({
+              user_email: request.payload.userEmail,
+              user_phone: request.payload.userPhone
+            })
+            .then(survey_response => {
+              reply(survey_response)
+            })
+            .catch()
+          })
+          .catch()
+      }
+    }
+  ]
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 
 import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
+import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 
 import {
   fetchActiveSurveys,
@@ -29,20 +30,39 @@ class SurveyPage extends Component {
       browserHistory.push('/')
     }
 
-    this.props.dispatch(fetchActiveSurveys())
+    if (this.props.survey.questions.length === 0) {
+      this.props.dispatch(fetchActiveSurveys())
+    }
+
   }
 
   blendQuestionsAndReponses(questions, responses) {
+
     return questions.map(question => {
       const answer = responses.find(response => {
         return question.id === response.questionId
       })
+
       if (answer) {
-        question.intensity = answer.intensity
-        question.selectedAnswer = answer.answerId
+        return Object.assign({}, question, {
+          intensity: answer.intensity,
+          selectedAnswer: answer.answerId
+        })
       }
-      return question
+
+      else {
+        return question
+      }
     })
+  }
+
+  countCompleteResponses(responses) {
+    return responses.reduce((memo, current) => {
+      if (current.answerId && current.intensity) {
+        memo += 1
+      }
+      return memo
+    }, 0)
   }
 
   submit() {
@@ -57,6 +77,7 @@ class SurveyPage extends Component {
       this.props.survey.questions,
       this.props.survey.responses
     )
+    const questionsAnswered = this.countCompleteResponses(this.props.survey.responses)
 
     return (
       <article>
@@ -64,13 +85,16 @@ class SurveyPage extends Component {
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
               {
-                !this.props.survey.isFetching && questions.length ?
+                this.props.survey.isFetching || questions.length === 0 ?
+                  <LoadingIndicator message="Loading Questions" />
+                :
                   <SurveyQuestionPager
                     onSubmit={this.submit.bind(this)}
+                    index={this.props.survey.selectedSurvey.index}
                     questions={questions}
+                    answered={questionsAnswered}
+                    categories={this.props.survey.categories}
                     dispatch={this.props.dispatch} />
-                :
-                <p>Loading Questions</p>
               }
             </Col>
           </Row>
@@ -89,5 +113,7 @@ SurveyPage.propTypes = {
 export default connect(
   state => ({
     survey: state.survey
-  })
+  }), null, null, {
+    withRef: true
+  }
 )(SurveyPage)

@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 
 import {
-  Input,
+  FormGroup,
+  FormControl,
+  InputGroup,
+  HelpBlock,
   Button
 } from 'react-bootstrap'
 
@@ -33,7 +36,7 @@ class WardFinderAddress extends Component {
   }
 
   onEnter(e) {
-    const code = (e.keyCode ? e.keyCode : e.which);
+    const code = (e.keyCode ? e.keyCode : e.which)
     if (code === 13) {
       this.submitAddress()
     }
@@ -43,20 +46,26 @@ class WardFinderAddress extends Component {
 
     return (
       <div style={style.container}>
-        <Input type="text"
-          label="Street Address"
-          onChange={this.onSetAddress.bind(this)}
-          value={this.props.ward.address.value}
-          help={this.props.ward.address.help}
+        <FormGroup
+          controlId="streetAddress"
           bsSize="large"
-          bsStyle={this.props.ward.address.help ? 'warning' : null}
-          placeholder="111 Granby St"
-          onKeyDown={this.onEnter.bind(this)}
-          buttonAfter={
-            <Button
-              onClick={this.submitAddress.bind(this)}
-              bsStyle="primary">Submit</Button>
-          } />
+          validationState={this.props.ward.address.help ? 'warning' : null}>
+          <InputGroup>
+            <FormControl
+              label="Street Address"
+              onChange={this.onSetAddress.bind(this)}
+              value={this.props.ward.address.value}
+              placeholder="111 Granby St"
+              onKeyDown={this.onEnter.bind(this)}/>
+            <InputGroup.Button>
+              <Button
+                onClick={this.submitAddress.bind(this)}
+                bsSize="large"
+                bsStyle="primary">Submit</Button>
+            </InputGroup.Button>
+          </InputGroup>
+          <HelpBlock>{this.props.ward.address.help}</HelpBlock>
+        </FormGroup>
       </div>
     )
   }

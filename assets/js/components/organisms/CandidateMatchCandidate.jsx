@@ -76,7 +76,7 @@ class CandidateMatchCandidate extends Component {
 
 CandidateMatchCandidate.propTypes = {
   candidateName: PropTypes.string,
-  compositeMatchScore: PropTypes.string,
+  compositeMatchScore: PropTypes.number,
   categoryMatchScores: PropTypes.array
 }
 

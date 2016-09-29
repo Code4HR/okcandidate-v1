@@ -11,7 +11,17 @@ body, html {
     padding: 3px 0;
 }
 
+/* black loader spinners */
+.ball-pulse > div {
+    background-color: black;
+}
+
 /*.candidate-card .collapse > .panel-body {
     padding-left: 0px;
     padding-right: 0px;
 }*/
+
+/* Padding for columns */
+.column {
+  padding: 0.5em;
+}

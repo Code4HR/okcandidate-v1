@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import checkStatus from './../utils/checkStatus'
 import { browserHistory } from 'react-router'
+import validator from 'validator'
 
 export const FETCH_ACTIVE_SURVEYS_REQUEST = 'FETCH_ACTIVE_SURVEYS_REQUEST'
 export const FETCH_ACTIVE_SURVEYS_SUCCESS = 'FETCH_ACTIVE_SURVEYS_SUCCESS'
@@ -58,7 +59,9 @@ export function selectActiveSurvey(survey) {
     return fetch(`/api/survey/${survey.id}`)
     .then(checkStatus)
     .then(response => response.json())
-    .then(response => dispatch(selectActiveSurveySuccess(response)))
+    .then(response => {
+      dispatch(selectActiveSurveySuccess(response))
+    })
     .catch(error => dispatch(selectActiveSurveyFailure(error)))
   }
 
@@ -106,6 +109,12 @@ export function updateSurveyBuilderQuestion(question) {
 export const SELECT_SURVEY_QUESTION_RESPONSE = 'SELECT_SURVEY_QUESTION_RESPONSE'
 export const SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY =
   'SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY'
+export const REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY =
+  'REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY'
+export const INCREMENT_SURVEY_QUESTION_INDEX =
+  'INCREMENT_SURVEY_QUESTION_INDEX'
+export const DECREMENT_SURVEY_QUESTION_INDEX =
+  'DECREMENT_SURVEY_QUESTION_INDEX'
 
 export function selectSurveyQuestionResponse(questionId, answer) {
   return {
@@ -120,6 +129,25 @@ export function selectSurveyQuestionResponseIntensity(questionId, intensity) {
     type: SELECT_SURVEY_QUESTION_RESPONSE_INTENSITY,
     questionId,
     intensity
+  }
+}
+
+export function removeSurveyQuestionResponseAndIntensity(questionId) {
+  return {
+    type: REMOVE_SURVEY_QUESTION_RESPONSE_AND_INTENSITY,
+    questionId
+  }
+}
+
+export function incrementSurveyQuestionIndex() {
+  return {
+    type: INCREMENT_SURVEY_QUESTION_INDEX
+  }
+}
+
+export function decrementSurveyQuestionIndex() {
+  return {
+    type: DECREMENT_SURVEY_QUESTION_INDEX
   }
 }
 
@@ -393,5 +421,173 @@ export function fetchSurveyCandidateMatches(id) {
     .catch(error => {
       dispatch(fetchSurveyCandidateMatchesFailure(error))
     })
+  }
+}
+
+export const HIDE_ELECTION_DAY_REMINDER_PROMPT =
+  'HIDE_ELECTION_DAY_REMINDER_PROMPT'
+export const SHOW_ELECTION_DAY_REMINDER_MODAL =
+  'SHOW_ELECTION_DAY_REMINDER_MODAL'
+export const HIDE_ELECTION_DAY_REMINDER_MODAL =
+  'HIDE_ELECTION_DAY_REMINDER_MODAL'
+
+export const SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS =
+  'SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS'
+export const SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER =
+  'SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER'
+
+export const SUBMIT_ELECTION_DAY_REMINDER_REQUEST = 'SUBMIT_ELECTION_DAY_REMINDER_REQUEST'
+export const SUBMIT_ELECTION_DAY_REMINDER_SUCCESS = 'SUBMIT_ELECTION_DAY_REMINDER_SUCCESS'
+export const SUBMIT_ELECTION_DAY_REMINDER_FAILURE = 'SUBMIT_ELECTION_DAY_REMINDER_FAILURE'
+
+export function hideElectionDayReminderPrompt () {
+  return {
+    type: HIDE_ELECTION_DAY_REMINDER_PROMPT
+  }
+}
+
+export function showElectionDayReminderModal() {
+  return {
+    type: SHOW_ELECTION_DAY_REMINDER_MODAL
+  }
+}
+
+export function hideElectionDayReminderModal() {
+  return {
+    type: HIDE_ELECTION_DAY_REMINDER_MODAL
+  }
+}
+
+export function setElectionDayReminderEmailAddress(value, error = '') {
+  return {
+    type: SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS,
+    value,
+    error
+  }
+}
+
+export function setElectionDayReminderTelephoneNumber(value, error = '') {
+  return {
+    type: SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER,
+    value,
+    error
+  }
+}
+
+export function submitElectionDayReminderRequest() {
+  return {
+    type: SUBMIT_ELECTION_DAY_REMINDER_REQUEST
+  }
+}
+
+export function submitElectionDayReminderSuccess(response) {
+  return {
+    type: SUBMIT_ELECTION_DAY_REMINDER_SUCCESS,
+    response
+  }
+}
+
+export function submitElectionDayReminderFailure(error) {
+  return {
+    type: SUBMIT_ELECTION_DAY_REMINDER_FAILURE,
+    error
+  }
+}
+
+export function validateElectionDayReminderRequest(email, telephone) {
+
+  const errors = {}
+  if (telephone) {
+    telephone = telephone.replace(/[^\d]/g, '')
+  }
+
+  function validateEmailAddress() {
+    if (!validator.isEmail(email)) {
+      errors.email = {
+        value: email,
+        error: 'Please enter a valid email address (like person@provider.com).'
+      }
+    }
+  }
+
+  function validateTelephoneNumber() {
+    if (!validator.isMobilePhone(telephone, 'en-US')) {
+      errors.telephone = {
+        value: telephone,
+        error: 'Please enter a 10-digit phone number (like 555-555-5555).'
+      }
+    }
+  }
+
+  // If an email address was provided:
+  if (email) {
+    validateEmailAddress()
+  }
+
+  // If a telephone number was provided:
+  if (telephone) {
+    validateTelephoneNumber()
+  }
+
+  // Nothing is defined.
+  if (!email && !telephone) {
+    errors.alert = {
+      message: 'At least one piece of contact information should be provided',
+      severity: 'warning'
+    }
+  }
+
+  // If errors were found, return the error object.  If not, return undefined.
+  const numberOfErrors = Object.keys(errors).length
+
+  if (numberOfErrors > 0) {
+
+    // If a specific alert hasn't been defined already...
+    if (!errors.alert) {
+      errors.alert = {
+        message: `Please correct the ${numberOfErrors > 1 ? 'errors' : 'error'} below`,
+        severity: 'warning'
+      }
+    }
+
+    return errors
+
+  }
+
+}
+
+export function submitElectionDayReminder(email, telephone, surveyId) {
+  return function(dispatch) {
+
+    dispatch(submitElectionDayReminderRequest())
+    const errors = validateElectionDayReminderRequest(email.value, telephone.value)
+    if (errors) {
+      return dispatch(submitElectionDayReminderFailure(errors))
+    }
+    fetch(`/api/survey_response/contact_info/${surveyId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userEmail: email.value,
+        userPhone: telephone.value
+      })
+    })
+    .then(checkStatus)
+    .then(response => response.json())
+    .then(response => {
+      dispatch(submitElectionDayReminderSuccess(response))
+    })
+    .catch(() => {
+      dispatch(submitElectionDayReminderFailure({
+        alert: {
+          message: 'There was an error saving your contact information',
+          severity: 'danger'
+        }
+      }))
+    })
+
   }
 }
