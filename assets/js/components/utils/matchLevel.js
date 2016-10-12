@@ -13,6 +13,10 @@ function getMatchLevel(answered, total) {
     progress: Math.round(answered % third / third * 100)
   }
 
+  if (total === 0) {
+    return result
+  }
+
   if (answered >= third && answered < (2 * third)) {
     return Object.assign({}, result, {
       level: 1,
