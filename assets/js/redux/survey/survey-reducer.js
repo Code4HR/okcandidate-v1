@@ -127,9 +127,9 @@ export default function (state = initialState, action) {
         return Object.assign({}, state, {
           ward: Object.assign({}, state.ward, {
             id: action.selection,
-            name: state.ward.results.find(ward => {
+            name: _.get(state.ward.results.find(ward => {
               return ward.id === action.selection
-            }).geographyName
+            }), 'geographyName') || 'noname'
           })
         })
 
