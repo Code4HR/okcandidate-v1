@@ -100,7 +100,7 @@ class WardFinderPage extends Component {
                 <Card style={style.card}>
                   <h2>Get Started!</h2>
                   <p>
-                    We can find candidates running for office in your area by using any Norfolk
+                    We can find candidates running for office in your area by using any Virginia Beach
                     street address.
                   </p>
                   <WardFinderAddress

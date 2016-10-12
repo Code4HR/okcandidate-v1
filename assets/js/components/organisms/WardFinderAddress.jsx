@@ -55,7 +55,7 @@ class WardFinderAddress extends Component {
               label="Street Address"
               onChange={this.onSetAddress.bind(this)}
               value={this.props.ward.address.value}
-              placeholder="111 Granby St"
+              placeholder="1906 Deer Park Drive"
               onKeyDown={this.onEnter.bind(this)}/>
             <InputGroup.Button>
               <Button
