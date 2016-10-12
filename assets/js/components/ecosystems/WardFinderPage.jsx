@@ -5,7 +5,8 @@ import {
 } from 'react-redux'
 
 import {
-  toggleWardfinderWardDropdown
+  toggleWardfinderWardDropdown,
+  selectGeography
 } from './../../redux/survey/survey-actions'
 
 import {
@@ -83,6 +84,10 @@ class WardFinderPage extends Component {
     this.props.dispatch(toggleWardfinderWardDropdown())
   }
 
+  skipGeolocation() {
+    this.props.dispatch(selectGeography(1))
+  }
+
   render() {
     return (
       <article>
@@ -134,6 +139,7 @@ class WardFinderPage extends Component {
                     :
                       <div>
                         <Button
+                          onClick={this.skipGeolocation.bind(this)}
                           bsStyle="primary"
                           bsSize="large">Get Started</Button>
                       </div>
