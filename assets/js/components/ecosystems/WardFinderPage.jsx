@@ -11,7 +11,8 @@ import {
 import {
   Col,
   Grid,
-  Row
+  Row,
+  Button
 } from 'react-bootstrap'
 
 import Card from './../atoms/Card.jsx'
@@ -73,6 +74,9 @@ class WardFinderPage extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      geolocation: false
+    }
   }
 
   toggleWardDropdown() {
@@ -98,23 +102,43 @@ class WardFinderPage extends Component {
             <Row>
               <Col xs={12} sm={6} smOffset={3}>
                 <Card style={style.card}>
-                  <h2>Get Started!</h2>
-                  <p>
-                    We can find candidates running for office in your area by using any Virginia Beach
-                    street address.
-                  </p>
-                  <WardFinderAddress
-                    ward={this.props.ward}
-                    dispatch={this.props.dispatch} />
-                  <a onClick={this.toggleWardDropdown.bind(this)}>Other options</a>
+
                   {
-                    this.props.ward.showWardFinderDropdown ?
-                    <WardFinderDropdown
-                      ward={this.props.ward}
-                      dispatch={this.props.dispatch} />
+                    this.state.geolocation ?
+                    <p>
+                      We can find candidates running for office in your area by using any Virginia Beach
+                      street address.
+                    </p>
                     :
-                    null
+                    <p>
+                      Click to start answering questions and find your perfect match!
+                    </p>
                   }
+
+                  {
+                    this.state.geolocation ?
+                      <div>
+                        <WardFinderAddress
+                          ward={this.props.ward}
+                          dispatch={this.props.dispatch} />
+                        <a onClick={this.toggleWardDropdown.bind(this)}>Other options</a>
+                        {
+                          this.props.ward.showWardFinderDropdown ?
+                          <WardFinderDropdown
+                            ward={this.props.ward}
+                            dispatch={this.props.dispatch} />
+                          :
+                          null
+                        }
+                      </div>
+                    :
+                      <div>
+                        <Button
+                          bsStyle="primary"
+                          bsSize="large">Get Started</Button>
+                      </div>
+                  }
+
                 </Card>
               </Col>
             </Row>
