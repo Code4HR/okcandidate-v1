@@ -11,9 +11,13 @@ const HapiShelf = require('hapi-shelf')
 const dateFormat = require('dateformat')
 const format = 'dd mmm HH:MM:ss'
 const routes = require('./api/routes')
-const auth = require('./api/auth/Authenticate.js')
-const newuser = require('./api/auth/CreateUser.js')
+//const auth = require('./auth')
+const secret = 'superSecret'
 
+function validate(token, request, callback) {
+  console.log(token)
+  return callback(null, true)
+}
 
 const port = process.env['PORT'] || '8000'
 
@@ -58,7 +62,7 @@ server.register(
         './api/models/CandidateAnswer',
         './api/models/CandidateGeography',
         './api/models/CandidateType',
-        './api/models/Users'
+        './api/models/User'
       ]
     }
   },
@@ -80,13 +84,16 @@ server.register([{
 }, {
   register: require('vision')
 }, {
-  register: auth  
-},{
-  register: newuser
+  register: require('hapi-auth-jwt2')
 }], function(err) {
 
-  if (err) return console.error(err)
+  //if (err) return console.error(err)
 
+    server.auth.strategy('token', 'jwt', {
+        key: secret,
+        validateFunc: validate,
+        verifyOptions: { algorithms: ['HS256']}
+      })
     // Add the React-rendering view engine
     server.views({
         engines: {

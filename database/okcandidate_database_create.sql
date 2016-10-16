@@ -24,15 +24,12 @@ DROP TABLE IF EXISTS survey;
 DROP TABLE IF EXISTS congressional_district;
 DROP TABLE IF EXISTS geography;
 DROP TABLE IF EXISTS response_type;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user;
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS user (
 	id SERIAL PRIMARY KEY,
-	username varchar(100),
 	email varchar(255),
-	scope varchar(100),
 	password varchar(100),
-	survey int
 );
 
 CREATE TABLE IF NOT EXISTS geography (

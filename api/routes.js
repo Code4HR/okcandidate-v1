@@ -10,7 +10,8 @@ module.exports = (server) => {
      require('./controllers/SurveyResponse')(server),
      require('./controllers/SurveyAnswer')(server),
      require('./controllers/Geography')(server),
-     require('./controllers/Candidate')(server)
+     require('./controllers/Candidate')(server),
+     require('./controllers/User')(server)
   )
 
   return [
@@ -25,10 +26,11 @@ module.exports = (server) => {
       method: 'GET',
       path: '/admin',
       config: {
+        /*
         auth: {
           strategy: 'standard',
           scope: 'admin'
-        }
+        }*/
       },
       handler: {
         view: 'Default'
@@ -38,10 +40,11 @@ module.exports = (server) => {
       method: 'GET',
       path: '/admin/races',
       config: {
+        /*
         auth: {
           strategy: 'standard',
           scope: 'admin'
-        }
+        }*/
       },
       handler: {
         view: 'Default'
