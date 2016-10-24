@@ -49,9 +49,7 @@ class ElectionDayReminderModal extends Component {
             dispatch={this.props.dispatch} />
         </Modal.Body>
         <Modal.Footer>
-          <a style={{float: 'left'}}
-            href="https://github.com/Code4HR/okcandidate/wiki/Privacy-Policy"
-            target="_blank">Privacy Policy</a>{' '}
+          <a>Privacy Policy</a>{' '}
           <Button
             bsStyle="primary"
             onClick={this.submitElectionDayReminder.bind(this)}>

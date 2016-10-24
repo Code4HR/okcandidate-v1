@@ -54,13 +54,10 @@ class ResultsPage extends Component {
           <Row>
             <Col xs={12} sm={8} smOffset={2}>
 
-              {
-                !this.props.survey.candidateMatch.hasContactInfo &&
-                <ElectionDayReminder
-                  electionDayReminder={this.props.survey.electionDayReminder}
-                  surveyId={this.props.survey.surveyResponseId}
-                  dispatch={this.props.dispatch} />
-              }
+              <ElectionDayReminder
+                electionDayReminder={this.props.survey.electionDayReminder}
+                surveyId={this.props.survey.surveyResponseId}
+                dispatch={this.props.dispatch} />
 
               <SurveyCompletionIndicator
                 questionsAnswered={this.props.survey.responses.length}

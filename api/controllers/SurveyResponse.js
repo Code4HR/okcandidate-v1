@@ -1,14 +1,3 @@
-function anonymize (survey) {
-  if (survey.attributes.userEmail) {
-    survey.attributes.userEmail = 'survey@okcandidate.code4hr.org'
-  }
-
-  if (survey.attributes.userPhone) {
-    survey.attributes.userPhone = '757-555-5555'
-  }
-  return survey
-}
-
 module.exports = function (server) {
   const SurveyResponse = server.plugins['hapi-shelf'].model('SurveyResponse')
   return [
@@ -19,7 +8,7 @@ module.exports = function (server) {
         SurveyResponse
           .fetchAll()
           .then(survey_responses => {
-            reply(survey_responses.map(data=>anonymize(data)))
+            reply(survey_responses)
           })
       }
     },
@@ -31,7 +20,7 @@ module.exports = function (server) {
           .where({id: request.params.id})
           .fetch()
           .then(survey_responses => {
-            reply(anonymize(survey_responses))
+            reply(survey_responses)
           })
       }
     },

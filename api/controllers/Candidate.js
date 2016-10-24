@@ -3,7 +3,6 @@ const _ = require('lodash')
 module.exports = function (server) {
   const Candidate = server.plugins['hapi-shelf'].model('Candidate')
   const SurveyAnswer = server.plugins['hapi-shelf'].model('SurveyAnswer')
-  const SurveyResponse = server.plugins['hapi-shelf'].model('SurveyResponse')
 
   function getCandidateMatch(surveyResponseId, callback)
   {
@@ -162,22 +161,8 @@ module.exports = function (server) {
     method: 'GET',
     path: '/api/candidate_match/{survey_response_id}',
     handler: (request, reply) => {
-
-      const responseId = request.params.survey_response_id
-
-      Promise.all([
-        SurveyResponse
-          .where({id: responseId})
-          .fetch(),
-        new Promise(resolve => {
-          getCandidateMatch(responseId, matches => {
-            resolve(matches)
-          })
-        })
-      ]).then(results => {
-        const info = results[0].toJSON()
-        const hasContactInfo = Boolean(info.userEmail || info.userPhone)
-        reply(Object.assign({}, results[1], {hasContactInfo}))
+      getCandidateMatch(request.params.survey_response_id, (matches) => {
+        reply(matches)
       })
     }
   }]
