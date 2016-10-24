@@ -9,13 +9,11 @@ import {
 import Card from './../atoms/Card.jsx'
 import SurveyQuestion from './../organisms/SurveyQuestion.jsx'
 import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
-import { getThirds } from './../utils/matchLevel'
 
 import {
   incrementSurveyQuestionIndex,
   decrementSurveyQuestionIndex,
-  removeSurveyQuestionResponseAndIntensity,
-  addGlobalAlert
+  removeSurveyQuestionResponseAndIntensity
 } from './../../redux/survey/survey-actions'
 
 const style = {
@@ -50,34 +48,12 @@ class SurveyQuestionPager extends Component {
   }
 
   nextQuestionOrSubmit() {
-
-    function isLastQuestion() {
-      return this.props.index === this.props.questions.length - 1
-    }
-
-    function userHasAnsweredEnoughQuestions() {
-      const third = getThirds(this.props.questions.length)
-      return this.props.answered > third
-    }
-
-    // if the current question is not the last question
-    if (!isLastQuestion.call(this)) {
+    if (this.props.index < this.props.questions.length - 1) {
       this.incrementIndex()
     }
-
-    else if (!userHasAnsweredEnoughQuestions.call(this)) {
-      this.props.dispatch(
-        addGlobalAlert(
-          'warning',
-          'You should answer more questions to get a good match'
-        )
-      )
-    }
-
-    else if (userHasAnsweredEnoughQuestions.call(this)) {
+    else {
       this.props.onSubmit()
     }
-
   }
 
   skipQuestion() {

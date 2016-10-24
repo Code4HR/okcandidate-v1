@@ -34,9 +34,7 @@ import {
   SET_ELECTION_DAY_REMINDER_EMAIL_ADDRESS,
   SET_ELECTION_DAY_REMINDER_TELEPHONE_NUMBER,
   SUBMIT_ELECTION_DAY_REMINDER_SUCCESS,
-  SUBMIT_ELECTION_DAY_REMINDER_FAILURE,
-  ADD_GLOBAL_ALERT,
-  REMOVE_GLOBAL_ALERT
+  SUBMIT_ELECTION_DAY_REMINDER_FAILURE
 } from './survey-actions'
 
 export const initialState = {
@@ -127,9 +125,9 @@ export default function (state = initialState, action) {
         return Object.assign({}, state, {
           ward: Object.assign({}, state.ward, {
             id: action.selection,
-            name: _.get(state.ward.results.find(ward => {
+            name: state.ward.results.find(ward => {
               return ward.id === action.selection
-            }), 'geographyName') || 'noname'
+            }).geographyName
           })
         })
 
@@ -363,33 +361,6 @@ export default function (state = initialState, action) {
             alert: action.error.alert,
             email: action.error.email || state.electionDayReminder.email,
             telephone: action.error.telephone || state.electionDayReminder.telephone
-          })
-        })
-
-      case ADD_GLOBAL_ALERT:
-        if (state.alerts.some(alert => {
-          return alert.text === action.text &&
-                 alert.severity === action.severity
-        })) {
-          return state
-        }
-        else {
-          return Object.assign({}, state, {
-            alerts: [
-              ...state.alerts,
-              makeError(
-                action.severity,
-                action.text,
-                state.alerts.length + 1
-              )
-            ]
-          })
-        }
-
-      case REMOVE_GLOBAL_ALERT:
-        return Object.assign({}, state, {
-          alerts: state.alerts.filter(alert => {
-            return alert.id !== action.id
           })
         })
 
