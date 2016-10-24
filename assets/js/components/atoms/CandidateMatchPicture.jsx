@@ -27,49 +27,54 @@ class CandidatePicture extends Component {
   getImagePath(name) {
 
     let imgPath
+    const rootPath = '/img/candidates/virginiabeach'
 
     switch (name) {
-        case 'Kenneth Cooper Alexander':
-          imgPath = '/img/candidates/alexander.jpg'
-          break
+    case 'Jessica Abbott':
+      imgPath = `${rootPath}/abbott.jpg`
+      break
 
-        case 'Robert J. McCabe':
-          imgPath = '/img/candidates/mccabe.jpg'
-          break
+    case 'Dane U. Blythe':
+      imgPath = `${rootPath}/blythe.jpg`
+      break
 
-        case 'Andy A. Protogyrou':
-          imgPath = '/img/candidates/protogyrou.jpg'
-          break
+    case 'Bobby Dyer':
+      imgPath = `${rootPath}/dyer.jpg`
+      break
 
-        case 'Andria P. McClellan':
-          imgPath = '/img/candidates/mcclellan.jpg'
-          break
+    case 'George Furman III':
+      imgPath = `${rootPath}/furman.jpg`
+      break
 
-        case 'Warren A. Stewart':
-          imgPath = '/img/candidates/stewart.jpg'
-          break
+    case 'Amelia Ross-Hammond':
+      imgPath = `${rootPath}/hammond.jpg`
+      break
 
-        case 'Barclay C. Winn':
-          imgPath = '/img/candidates/winn.jpg'
-          break
+    case 'Richard W. "RK" Kowalewitch':
+      imgPath = `${rootPath}/kowalewitch.jpg`
+      break
 
-        case 'Harry David Candela':
-          imgPath = '/img/candidates/candela.jpg'
-          break
+    case 'Courtney LaLonde':
+      imgPath = `${rootPath}/lalonde.jpg`
+      break
 
-        case 'G.W. \"Billy\" Cook, Jr.':
-          imgPath = '/img/candidates/cook.jpg'
-          break
+    case 'William D. Sessoms, Jr.':
+      imgPath = `${rootPath}/sessoms.jpg`
+      break
 
-        case 'Angelia Williams Graves':
-          imgPath = '/img/candidates/graves.jpg'
-          break
+    case 'A.M. "Don" Weeks':
+      imgPath = `${rootPath}/weeks.jpg`
+      break
 
-        case 'Kendrick J. Turner':
-          imgPath = '/img/candidates/turner.jpg'
-          break
+    case 'Rosemary Wilson':
+      imgPath = `${rootPath}/wilson.jpg`
+      break
 
-        default:
+    case 'Pam Witham':
+      imgPath = `${rootPath}/witham.jpg`
+      break
+
+    default:
 
     }
 
