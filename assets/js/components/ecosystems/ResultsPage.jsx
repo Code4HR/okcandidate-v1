@@ -19,8 +19,9 @@ import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
 import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
 import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
+import ENV from './../constants.js'
 
-const GOOGLE_ANALYTICS = process.env['GOOGLE_ANALYTICS'];
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS'];
 ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
 
 class ResultsPage extends Component {
