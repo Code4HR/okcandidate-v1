@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactGA  from 'react-ga'
 
 import { browserHistory } from 'react-router'
 
@@ -15,6 +16,10 @@ import {
   decrementSurveyQuestionIndex,
   removeSurveyQuestionResponseAndIntensity
 } from './../../redux/survey/survey-actions'
+
+
+const GOOGLE_ANALYTICS = process.env['GOOGLE_ANALYTICS'];
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
 
 const style = {
   buttonTray: {
@@ -50,9 +55,17 @@ class SurveyQuestionPager extends Component {
   nextQuestionOrSubmit() {
     if (this.props.index < this.props.questions.length - 1) {
       this.incrementIndex()
+      ReactGA.event({
+        category: 'Survey',
+        action: 'Answered question'
+      });
     }
     else {
       this.props.onSubmit()
+      ReactGA.event({
+        category: 'Survey',
+        action: 'Finished'
+      });
     }
   }
 
@@ -60,6 +73,10 @@ class SurveyQuestionPager extends Component {
     const questionId = this.props.questions[this.props.index].id
     this.props.dispatch(removeSurveyQuestionResponseAndIntensity(questionId))
     this.nextQuestionOrSubmit()
+    ReactGA.event({
+      category: 'Survey',
+      action: 'Skipped A Question'
+    });
   }
 
   goForward() {

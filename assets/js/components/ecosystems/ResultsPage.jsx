@@ -13,10 +13,15 @@ import {
   Row
 } from 'react-bootstrap'
 
+import ReactGA  from 'react-ga'
+
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
 import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
 import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
+
+const GOOGLE_ANALYTICS = process.env['GOOGLE_ANALYTICS'];
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
 
 class ResultsPage extends Component {
 
@@ -26,7 +31,13 @@ class ResultsPage extends Component {
     this.props.dispatch(fetchSurveyCandidateMatches(
       this.props.params.id
     ))
+  }
 
+  componentDidMount () {
+    ReactGA.event({
+      category: 'Survey',
+      action: 'Viewed Results'
+    });
   }
 
   sortRaces(races) {

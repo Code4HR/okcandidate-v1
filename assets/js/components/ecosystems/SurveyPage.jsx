@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
+import ReactGA  from 'react-ga'
 
 import SurveyQuestionPager from './../ecosystems/SurveyQuestionPager.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
@@ -15,6 +16,10 @@ import {
   Grid,
   Row
 } from 'react-bootstrap'
+
+
+const GOOGLE_ANALYTICS = process.env['GOOGLE_ANALYTICS'];
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
 
 class SurveyPage extends Component {
 
@@ -69,6 +74,10 @@ class SurveyPage extends Component {
     this.props.dispatch(
       submitSurveyAnswers(this.props.survey.responses)
     )
+    ReactGA.event({
+      category: 'Survey',
+      action: 'Clicked Finish Survey'
+    });
   }
 
   render() {
