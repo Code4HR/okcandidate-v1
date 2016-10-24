@@ -591,3 +591,21 @@ export function submitElectionDayReminder(email, telephone, surveyId) {
 
   }
 }
+
+export const ADD_GLOBAL_ALERT = 'ADD_GLOBAL_ALERT'
+export const REMOVE_GLOBAL_ALERT = 'REMOVE_GLOBAL_ALERT'
+
+export function addGlobalAlert(severity, text) {
+  return {
+    type: ADD_GLOBAL_ALERT,
+    severity,
+    text
+  }
+}
+
+export function removeGlobalAlert(id) {
+  return {
+    type: REMOVE_GLOBAL_ALERT,
+    id
+  }
+}
