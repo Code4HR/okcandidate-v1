@@ -4,7 +4,8 @@ import ReactGA  from 'react-ga'
 import { browserHistory } from 'react-router'
 
 import {
-  Button
+  Button,
+  Alert
 } from 'react-bootstrap'
 
 import Card from './../atoms/Card.jsx'
@@ -159,6 +160,15 @@ class SurveyQuestionPager extends Component {
           onSubmit={this.props.onSubmit} />
 
         <Card>
+
+          {
+            this.props.answered === 0 &&
+            <Alert bsStyle="info">
+              You don't need to answer every question.  Skipping a question or two
+              won't prevent you from finding your OKCandidate.
+            </Alert>
+          }
+
           <SurveyQuestion
             style={{marginBottom: '2em'}}
             question={currentQuestion}
