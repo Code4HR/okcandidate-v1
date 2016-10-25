@@ -20,8 +20,8 @@ import {
 
 import ENV from './../constants.js'
 
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS'];
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
 
 class SurveyPage extends Component {
 
@@ -79,7 +79,7 @@ class SurveyPage extends Component {
     ReactGA.event({
       category: 'Survey',
       action: 'Clicked Finish Survey'
-    });
+    })
   }
 
   render() {
