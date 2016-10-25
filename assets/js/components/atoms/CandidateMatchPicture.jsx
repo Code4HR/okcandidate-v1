@@ -26,60 +26,24 @@ class CandidatePicture extends Component {
    */
   getImagePath(name) {
 
-    let imgPath
     const rootPath = '/img/candidates/virginiabeach'
 
-    switch (name) {
-    case 'Jessica Abbott':
-      imgPath = `${rootPath}/abbott.jpg`
-      break
-
-    case 'Dane U. Blythe':
-      imgPath = `${rootPath}/blythe.jpg`
-      break
-
-    case 'Bobby Dyer':
-      imgPath = `${rootPath}/dyer.jpg`
-      break
-
-    case 'George Furman III':
-      imgPath = `${rootPath}/furman.jpg`
-      break
-
-    case 'Amelia Ross-Hammond':
-      imgPath = `${rootPath}/hammond.jpg`
-      break
-
-    case 'Richard W. "RK" Kowalewitch':
-      imgPath = `${rootPath}/kowalewitch.jpg`
-      break
-
-    case 'Courtney LaLonde':
-      imgPath = `${rootPath}/lalonde.jpg`
-      break
-
-    case 'William D. Sessoms, Jr.':
-      imgPath = `${rootPath}/sessoms.jpg`
-      break
-
-    case 'A.M. "Don" Weeks':
-      imgPath = `${rootPath}/weeks.jpg`
-      break
-
-    case 'Rosemary Wilson':
-      imgPath = `${rootPath}/wilson.jpg`
-      break
-
-    case 'Pam Witham':
-      imgPath = `${rootPath}/witham.jpg`
-      break
-
-    default:
-
-    }
+    const picture = {
+      'Jessica Abbott': 'abbott.jpg',
+      'Dane U. Blythe': 'blythe.jpg',
+      'Bobby Dyer': 'dyer.jpg',
+      'George Furman III': 'furman.jpg',
+      'Amelia Ross-Hammond': 'hammond.jpg',
+      'Richard W. "RK" Kowalewitch': 'kowalewitch.jpg',
+      'Courtney LaLonde': 'lalonde.jpg',
+      'William D. Sessoms, Jr.': 'sessoms.jpg',
+      'A.M. "Don" Weeks': 'weeks.jpg',
+      'Rosemary Wilson': 'wilson.jpg',
+      'Pam Witham': 'witham.jpg'
+    }[name]
 
     return {
-      background: `url(${imgPath})`
+      background: `url(${rootPath}/${picture})`
     }
 
   }
