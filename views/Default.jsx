@@ -5,35 +5,34 @@ const React = require('react');
 const Default = React.createClass({
 
   getInitialState: function() {
+
+    const defaultUrl = "http://okcandidate.code4hr.org";
+    const image = this.props.mayor ? `http://okcandidate.code4hr.org/img/candidates/virginiabeach/${this.props.mayor}.jpg` : 'http://okcandidate.code4hr.org/img/ballot-box.png';
+    const url = this.props.id ? `http://code4hr.org/results/${id}` : defaultUrl;
+    const description = "Find out which candidates for local office are a match for you!";
+    const siteName = "OkCandidate"
     return {
         tags: [
-        {name: "description", content: "lorem ipsum dolor"},
-        {itemProp: "name", content: "The Name or Title Here"},
-        {itemProp: "description", content: "This is the page description"},
-        {itemProp: "image", content: "http://www.example.com/image.jpg"},
-        {name: "twitter:card", content: "product"},
-        {name: "twitter:site", content: "@publisher_handle"},
-        {name: "twitter:title", content: "Page Title"},
-        {name: "twitter:description", content: "Page description less than 200 characters"},
-        {name: "twitter:creator", content: "@author_handle"},
-        {name: "twitter:image", content: "http://www.example.com/image.html"},
-        {name: "twitter:data1", content: "$3"},
-        {name: "twitter:label1", content: "Price"},
-        {name: "twitter:data2", content: "Black"},
-        {name: "twitter:label2", content: "Color"},
-        {property: "og:title", content: "Title Here"},
-        {property: "og:type", content: "article"},
-        {property: "og:url", content: "http://www.example.com/"},
-        {property: "og:image", content: "http://example.com/image.jpg"},
-        {property: "og:description", content: "Description Here"},
-        {property: "og:site_name", content: "Site Name, i.e. Moz"},
-        {property: "og:price:amount", content: "15.00"},
-        {property: "og:price:currency", content: "USD"},
+        {name: "description", content: ""},
+        {itemProp: "name", content: siteName},
+        {itemProp: "description", content: description},
+        {itemProp: "image", content: image},
+        {name: "twitter:card", content: siteName},
+        {name: "twitter:site", content: url},
+        {name: "twitter:title", content: siteName},
+        {name: "twitter:description", content: description},
+        {name: "twitter:creator", content: "@code4hr"},
+        {name: "twitter:image", content: defaultUrl},
+        {property: "og:title", content: siteName},
+        {property: "og:type", content: "website"},
+        {property: "og:url", content: url},
+        {property: "og:image", content: image},
+        {property: "og:description", content: description},
+        {property: "og:site_name", content: siteName}
     ]}
   },
 
   render: function() {
-
     return(
       <html>
         <head>

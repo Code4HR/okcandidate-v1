@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (server) => {
-
+  const SurveyResponse = server.plugins['hapi-shelf'].model('SurveyResponse')
   const API_ROUTES = [].concat(
      require('./controllers/Category')(server),
      require('./controllers/Survey')(server),
@@ -57,8 +57,8 @@ module.exports = (server) => {
     {
       method: 'GET',
       path: '/results/{id}',
-      handler: {
-        view: 'Default'
+      handler: function (request, reply) {
+        reply.view('Default', {mayor:  request.query.mayor})
       }
     }
   ].concat(API_ROUTES)
