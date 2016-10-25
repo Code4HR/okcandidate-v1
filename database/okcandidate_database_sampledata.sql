@@ -46,7 +46,7 @@ INSERT INTO question (id, survey_id, category_id, question_text) VALUES
 (10,1,4, 'Is it important to you to have better neighborhood roads and connectors?'),
 (11,1,4, 'Is it important to you to have easier travel between major areas in the Virginia Beach?'),
 (12,1,4, 'Is it important to you to have better public transportation options?'),
-(13,1,4, 'Is it important to you to have maintain our existing infrastructure?'),
+(13,1,4, 'Is it important to you to maintain our existing road infrastructure?'),
 (14,1,5,'How do you feel about the city budget?'),
 (15,1,5,'Should we decrease, maintain current levels, or increase funding for Virginia Beach City Public Schools?'),
 (16,1,5,'Should we change the funding formula for Virginia Beach City Public Schools?'),
