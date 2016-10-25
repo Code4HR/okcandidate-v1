@@ -25,6 +25,7 @@ import RaceManager from './ecosystems/RaceManager.jsx'
 import WardFinderPage from './ecosystems/WardFinderPage.jsx'
 import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
+import VoterCard from './environments/VoterCard.jsx'
 
 class App extends Component {
 
@@ -35,6 +36,7 @@ class App extends Component {
           <IndexRoute component={WardFinderPage} />
           <Route path="survey" component={SurveyPage} />
           <Route path="results/:id" component={ResultsPage} />
+          <Route path="votercard/:id" component={VoterCard} />
           <Route path="admin" component={AdminDashboard}/>
           <Route path="admin/races" component={RaceManager}/>
           <Route path="login" component={AdminLogin} />
