@@ -22,7 +22,7 @@ const style = {
   },
   label: {
     fontSize: '1em',
-    padding: '.5em',
+    padding: '.5em'
   }
 }
 

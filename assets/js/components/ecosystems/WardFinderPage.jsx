@@ -22,11 +22,6 @@ import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
 import Credits from './../atoms/Credits.jsx'
 import colors from './../style/colors.js'
-import ENV from './../constants.js'
-
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
-
 
 const style = {
   header: {
