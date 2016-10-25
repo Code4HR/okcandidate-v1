@@ -15,6 +15,7 @@ import {
   Row,
   Button
 } from 'react-bootstrap'
+import ReactGA  from 'react-ga'
 
 import Card from './../atoms/Card.jsx'
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
