@@ -96,6 +96,9 @@ class SurveyQuestionPager extends Component {
   skipQuestion() {
     const questionId = this.props.questions[this.props.index].id
     this.props.dispatch(removeSurveyQuestionResponseAndIntensity(questionId))
+    this.setState({
+      alerts: {}
+    })
     this.nextQuestionOrSubmit()
     ReactGA.event({
       category: 'Survey',
@@ -106,7 +109,9 @@ class SurveyQuestionPager extends Component {
   goForward() {
     try {
       this.validateSelections()
-      this.state.alerts = {}
+      this.setState({
+        alerts: {}
+      })
       this.nextQuestionOrSubmit()
     }
     catch (errors) {
