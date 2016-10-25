@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactGA  from 'react-ga'
 
 import { browserHistory } from 'react-router'
 
@@ -17,6 +18,10 @@ import {
   removeSurveyQuestionResponseAndIntensity,
   addGlobalAlert
 } from './../../redux/survey/survey-actions'
+import ENV from './../constants.js'
+
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS'];
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
 
 const style = {
   buttonTray: {
@@ -63,6 +68,10 @@ class SurveyQuestionPager extends Component {
     // if the current question is not the last question
     if (!isLastQuestion.call(this)) {
       this.incrementIndex()
+      ReactGA.event({
+        category: 'Survey',
+        action: 'Answered question'
+      });
     }
 
     else if (!userHasAnsweredEnoughQuestions.call(this)) {
@@ -76,6 +85,10 @@ class SurveyQuestionPager extends Component {
 
     else if (userHasAnsweredEnoughQuestions.call(this)) {
       this.props.onSubmit()
+      ReactGA.event({
+        category: 'Survey',
+        action: 'Finished'
+      });
     }
 
   }
@@ -84,6 +97,10 @@ class SurveyQuestionPager extends Component {
     const questionId = this.props.questions[this.props.index].id
     this.props.dispatch(removeSurveyQuestionResponseAndIntensity(questionId))
     this.nextQuestionOrSubmit()
+    ReactGA.event({
+      category: 'Survey',
+      action: 'Skipped A Question'
+    });
   }
 
   goForward() {

@@ -27,11 +27,6 @@ import WardFinderPage from './ecosystems/WardFinderPage.jsx'
 import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
 
-ga.initialize(process.env.GOOGLE_ANALYTICS)
-browserHistory.listen(location => {
-  ga.pageview(location.pathname)
-})
-
 class App extends Component {
 
   render() {
