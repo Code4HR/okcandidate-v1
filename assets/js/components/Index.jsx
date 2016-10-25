@@ -2,7 +2,6 @@ import React, { Component} from 'react'
 import ReactDOM from 'react-dom'
 import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
-import ga from 'react-ga'
 import { applyMiddleware, createStore } from 'redux'
 import reducer from './../redux/reducer'
 import createLogger from 'redux-logger'
@@ -26,11 +25,7 @@ import RaceManager from './ecosystems/RaceManager.jsx'
 import WardFinderPage from './ecosystems/WardFinderPage.jsx'
 import ResultsPage from './ecosystems/ResultsPage.jsx'
 import SurveyPage from './ecosystems/SurveyPage.jsx'
-
-ga.initialize(process.env.GOOGLE_ANALYTICS)
-browserHistory.listen(location => {
-  ga.pageview(location.pathname)
-})
+import VoterCard from './environments/VoterCard.jsx'
 
 class App extends Component {
 
@@ -41,6 +36,7 @@ class App extends Component {
           <IndexRoute component={WardFinderPage} />
           <Route path="survey" component={SurveyPage} />
           <Route path="results/:id" component={ResultsPage} />
+          <Route path="votercard/:id" component={VoterCard} />
           <Route path="admin" component={AdminDashboard}/>
           <Route path="admin/races" component={RaceManager}/>
           <Route path="login" component={AdminLogin} />

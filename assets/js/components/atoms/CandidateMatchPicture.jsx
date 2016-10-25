@@ -26,55 +26,24 @@ class CandidatePicture extends Component {
    */
   getImagePath(name) {
 
-    let imgPath
+    const rootPath = '/img/candidates/virginiabeach'
 
-    switch (name) {
-        case 'Kenneth Cooper Alexander':
-          imgPath = '/img/candidates/alexander.jpg'
-          break
-
-        case 'Robert J. McCabe':
-          imgPath = '/img/candidates/mccabe.jpg'
-          break
-
-        case 'Andy A. Protogyrou':
-          imgPath = '/img/candidates/protogyrou.jpg'
-          break
-
-        case 'Andria P. McClellan':
-          imgPath = '/img/candidates/mcclellan.jpg'
-          break
-
-        case 'Warren A. Stewart':
-          imgPath = '/img/candidates/stewart.jpg'
-          break
-
-        case 'Barclay C. Winn':
-          imgPath = '/img/candidates/winn.jpg'
-          break
-
-        case 'Harry David Candela':
-          imgPath = '/img/candidates/candela.jpg'
-          break
-
-        case 'G.W. \"Billy\" Cook, Jr.':
-          imgPath = '/img/candidates/cook.jpg'
-          break
-
-        case 'Angelia Williams Graves':
-          imgPath = '/img/candidates/graves.jpg'
-          break
-
-        case 'Kendrick J. Turner':
-          imgPath = '/img/candidates/turner.jpg'
-          break
-
-        default:
-
-    }
+    const picture = {
+      'Jessica Abbott': 'abbott.jpg',
+      'Dane U. Blythe': 'blythe.jpg',
+      'Bobby Dyer': 'dyer.jpg',
+      'George Furman III': 'furman.jpg',
+      'Amelia Ross-Hammond': 'hammond.jpg',
+      'Richard W. "RK" Kowalewitch': 'kowalewitch.jpg',
+      'Courtney LaLonde': 'lalonde.jpg',
+      'William D. Sessoms, Jr.': 'sessoms.jpg',
+      'A.M. "Don" Weeks': 'weeks.jpg',
+      'Rosemary Wilson': 'wilson.jpg',
+      'Pam Witham': 'witham.jpg'
+    }[name]
 
     return {
-      background: `url(${imgPath})`
+      background: `url(${rootPath}/${picture})`
     }
 
   }

@@ -13,20 +13,30 @@ import {
   Row
 } from 'react-bootstrap'
 
+import ReactGA  from 'react-ga'
+
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
 import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
 import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
+import ENV from './../constants.js'
+
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
 
 class ResultsPage extends Component {
 
   constructor(props) {
     super(props)
+  }
 
-    this.props.dispatch(fetchSurveyCandidateMatches(
-      this.props.params.id
-    ))
+  componentDidMount () {
+    this.props.dispatch(fetchSurveyCandidateMatches(this.props.params.id))
 
+    ReactGA.event({
+      category: 'Survey',
+      action: 'Viewed Results'
+    })
   }
 
   sortRaces(races) {
@@ -62,11 +72,14 @@ class ResultsPage extends Component {
                   dispatch={this.props.dispatch} />
               }
 
-              <SurveyCompletionIndicator
-                questionsAnswered={this.props.survey.responses.length}
-                totalQuestions={this.props.survey.questions.length}
-                resultsPage
-                onSubmit={this.backToSurvey.bind(this)} />
+              {
+                (this.props.survey.responses.length && this.props.survey.questions.length) !== 0 &&
+                <SurveyCompletionIndicator
+                  questionsAnswered={this.props.survey.responses.length}
+                  totalQuestions={this.props.survey.questions.length}
+                  resultsPage
+                  onSubmit={this.backToSurvey.bind(this)} />
+              }
 
               <h1>Matches</h1>
               {

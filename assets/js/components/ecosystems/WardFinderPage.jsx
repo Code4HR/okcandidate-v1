@@ -15,12 +15,18 @@ import {
   Row,
   Button
 } from 'react-bootstrap'
+import ReactGA  from 'react-ga'
 
 import Card from './../atoms/Card.jsx'
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
 import Credits from './../atoms/Credits.jsx'
 import colors from './../style/colors.js'
+import ENV from './../constants.js'
+
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
+
 
 const style = {
   header: {
@@ -86,6 +92,10 @@ class WardFinderPage extends Component {
 
   skipGeolocation() {
     this.props.dispatch(selectGeography(1))
+    ReactGA.event({
+      category: 'Splash',
+      action: 'Clicked on Start CTA'
+    })
   }
 
   render() {
@@ -111,8 +121,8 @@ class WardFinderPage extends Component {
                   {
                     this.state.geolocation ?
                     <p>
-                      We can find candidates running for office in your area by using any Virginia Beach
-                      street address.
+                      We can find candidates running for office in your area by
+                      using any Virginia Beach street address.
                     </p>
                     :
                     <p>
