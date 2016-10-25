@@ -20,8 +20,8 @@ import {
 } from './../../redux/survey/survey-actions'
 import ENV from './../constants.js'
 
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS'];
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
 
 const style = {
   buttonTray: {
@@ -71,7 +71,7 @@ class SurveyQuestionPager extends Component {
       ReactGA.event({
         category: 'Survey',
         action: 'Answered question'
-      });
+      })
     }
 
     else if (!userHasAnsweredEnoughQuestions.call(this)) {
@@ -88,7 +88,7 @@ class SurveyQuestionPager extends Component {
       ReactGA.event({
         category: 'Survey',
         action: 'Finished'
-      });
+      })
     }
 
   }
@@ -103,7 +103,7 @@ class SurveyQuestionPager extends Component {
     ReactGA.event({
       category: 'Survey',
       action: 'Skipped A Question'
-    });
+    })
   }
 
   goForward() {

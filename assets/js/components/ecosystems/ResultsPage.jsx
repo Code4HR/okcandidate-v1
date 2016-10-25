@@ -21,8 +21,8 @@ import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
 import ENV from './../constants.js'
 
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS'];
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true});
+const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
+ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
 
 class ResultsPage extends Component {
 
@@ -38,7 +38,7 @@ class ResultsPage extends Component {
     ReactGA.event({
       category: 'Survey',
       action: 'Viewed Results'
-    });
+    })
   }
 
   sortRaces(races) {
