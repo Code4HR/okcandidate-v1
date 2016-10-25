@@ -5,7 +5,7 @@ import colors from './../style/colors'
 const style = {
   container: {
     background: colors.red,
-    padding: '.25em 1em',
+    padding: '0 1em',
     maxWidth: '7em',
     display: 'flex',
     justifyContent: 'center',
@@ -23,7 +23,6 @@ const style = {
   label: {
     fontSize: '1em',
     padding: '.5em',
-    marginLeft: '.5em'
   }
 }
 
