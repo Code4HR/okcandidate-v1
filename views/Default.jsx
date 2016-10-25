@@ -15,7 +15,7 @@ const Default = React.createClass({
     const siteName = "OkCandidate"
     return {
         tags: [
-        {name: "description", content: ""},
+        {name: "description", content: description},
         {itemProp: "name", content: siteName},
         {itemProp: "description", content: description},
         {itemProp: "image", content: image},
