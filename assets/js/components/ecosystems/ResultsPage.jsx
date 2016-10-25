@@ -28,17 +28,15 @@ class ResultsPage extends Component {
 
   constructor(props) {
     super(props)
-
-    this.props.dispatch(fetchSurveyCandidateMatches(
-      this.props.params.id
-    ))
   }
 
   componentDidMount () {
+    this.props.dispatch(fetchSurveyCandidateMatches(this.props.params.id))
+
     ReactGA.event({
       category: 'Survey',
       action: 'Viewed Results'
-    });
+    })
   }
 
   sortRaces(races) {

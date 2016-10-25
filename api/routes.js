@@ -60,6 +60,13 @@ module.exports = (server) => {
       handler: {
         view: 'Default'
       }
+    },
+    {
+      method: 'GET',
+      path: '/votercard/{id}',
+      handler: {
+        view: 'Default'
+      }
     }
   ].concat(API_ROUTES)
 
