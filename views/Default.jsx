@@ -4,12 +4,14 @@ const React = require('react');
 
 const Default = React.createClass({
 
+  _titlecase: function(str){
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  },
   getInitialState: function() {
-
     const defaultUrl = "http://okcandidate.code4hr.org";
-    const image = this.props.mayor ? `http://okcandidate.code4hr.org/img/candidates/virginiabeach/${this.props.mayor}.jpg` : 'http://okcandidate.code4hr.org/img/ballot-box.png';
+    const image = this.props.candidate ? `http://okcandidate.code4hr.org/img/candidates/virginiabeach/${this.props.candidate}.jpg` : 'http://okcandidate.code4hr.org/img/ballot-box.png';
     const url = this.props.id ? `http://code4hr.org/results/${id}` : defaultUrl;
-    const description = "Find out which candidates for local office are a match for you!";
+    const description = this.props.candidate ? `I got matched with ${this._titlecase(this.props.candidate)}. Who will you match with?`: "Find out which candidates for local office are a match for you!";
     const siteName = "OkCandidate"
     return {
         tags: [
@@ -22,7 +24,7 @@ const Default = React.createClass({
         {name: "twitter:title", content: siteName},
         {name: "twitter:description", content: description},
         {name: "twitter:creator", content: "@code4hr"},
-        {name: "twitter:image", content: defaultUrl},
+        {name: "twitter:image", content: image},
         {property: "og:title", content: siteName},
         {property: "og:type", content: "website"},
         {property: "og:url", content: url},

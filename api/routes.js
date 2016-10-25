@@ -58,7 +58,7 @@ module.exports = (server) => {
       method: 'GET',
       path: '/results/{id}',
       handler: function (request, reply) {
-        reply.view('Default', {mayor:  request.query.mayor})
+        reply.view('Default', {candidate:  request.query.candidate})
       }
     }
   ].concat(API_ROUTES)
