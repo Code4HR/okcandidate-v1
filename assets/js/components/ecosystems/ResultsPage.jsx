@@ -74,11 +74,14 @@ class ResultsPage extends Component {
                   dispatch={this.props.dispatch} />
               }
 
-              <SurveyCompletionIndicator
-                questionsAnswered={this.props.survey.responses.length}
-                totalQuestions={this.props.survey.questions.length}
-                resultsPage
-                onSubmit={this.backToSurvey.bind(this)} />
+              {
+                (this.props.survey.responses.length && this.props.survey.questions.length) !== 0 &&
+                <SurveyCompletionIndicator
+                  questionsAnswered={this.props.survey.responses.length}
+                  totalQuestions={this.props.survey.questions.length}
+                  resultsPage
+                  onSubmit={this.backToSurvey.bind(this)} />
+              }
 
               <h1>Matches</h1>
               {
