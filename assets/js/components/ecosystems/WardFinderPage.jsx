@@ -90,7 +90,7 @@ class WardFinderPage extends Component {
     this.props.dispatch(selectGeography(1))
     ReactGA.event({
       category: 'Splash',
-      action: 'Clicked on Start CTA'
+      action: 'Skipped neighborhood typahead'
     })
   }
 
@@ -122,7 +122,7 @@ class WardFinderPage extends Component {
                     </p>
                     :
                     <p>
-                      Type in the name of your neighborhood and click "Go" to get started.
+                      Start typing the name of your neighborhood and select it when it appears.
                     </p>
                   }
 
@@ -145,6 +145,7 @@ class WardFinderPage extends Component {
                     :
                       <div>
                         <NeighborhoodTypeahead dispatch={this.props.dispatch} />
+                        <Button onClick={this.skipGeolocation.bind(this)}>Skip This</Button>
                       </div>
                   }
 

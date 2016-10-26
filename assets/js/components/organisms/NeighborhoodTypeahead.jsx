@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Select from 'react-select'
+import 'react-select/dist/react-select.css'
+import ReactGA from 'react-ga'
 
 import neighborhoods from './../utils/neighborhoodList.js'
 
@@ -20,12 +22,17 @@ class NeighborhoodFinder extends Component {
   }
 
   submit(selection) {
+    ReactGA.event({
+      category: 'Splash',
+      action: 'Used neighborhood typeahead'
+    })
     this.props.dispatch(submitNeighborhood(selection.value))
   }
 
   render() {
     return (
       <Select
+        style={{marginBottom: '.5em'}}
         clearable={false}
         name="form-field-name"
         options={this.shimNeighborhoods(neighborhoods)}
