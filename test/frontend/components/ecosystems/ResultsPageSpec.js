@@ -12,6 +12,7 @@ import ElectionDayReminderPrompt
   from '../../../../assets/js/components/organisms/ElectionDayReminderPrompt'
 
 describe('The results page', () => {
+
   let page, state, dispatch, store
 
   beforeEach(() => {

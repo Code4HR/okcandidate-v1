@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
+const ReactGA = require('react-ga')
 
 import {
   fetchSurveyCandidateMatches
@@ -13,16 +14,10 @@ import {
   Row
 } from 'react-bootstrap'
 
-import ReactGA  from 'react-ga'
-
 import CandidateMatchCandidate from './../organisms/CandidateMatchCandidate.jsx'
 import SurveyCompletionIndicator from './../organisms/SurveyCompletionIndicator.jsx'
 import ElectionDayReminder from './../ecosystems/ElectionDayReminder.jsx'
 import LoadingIndicator from './../atoms/LoadingIndicator.jsx'
-import ENV from './../constants.js'
-
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
 
 class ResultsPage extends Component {
 

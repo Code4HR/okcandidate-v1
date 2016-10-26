@@ -111,7 +111,8 @@ class VoterCard extends Component {
 }
 
 VoterCard.propTypes = {
-  dispatch:  PropTypes.func,
+  history: PropTypes.object,
+  dispatch: PropTypes.func,
   params: PropTypes.object,
   survey: PropTypes.object
 }
