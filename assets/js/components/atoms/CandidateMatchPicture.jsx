@@ -8,7 +8,7 @@ const style = {
     width: 72,
     height: 72,
     background: colors.lightBlue,
-    backgroundSize: 'contain'
+    backgroundSize: 'cover'
   }
 }
 
@@ -39,7 +39,9 @@ class CandidatePicture extends Component {
       'William D. Sessoms, Jr.': 'sessoms.jpg',
       'A.M. "Don" Weeks': 'weeks.jpg',
       'Rosemary Wilson': 'wilson.jpg',
-      'Pam Witham': 'witham.jpg'
+      'Pam Witham': 'witham.jpg',
+      'Robert K. Dean': 'dean.jpg',
+      'Shannon Kane': 'kane.jpg'
     }[name]
 
     return {

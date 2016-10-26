@@ -83,7 +83,7 @@ class ResultsPage extends Component {
                   this.sortRaces(races).map((race, index) => {
                     return (
                       <section key={index}>
-                        <h2>{race.candidateTypeName}</h2>
+                        <h2 style={{fontSize: 18}}>{race.candidateTypeName}</h2>
                         {
                           this.sortCandidates(race.candidates)
                             .map((candidate, index) => {
