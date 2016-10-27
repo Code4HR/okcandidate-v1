@@ -32,6 +32,7 @@ class NeighborhoodFinder extends Component {
   render() {
     return (
       <Select
+        autoBlur
         style={{marginBottom: '.5em'}}
         clearable={false}
         name="form-field-name"
