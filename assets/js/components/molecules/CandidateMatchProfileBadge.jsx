@@ -33,7 +33,7 @@ class CandidateMatchProfileBadge extends Component {
           <CandidateMatchRating
             compositeMatchScore={this.props.compositeMatchScore}
             style={style.badge} />
-          <a style={style.label} href={this.props.candidateWebsite}>Read more about this candidate</a>
+          <a style={style.label} href={this.props.candidateWebsite}>Candidate info</a>
         </div>
       </section>
     )
