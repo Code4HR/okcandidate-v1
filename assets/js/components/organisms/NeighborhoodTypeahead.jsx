@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import ReactGA from 'react-ga'
+import bowser from 'bowser'
 
 import neighborhoods from './../utils/neighborhoodList.js'
 
@@ -29,10 +30,18 @@ class NeighborhoodFinder extends Component {
     this.props.dispatch(submitNeighborhood(selection.value))
   }
 
+  centerInputInViewport(event) {
+    if (bowser.ios && window.scrollY < 50) {
+      const top = event.target.getClientRects()[0].top - 48
+      window.scrollTo(0, top)
+    }
+  }
+
   render() {
     return (
       <Select
         autoBlur
+        onFocus={this.centerInputInViewport.bind(this)}
         style={{marginBottom: '.5em'}}
         clearable={false}
         name="form-field-name"

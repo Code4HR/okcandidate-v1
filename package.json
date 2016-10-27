@@ -10,6 +10,7 @@
     "bluebird": "^3.4.1",
     "bookshelf": "^0.10.0",
     "boom": "^3.2.2",
+    "bowser": "^1.4.6",
     "dateformat": "^1.0.12",
     "es6-promise": "^3.1.2",
     "hapi": "^11.1.3",
