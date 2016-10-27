@@ -90,6 +90,7 @@ class VoterCard extends Component {
                           return (
                             <CandidateMatchCandidate
                               candidateName={match.candidateName}
+                              candidateWebsite={match.candidateWebsite}
                               compositeMatchScore={match.compositeMatchScore}
                               categoryMatchScores={match.categoryMatchScores} />
                           )

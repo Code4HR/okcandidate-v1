@@ -126,20 +126,20 @@ VALUES (1, 'Mayor'), (2, 'City Council - At Large')
 ---------------
 -- Candidate --
 ---------------
-INSERT INTO candidate (id, candidate_name, candidate_type_id) VALUES
-(1, 'A.M. "Don" Weeks', 1),
-(2, 'Jessica Abbott', 4),
-(3, 'Shannon Kane', 5),
-(4, 'Rosemary Wilson', 2),
-(5, 'Pam Witham', 2),
-(6, 'Dane U. Blythe', 2),
-(7, 'Robert K. Dean', 5),
-(8, 'Bobby Dyer', 3),
-(9, 'Richard W. "RK" Kowalewitch', 1),
-(10, 'William D. Sessoms, Jr.', 1),
-(11, 'Courtney LaLonde', 2),
-(12, 'George Furman III', 1),
-(13, 'Amelia Ross-Hammond',4);
+INSERT INTO candidate (id, candidate_name, candidate_website, candidate_type_id) VALUES
+(1, 'A.M. "Don" Weeks', 'http://www.donweeksformayor.com', 1),
+(2, 'Jessica Abbott', 'https://jessicapabbott.com', 4),
+(3, 'Shannon Kane', 'http://shannonforcouncil.com', 5),
+(4, 'Rosemary Wilson', 'http://www.rosemarywilson2016.com', 2),
+(5, 'Pam Witham', 'http://www.pamwitham.com', 2),
+(6, 'Dane U. Blythe', 'http://www.blytheforcitycouncil.com', 2),
+(7, 'Robert K. Dean', 'http://robertdeanforcitycouncil.com', 5),
+(8, 'Bobby Dyer', 'https://ballotpedia.org/Bob_Dyer', 3),
+(9, 'Richard W. "RK" Kowalewitch', 'http://rkformayor.com', 1),
+(10, 'William D. Sessoms, Jr.', 'http://www.sessomsformayor.com', 1),
+(11, 'Courtney LaLonde', 'http://www.courtneylalonde.com', 2),
+(12, 'George Furman III', 'https://ballotpedia.org/George_Furman_III', 1),
+(13, 'Amelia Ross-Hammond', 'https://www.rosshammond.org', 4);
 
 ----------------------
 -- Candidate Answer --
