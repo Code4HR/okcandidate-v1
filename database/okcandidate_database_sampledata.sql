@@ -134,7 +134,7 @@ INSERT INTO candidate (id, candidate_name, candidate_website, candidate_type_id)
 (5, 'Pam Witham', 'http://www.pamwitham.com', 2),
 (6, 'Dane U. Blythe', 'http://www.blytheforcitycouncil.com', 2),
 (7, 'Robert K. Dean', 'http://robertdeanforcitycouncil.com', 5),
-(8, 'Bobby Dyer', 'http://pilotonline.com/news/government/local/find-out-who-s-running-for-virginia-beach-mayor-and/article_1e1d1356-fba7-5123-9f75-1374ea9dc3d8.html', 3),
+(8, 'Bobby Dyer', 'https://ballotpedia.org/Bob_Dyer', 3),
 (9, 'Richard W. "RK" Kowalewitch', 'http://rkformayor.com', 1),
 (10, 'William D. Sessoms, Jr.', 'http://www.sessomsformayor.com', 1),
 (11, 'Courtney LaLonde', 'http://www.courtneylalonde.com', 2),
