@@ -13,7 +13,7 @@ const style = {
 
   },
   label: {
-    fontSize: '1.25em',
+    fontSize: '1em',
     margin: '0 0 .25em 0'
   }
 }
