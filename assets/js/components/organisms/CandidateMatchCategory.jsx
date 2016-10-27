@@ -20,7 +20,7 @@ class CandidateMatchCategory extends Component {
     return (
       <Panel style={style.panel}>
         <div style={{display: 'flex', alignItems: 'center'}}>
-          <h4 style={{flexGrow: 1}}>
+          <h4 style={{flexGrow: 1, fontSize: 14}}>
             {this.props.categoryName}
           </h4>
           <CandidateMatchRating

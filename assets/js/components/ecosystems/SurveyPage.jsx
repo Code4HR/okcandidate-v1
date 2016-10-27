@@ -18,11 +18,6 @@ import {
   Row
 } from 'react-bootstrap'
 
-import ENV from './../constants.js'
-
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
-
 class SurveyPage extends Component {
 
   constructor(props) {

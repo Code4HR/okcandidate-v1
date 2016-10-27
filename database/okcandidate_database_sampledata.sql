@@ -46,7 +46,7 @@ INSERT INTO question (id, survey_id, category_id, question_text) VALUES
 (10,1,4, 'Is it important to you to have better neighborhood roads and connectors?'),
 (11,1,4, 'Is it important to you to have easier travel between major areas in the Virginia Beach?'),
 (12,1,4, 'Is it important to you to have better public transportation options?'),
-(13,1,4, 'Is it important to you to have maintain our existing infrastructure?'),
+(13,1,4, 'Is it important to you to maintain our existing road infrastructure?'),
 (14,1,5,'How do you feel about the city budget?'),
 (15,1,5,'Should we decrease, maintain current levels, or increase funding for Virginia Beach City Public Schools?'),
 (16,1,5,'Should we change the funding formula for Virginia Beach City Public Schools?'),
@@ -126,20 +126,20 @@ VALUES (1, 'Mayor'), (2, 'City Council - At Large')
 ---------------
 -- Candidate --
 ---------------
-INSERT INTO candidate (id, candidate_name, candidate_type_id) VALUES
-(1, 'A.M. "Don" Weeks', 1),
-(2, 'Jessica Abbott', 4),
-(3, 'Shannon Kane', 5),
-(4, 'Rosemary Wilson', 2),
-(5, 'Pam Witham', 2),
-(6, 'Dane U. Blythe', 2),
-(7, 'Robert K. Dean', 5),
-(8, 'Bobby Dyer', 3),
-(9, 'Richard W. "RK" Kowalewitch', 1),
-(10, 'William D. Sessoms, Jr.', 1),
-(11, 'Courtney LaLonde', 2),
-(12, 'George Furman III', 1),
-(13, 'Amelia Ross-Hammond',4);
+INSERT INTO candidate (id, candidate_name, candidate_website, candidate_type_id) VALUES
+(1, 'A.M. "Don" Weeks', 'http://www.donweeksformayor.com', 1),
+(2, 'Jessica Abbott', 'https://jessicapabbott.com', 4),
+(3, 'Shannon Kane', 'http://shannonforcouncil.com', 5),
+(4, 'Rosemary Wilson', 'http://www.rosemarywilson2016.com', 2),
+(5, 'Pam Witham', 'http://www.pamwitham.com', 2),
+(6, 'Dane U. Blythe', 'http://www.blytheforcitycouncil.com', 2),
+(7, 'Robert K. Dean', 'http://robertdeanforcitycouncil.com', 5),
+(8, 'Bobby Dyer', 'https://ballotpedia.org/Bob_Dyer', 3),
+(9, 'Richard W. "RK" Kowalewitch', 'http://rkformayor.com', 1),
+(10, 'William D. Sessoms, Jr.', 'http://www.sessomsformayor.com', 1),
+(11, 'Courtney LaLonde', 'http://www.courtneylalonde.com', 2),
+(12, 'George Furman III', 'https://ballotpedia.org/George_Furman_III', 1),
+(13, 'Amelia Ross-Hammond', 'https://www.rosshammond.org', 4);
 
 ----------------------
 -- Candidate Answer --

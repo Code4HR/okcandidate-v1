@@ -90,6 +90,7 @@ class VoterCard extends Component {
                           return (
                             <CandidateMatchCandidate
                               candidateName={match.candidateName}
+                              candidateWebsite={match.candidateWebsite}
                               compositeMatchScore={match.compositeMatchScore}
                               categoryMatchScores={match.categoryMatchScores} />
                           )
@@ -111,7 +112,8 @@ class VoterCard extends Component {
 }
 
 VoterCard.propTypes = {
-  dispatch:  PropTypes.func,
+  history: PropTypes.object,
+  dispatch: PropTypes.func,
   params: PropTypes.object,
   survey: PropTypes.object
 }

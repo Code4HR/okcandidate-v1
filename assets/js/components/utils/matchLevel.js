@@ -5,12 +5,13 @@ function getThirds(total) {
 function getMatchLevel(answered, total) {
 
   const third = getThirds(total)
+  const remaining = total - answered
 
   const result = {
     level: 0,
     mood: ':(',
-    text: `Answer ${third - answered % third} questions for an OK rating`,
-    progress: Math.round(answered % third / third * 100)
+    text: `${remaining} question${remaining === 1 ? '' : 's'} remaining`,
+    progress: Math.round((answered / total) * 100)
   }
 
   if (total === 0) {
@@ -20,16 +21,14 @@ function getMatchLevel(answered, total) {
   if (answered >= third && answered < (2 * third)) {
     return Object.assign({}, result, {
       level: 1,
-      mood: 'OK!',
-      text: `Answer ${third - answered % third} questions for a good rating`
+      mood: 'OK!'
     })
   }
 
   else if (answered >= (2 * third) && answered < total) {
     return Object.assign({}, result, {
       level: 2,
-      mood: 'Good!',
-      text: `Answer ${total - answered} questions for the best rating`
+      mood: 'Good!'
     })
   }
 

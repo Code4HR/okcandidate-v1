@@ -33,6 +33,7 @@ class Credits extends Component {
         <p>
            Made with <span style={style.heart}>&hearts;</span> by <a href="http://code4hr.org/">Code for Hampton
            Roads Volunteers</a> and the <a href="http://pilotonline.com/">Virginian Pilot</a>.
+           <a href="mailto:code4hr@codeforamerica.org" title="Feedback">Feedback</a>
            <a style={style.adminLink} href="http://pilotonline.com/">Admin Dashboard</a>
         </p>
       </div>

@@ -13,7 +13,7 @@ const style = {
 
   },
   label: {
-    fontSize: '1.25em',
+    fontSize: '1em',
     margin: '0 0 .25em 0'
   }
 }
@@ -33,6 +33,7 @@ class CandidateMatchProfileBadge extends Component {
           <CandidateMatchRating
             compositeMatchScore={this.props.compositeMatchScore}
             style={style.badge} />
+          <a style={style.label} href={this.props.candidateWebsite}>Candidate info</a>
         </div>
       </section>
     )
@@ -43,6 +44,7 @@ class CandidateMatchProfileBadge extends Component {
 CandidateMatchProfileBadge.propTypes = {
   compositeMatchScore: PropTypes.number,
   candidateName: PropTypes.string,
+  candidateWebsite: PropTypes.string,
   style: PropTypes.object
 }
 

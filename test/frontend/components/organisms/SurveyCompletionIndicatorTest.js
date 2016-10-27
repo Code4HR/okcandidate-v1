@@ -84,10 +84,10 @@ describe('Survey Completion Indicator', () => {
       expect(heart.props.level).to.equal(0)
     })
 
-    it('should pass a progress value of 67%', () => {
+    it('should pass a progress value of 22%', () => {
       const progress =
         TestUtils.scryRenderedComponentsWithType(component, ProgressBar)[0]
-      expect(progress.props.now).to.equal(67)
+      expect(progress.props.now).to.equal(22)
     })
 
   })
@@ -115,10 +115,10 @@ describe('Survey Completion Indicator', () => {
       expect(heart.props.level).to.equal(1)
     })
 
-    it('should pass a progress value of 8%', () => {
+    it('should pass a progress value of 36%', () => {
       const progress =
         TestUtils.scryRenderedComponentsWithType(component, ProgressBar)[0]
-      expect(progress.props.now).to.equal(8)
+      expect(progress.props.now).to.equal(36)
     })
 
   })
@@ -146,10 +146,10 @@ describe('Survey Completion Indicator', () => {
       expect(heart.props.level).to.equal(2)
     })
 
-    it('should pass a progress value of 0%', () => {
+    it('should pass a progress value of 67%', () => {
       const progress =
         TestUtils.scryRenderedComponentsWithType(component, ProgressBar)[0]
-      expect(progress.props.now).to.equal(0)
+      expect(progress.props.now).to.equal(67)
     })
 
   })

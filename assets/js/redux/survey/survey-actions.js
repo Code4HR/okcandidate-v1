@@ -283,6 +283,12 @@ export function submitStreetAddress(street) {
   }
 }
 
+export function submitNeighborhood(neighborhood) {
+  return dispatch => {
+    dispatch(fetchSurveyResponseId(1, 1, neighborhood))
+  }
+}
+
 export const FETCH_GEOGRAPHY_REQUEST = 'FETCH_GEOGRAPHY_REQUEST'
 export const FETCH_GEOGRAPHY_SUCCESS = 'FETCH_GEOGRAPHY_SUCCESS'
 export const FETCH_GEOGRAPHY_FAILURE = 'FETCH_GEOGRAPHY_FAILURE'
@@ -359,7 +365,7 @@ export function fetchSurveyResponseIdFailure(error) {
   }
 }
 
-export function fetchSurveyResponseId(surveyId, geographyId) {
+export function fetchSurveyResponseId(surveyId, geographyId, neighborhood) {
   return function(dispatch) {
     dispatch(fetchSurveyResponseIdRequest())
     return fetch('/api/survey_response', {
@@ -370,7 +376,8 @@ export function fetchSurveyResponseId(surveyId, geographyId) {
       },
       body: JSON.stringify({
         surveyId: surveyId,
-        geographyId: geographyId
+        geographyId: geographyId,
+        neighborhood: neighborhood
       })
     })
     .then(checkStatus)

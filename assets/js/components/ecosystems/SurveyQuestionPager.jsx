@@ -19,10 +19,6 @@ import {
   removeSurveyQuestionResponseAndIntensity,
   addGlobalAlert
 } from './../../redux/survey/survey-actions'
-import ENV from './../constants.js'
-
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
-ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
 
 const style = {
   buttonTray: {

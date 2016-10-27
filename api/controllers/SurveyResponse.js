@@ -46,6 +46,7 @@ module.exports = function (server) {
             geography_id: request.payload.geographyId,
             user_email: request.payload.userEmail,
             user_phone: request.payload.userPhone,
+            neighborhood: request.payload.neighborhood
           })
           .then(function (newSurveyResponse) {
             reply(newSurveyResponse)
@@ -66,7 +67,8 @@ module.exports = function (server) {
               survey_id: request.payload.surveyId,
               geography_id: request.payload.geographyId,
               user_email: request.payload.userEmail,
-              user_phone: request.payload.userPhone
+              user_phone: request.payload.userPhone,
+              neighborhood: request.payload.neighborhood
             })
               .then(function (surveyResponse) {
                 reply(surveyResponse)
