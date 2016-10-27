@@ -46,6 +46,7 @@ class CandidateMatchCandidate extends Component {
         <div style={{display: 'flex'}}>
           <CandidateMatchProfileBadge
             candidateName={this.props.candidateName}
+            candidateWebsite={this.props.candidateWebsite}
             compositeMatchScore={this.props.compositeMatchScore}
             style={{flex: 1}} />
           <Button onClick={() => this.toggleCategories()}>
@@ -76,6 +77,7 @@ class CandidateMatchCandidate extends Component {
 
 CandidateMatchCandidate.propTypes = {
   candidateName: PropTypes.string,
+  candidateWebsite: PropTypes.string,
   compositeMatchScore: PropTypes.number,
   categoryMatchScores: PropTypes.array
 }

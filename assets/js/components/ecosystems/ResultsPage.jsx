@@ -91,6 +91,7 @@ class ResultsPage extends Component {
                                 <CandidateMatchCandidate
                                   key={index}
                                   candidateName={candidate.candidateName}
+                                  candidateWebsite={candidate.candidateWebsite}
                                   compositeMatchScore={candidate.compositeMatchScore}
                                   categoryMatchScores={candidate.categoryMatchScores} />
                               )
