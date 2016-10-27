@@ -4,11 +4,11 @@
 
 --GRANT SELECT, INSERT, UPDATE, DELETE
 --ON ALL TABLES IN SCHEMA public
---TO pauloblack;
+--TO okc;
 -- --
 --GRANT USAGE, SELECT
 --ON ALL SEQUENCES IN SCHEMA public
---TO pauloblack;
+--TO okc;
 
 DROP TABLE IF EXISTS candidate_geography;
 DROP TABLE IF EXISTS candidate_answer;
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS survey_response (
 	survey_id int NOT NULL REFERENCES survey,
 	geography_id int NOT NULL REFERENCES geography,
 	user_email varchar(100),
-	user_phone varchar(50)
+	user_phone varchar(50),
+	neighborhood varchar(100)
 );
 
 CREATE TABLE IF NOT EXISTS survey_answer (
