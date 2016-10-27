@@ -43,7 +43,7 @@ const Default = React.createClass({
             this.state.tags.map((tag, index) =>
               <meta data-doc-meta="true" key={index} {...tag} />)
           }
-          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
           <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"></link>
           <title>OK Candidate</title>
           <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png"></link>
