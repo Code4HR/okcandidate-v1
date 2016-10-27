@@ -144,7 +144,6 @@ module.exports = [
   "Kempsville",
   "King's Forrest",
   "King's Grant",
-  "Kings Grant",
   "Kline Drive",
   "Knob Hill",
   "Koa Camp",
