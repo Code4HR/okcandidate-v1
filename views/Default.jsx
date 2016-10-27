@@ -58,6 +58,7 @@ const Default = React.createClass({
 
         <body>
           <div id="app"></div>
+          <a href="mailto:code4hr@codeforamerica.org" title="Feedback">Feedback</a>
           <script src="/js/bundle.js"></script>
         </body>
       </html>
