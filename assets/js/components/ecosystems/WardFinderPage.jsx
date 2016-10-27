@@ -20,6 +20,7 @@ import ReactGA  from 'react-ga'
 import Card from './../atoms/Card.jsx'
 import WardFinderDropdown from './../organisms/WardFinderDropdown.jsx'
 import WardFinderAddress from './../organisms/WardFinderAddress.jsx'
+import NeighborhoodTypeahead from './../organisms/NeighborhoodTypeahead.jsx'
 import Credits from './../atoms/Credits.jsx'
 import colors from './../style/colors.js'
 
@@ -89,7 +90,7 @@ class WardFinderPage extends Component {
     this.props.dispatch(selectGeography(1))
     ReactGA.event({
       category: 'Splash',
-      action: 'Clicked on Start CTA'
+      action: 'Skipped neighborhood typahead'
     })
   }
 
@@ -121,7 +122,7 @@ class WardFinderPage extends Component {
                     </p>
                     :
                     <p>
-                      Click to start answering questions and find your perfect match!
+                      Start typing the name of your neighborhood and select it when it appears.
                     </p>
                   }
 
@@ -143,10 +144,8 @@ class WardFinderPage extends Component {
                       </div>
                     :
                       <div>
-                        <Button
-                          onClick={this.skipGeolocation.bind(this)}
-                          bsStyle="primary"
-                          bsSize="large">Get Started</Button>
+                        <NeighborhoodTypeahead dispatch={this.props.dispatch} />
+                        <Button onClick={this.skipGeolocation.bind(this)}>Skip This</Button>
                       </div>
                   }
 
