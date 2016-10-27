@@ -30,7 +30,7 @@ class NeighborhoodFinder extends Component {
     this.props.dispatch(submitNeighborhood(selection.value))
   }
 
-  centerInputInViewport(event) {
+  scrollWindowToAboveInput(event) {
     if (bowser.ios && window.scrollY < 50) {
       const top = event.target.getClientRects()[0].top - 48
       window.scrollTo(0, top)
@@ -41,7 +41,7 @@ class NeighborhoodFinder extends Component {
     return (
       <Select
         autoBlur
-        onFocus={this.centerInputInViewport.bind(this)}
+        onFocus={this.scrollWindowToAboveInput.bind(this)}
         style={{marginBottom: '.5em'}}
         clearable={false}
         name="form-field-name"
