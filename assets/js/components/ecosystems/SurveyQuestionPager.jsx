@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactGA  from 'react-ga'
+import bowser from 'bowser'
 
 import { browserHistory } from 'react-router'
 
@@ -39,6 +40,12 @@ class SurveyQuestionPager extends Component {
     this.state = {
       alerts: {},
       finalSkip: false
+    }
+  }
+
+  componentDidMount() {
+    if (bowser.ios) {
+      window.scrollTo(0, 0)
     }
   }
 
