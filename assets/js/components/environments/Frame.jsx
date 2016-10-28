@@ -2,14 +2,16 @@ import React, { Component, PropTypes } from 'react'
 
 import AppHeader from './../organisms/AppHeader.jsx'
 import ReactGA from 'react-ga'
-import ENV from './../constants.js'
 
-const GOOGLE_ANALYTICS = ENV['GOOGLE_ANALYTICS']
+const GOOGLE_ANALYTICS = process.env.GOOGLE_ANALYTICS
+const NODE_ENV = process.env.NODE_ENV
 
 class Frame extends Component {
 
   componentDidMount() {
-    ReactGA.initialize(GOOGLE_ANALYTICS, {debug: true})
+    ReactGA.initialize(GOOGLE_ANALYTICS, {
+      debug: NODE_ENV !== 'production'
+    })
   }
 
   render() {
