@@ -11,11 +11,20 @@ import './../../../node_modules/purecss/build/pure-min.css'
 import './../../style/main.css'
 
 // Redux Setup
-const logger = createLogger()
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk, logger)
-)
+const NODE_ENV = process.env.NODE_ENV
+
+let logger, store
+
+if (NODE_ENV === 'production') {
+  store = createStore(reducer, applyMiddleware(thunk))
+}
+else {
+  logger = createLogger()
+  store = createStore(
+    reducer,
+    applyMiddleware(thunk, logger)
+  )
+}
 
 // Top Level Components
 import Frame from './environments/Frame.jsx'
