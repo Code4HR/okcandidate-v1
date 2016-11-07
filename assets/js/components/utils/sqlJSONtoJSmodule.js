@@ -8,31 +8,55 @@ const file = process.argv[2]
 /*
   @name sqlJSONtoJSmodule
   @usage
-    node sqlJSONtoJSmodule filename
+    node sqlJSONtoJSmodule.js filename
   @description
-    Given a text file containing records that look like:
-    ```
-    row_to_json
-    -------------------------------------------------------------------------------------------------------------------------------------------------------
-    ...
-    {"id":2707,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Southern Woods/Redmill Farms"}
-    {"id":2708,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Ocean Lakes"}
-    {"id":2709,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Abingdon Village"}
-    {"id":2710,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Southern Woods/Redmill Farms"}
-    ...
-    (3730 rows)
+
+    To get a dump of survey_records, connect to the OKC production database using psql.
 
     ```
-    Removes formatting created by Postgres and creates a JS module with an array of objects.
-    If the input file is named 'output.txt', the resulting JS module is named 'output.js'
+      psql -h okcandidate.code4hr.org -p 5432 -U okc
+    ```
+
+    You will be prompted to enter the password for the OKC user.
+    To save the results of your query to a local file:
 
     ```
-    module.exports = [
+      \0 output.txt
+      SELECT row_to_json(survey_response) FROM survey_response | response;
+      \q
+    ``
+
+    This creates a file `output.txt` that looks like:
+
+    ```
+      row_to_json
+      -------------------------------------------------------------------------------------------------------------------------------------------------------
+      ...
       {"id":2707,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Southern Woods/Redmill Farms"}
       {"id":2708,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Ocean Lakes"}
       {"id":2709,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Abingdon Village"}
       {"id":2710,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Southern Woods/Redmill Farms"}
-    ]
+      ...
+      (3730 rows)
+
+    ```
+    This script will remove formatting created by Postgres and create a JS module containing an array of objects.
+
+    ```
+      node sqlJSONtoJSmodule.js output.txt
+    ```
+
+    If the input file is named 'output.txt', the resulting JS module is named 'output.js'
+
+    ```
+      module.exports = [
+        ...
+        {"id":2707,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Southern Woods/Redmill Farms"},
+        {"id":2708,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Ocean Lakes"},
+        {"id":2709,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Abingdon Village"},
+        {"id":2710,"survey_id":1,"geography_id":1,"user_email":null,"user_phone":null,"neighborhood":"Southern Woods/Redmill Farms"},
+        ...
+      ]
     ```
 */
 
