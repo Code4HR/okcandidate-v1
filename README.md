@@ -46,17 +46,14 @@ Using Docker to develop on OKC locally is ideal (but not required). Benefits:
 To run locally for development with postgres and node running in Docker containers, with nodemon watching for file changes on your local machines clone of this repo, follow these steps:
  - Install [Docker Toolbox](https://www.docker.com/products/overview#/docker_toolbox) (Mac/Windows), the [Docker for Mac/Windows Beta](https://beta.docker.com), or Docker binaries docker-engine and docker-compose directly (Linux/Mac/Windows)
  - Clone this repo
- - In repo directory, run docker-compose with our dev yaml file: `docker-compose -f docker-compose-dev.yml up -d`. This pulls our latest images, builds the local repo, and starts psql and node servers (with nodemon).
- - First time starting these containers? You'll need to put in some sample data to postgres. Run these two docker commands which will spin up a tempory container, import data to postgres, then stop/remove themselves. Enter `complicatedPassword` from your `docker-compose-dev.yml` file when it asks for it.
-   - `docker run -it --link okcandidate_okcpostgres_1:postgres -v $(pwd)/database:/var/import --rm postgres sh -c 'exec psql -h postgres -U okc okc < /var/import/okcandidate_database_create.sql'`
-   - `docker run -it --link okcandidate_okcpostgres_1:postgres -v $(pwd)/database:/var/import --rm postgres sh -c 'exec psql -h postgres -U okc okc < /var/import/okcandidate_database_sampledata.sql'`
- - Edit files in repo directory on your machine, and point to either http://192.168.99.100:8000 or http://localhost:8000 (depending on your Docker setup and host OS).
- - Want to check container status? try `docker-compose -f docker-compose-dev.yml ps`.
- - Need to see logs? try `docker-compose -f docker-compose-dev.yml logs` (you can also follow logs, and just list logs for specific container, use `--help`).
- - Want to make commands easier? copy `docker-compose-dev.yml` to `docker-compose.yml` and then you can just do `docker-compose ps` etc.
+ - Copy `.env-example` to `.env`
+ - In repo directory, run docker-compose: `docker-compose up -d`. This pulls our latest images, builds the local repo, and starts psql and node servers (with nodemon).
+ - Edit files in repo directory on your machine, and point to either http://192.168.99.100 or http://localhost (depending on your Docker setup and host OS).
+ - Want to check container status? try `docker-compose ps`.
+ - Need to see logs? try `docker-compose logs` (you can also follow logs, and just list logs for specific container, use `--help`).
  - Once your change is ready, just commit to local git feature-branch and push like you normally would.
- - When you're done for the day, stop the OKC containers: `docker-compose -f docker-compose-dev.yml stop -d`
- - When you're done forever, and want to cleanup: `docker-compose -f docker-compose-dev.yml down -v --rmi all`
+ - When you're done for the day, stop the OKC containers: `docker-compose stop -d`
+ - When you're done forever, and want to cleanup: `docker-compose down -v --rmi all`
 
 Note: To run OKC in the cloud (e.g. your city's staging/production) with a separate postgres container you could use docker-compose with something like our docker-compose-sample.yml
 
