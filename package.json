@@ -28,7 +28,7 @@
     "loaders.css": "^0.1.2",
     "lodash": "^4.6.1",
     "material-ui": "^0.14.4",
-    "mocha": "^2.4.5",
+    "mocha": "^4.0.0",
     "pg": "^4.5.1",
     "purecss": "^0.6.0",
     "react": "^0.14.3",
@@ -46,7 +46,7 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
     "sinon": "^1.17.3",
-    "turf": "^2.0.2",
+    "turf": "^3.0.1",
     "validator": "^5.7.0",
     "vision": "^4.0.1"
   },
