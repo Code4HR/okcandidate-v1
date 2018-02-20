@@ -24,7 +24,7 @@
     "isomorphic-fetch": "^2.2.1",
     "joi": "^13.0.0",
     "jsdom": "^8.1.0",
-    "knex": "^0.11.10",
+    "knex": "^0.14.3",
     "loaders.css": "^0.1.2",
     "lodash": "^4.6.1",
     "material-ui": "^0.14.4",
