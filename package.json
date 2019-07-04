@@ -48,7 +48,8 @@
     "sinon": "^1.17.3",
     "turf": "^3.0.1",
     "validator": "^5.7.0",
-    "vision": "^5.0.0"
+    "vision": "^5.0.0",
+    "snyk": "^1.189.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -58,7 +59,9 @@
     "build": "webpack -p --progress --colors",
     "dev": "webpack --progress --colors --watch & nodemon",
     "dev-docker": "webpack --no-colors --watch & ./node_modules/nodemon/bin/nodemon.js",
-    "lint": "eslint --ignore-pattern **/bundle*.js --ext .js,.jsx assets/**"
+    "lint": "eslint --ignore-pattern **/bundle*.js --ext .js,.jsx assets/**",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -89,5 +92,6 @@
     "redux-devtools": "^3.1.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.12.9"
-  }
+  },
+  "snyk": true
 }
